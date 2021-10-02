@@ -107,3 +107,4 @@ zipp==3.4.1
 Shapely
 python-dotenv==0.19.0
 # zope.interface==4.3.2
+area==1.1.1

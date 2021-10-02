@@ -17,6 +17,7 @@ from branca.element import MacroElement
 from jinja2 import Template
 from shapely.geometry import shape
 from shapely import geometry
+from area import area
 
 # generic base view
 from django.views.generic import TemplateView
@@ -32,137 +33,16 @@ credentials = ee.ServiceAccountCredentials(service_account, 'privatekey.json')
 ee.Initialize(credentials)
 
 
-# def mmy_home():
-#     m = folium.Map(location=[9.0, 2.4], zoom_start=7,)
-#     plugins.Fullscreen(position='topright', title='Full Screen',
-#                        title_cancel='Exit Full Screen', force_separate_button=False).add_to(m)
-
-#     dtstats_df1 = pd.DataFrame()
-#     for dist1 in dist_stats1['features']:
-#         df1 = pd.DataFrame([dist1['properties']],
-#                            columns=dist1['properties'].keys())
-#         dtstats_df1 = pd.concat([dtstats_df1, df1], axis=0)
-
-#     # Reorder columns in dataframe, sort by state name and reset index
-#     dtstats_df1 = dtstats_df1[['Country', 'Districts', 'Cashew_Yield']]
-#     dtstats_df1 = dtstats_df1.sort_values(
-#         by=['Districts']).reset_index(drop=True)
-
-#     # change state names from upper case to title case!!
-#     dtstats_df1['Districts'] = dtstats_df1['Districts'].str.title()
-
-#     dist_stats = alldept.eq(1).multiply(ee.Image.pixelArea()).reduceRegions(
-#         collection=benin_adm2,
-#         reducer=ee.Reducer.sum(),
-#         scale=30,
-#     )
-#     dist_stats = dist_stats.select(['NAME_0', 'NAME_1', 'NAME_2', 'sum'], [
-#                                    'Country', 'Districts', 'Communes', 'Cashew_Yield'], retainGeometry=True).getInfo()
-
-#     dtstats_df = pd.DataFrame()
-#     for dist in dist_stats['features']:
-#         df = pd.DataFrame([dist['properties']],
-#                           columns=dist['properties'].keys())
-#         dtstats_df = pd.concat([dtstats_df, df], axis=0)
-
-#     # Reorder columns in dataframe, sort by state name and reset index
-#     dtstats_df = dtstats_df[['Country',
-#                              'Districts', 'Communes', 'Cashew_Yield']]
-#     dtstats_df = dtstats_df.sort_values(
-#         by=['Districts']).reset_index(drop=True)
-
-#     # change state names from upper case to title case!!
-#     dtstats_df['Districts'] = dtstats_df['Districts'].str.title()
-
-#     m = folium.Map(
-#         location=[9.0, 2.4],
-#         zoom_start=7,
-#     )
-#     m.add_to(figure)
-
-#     plugins.Fullscreen(position='topright', title='Full Screen',
-#                        title_cancel='Exit Full Screen', force_separate_button=False).add_to(m)
-
-#     marker_cluster = MarkerCluster(
-#         name="Benin-Nursery Information").add_to(m)
-
-#     for i in range(len(ben_nursery)):
-#         folium.Marker(
-#             location=[ben_nursery[i:i+1]['Latitude'].values[0], ben_nursery[i:i+1]['Longitude'].values[0]],
-#             rise_on_hover=True,
-#             rise_offset=250,
-#             icon=folium.Icon(color="red", icon="leaf"),
-#             popup=
-#             '''
-#                 <h4 style="font-family: 'Trebuchet MS', sans-serif">Commune Name: <b>{}</b></h4>
-#                 <h5 style="font-family: 'Trebuchet MS', sans-serif">Nursery Owner: <i>{}</i></h5>
-#                 <h5 style="font-family: 'Trebuchet MS', sans-serif">Nursery Area (ha): <b>{}</b></h5>
-#                 <h5 style="font-family: 'Trebuchet MS', sans-serif">Number of Plants: <b>{}</b></h5>
-#                 <a href="https://www.technoserve.org/our-work/agriculture/cashew/?_ga=2.159985149.1109250972.1626437600-1387218312.1616379774"target="_blank">click link to website</a>
-#                 <img src="https://gumlet.assettype.com/deshdoot/import/2019/12/tripXOXO-e1558439144643.jpg?w=1200&h=750&auto=format%2Ccompress&fit=max" width="200" height="70">
-#             '''
-#             .format(ben_nursery[i:i+1].Commune.values[0], ben_nursery[i:i+1].Owner.values[0], ben_nursery[i:i+1]['Area (ha)'].values[0], ben_nursery[i:i+1]['Numebr of Plants'].values[0])).add_to(marker_cluster)
-
-#     def add_ee_layer(self, ee_image_object, vis_params, name):
-#         map_id_dict = ee.Image(ee_image_object).getMapId(vis_params)
-#         folium.raster_layers.TileLayer(
-#             tiles=map_id_dict['tile_fetcher'].url_format,
-#             attr='Map Data &copy; <a href="https://earthengine.google.com/">Google Earth Engine</a>',
-#             name=name,
-#             overlay=True,
-#             control=True
-#         ).add_to(self)
-
-#     folium.Map.add_ee_layer = add_ee_layer
-#     m.add_ee_layer(alldept, {
-#                         'min': 0, 'max': 4, 'palette': "black, green, white, gray"}, 'Benin-Caju Prediction')
-
-#     # json_layer_ben = folium.GeoJson(data=benin_adm1_json, name='Benin States JSON')
-
-#     def highlight_function(feature):
-#         return {"fillColor": "#ffaf00", "color": "green", "weight": 3, "dashArray": "1, 1"}
-
-
-benin_adm0 = ee.FeatureCollection("users/ashamba/BEN_adm0")
-benin_adm1 = ee.FeatureCollection("users/ashamba/BEN_adm1")
-benin_adm2 = ee.FeatureCollection("users/ashamba/BEN_adm2")
 alldept = ee.Image('users/ashamba/allDepartments_v0')
+dtstats_df = pd.read_excel("./new_data/dtstats_df.xlsx", engine='openpyxl')
+dtstats_df1 = pd.read_excel("./new_data/dtstats_df1.xlsx", engine='openpyxl')
+alteia_df = pd.read_excel("./new_data/alteia_df.xlsx", engine='openpyxl')
+ben_yield = pd.read_excel("./new_data/ben_yield.xlsx", engine='openpyxl')
+ben_nursery = pd.read_excel("./new_data/ben_nursery.xlsx", engine='openpyxl')
+ben_yield_GEO = pd.read_excel("./new_data/ben_yield_GEO.xlsx", engine='openpyxl')
 
-ben_yield = pd.read_excel("./Data/Yield data_YEARS_master.xlsx", skiprows=1,engine='openpyxl',sheet_name = 'YIELD + BPA_2020')
-ben_yield = ben_yield.interpolate()
-ben_yield['Departement'] = ben_yield['Departement'].str.title()
-ben_yield['Commune'] = ben_yield['Commune'].str.title()
-ben_yield['Arrondissement'] = ben_yield['Arrondissement'].str.title()
-ben_yield['Village'] = ben_yield['Village'].str.title()
-ben_yield['Surname'] = ben_yield['Surname'].str.title()
-ben_yield['Given Name'] = ben_yield['Given Name'].str.title()
-ben_yield.loc[(ben_yield.Commune == 'Bante'), 'Commune'] = 'Bantè'
-ben_yield.loc[(ben_yield.Commune == 'Dassa'), 'Commune'] = 'Dassa-Zoumè'
-ben_yield.loc[(ben_yield.Commune == 'Save'), 'Commune'] = 'Savè'
-ben_yield.loc[(ben_yield.Commune == 'Glazoue'), 'Commune'] = 'Glazoué'
-ben_yield.loc[(ben_yield.Commune == 'Ndali'), 'Commune'] = "N'Dali"
-ben_yield.loc[(ben_yield.Commune == 'Ouesse'), 'Commune'] = 'Ouèssè'
-
-# ben_yield_GEO = pd.read_excel("./Data/Yield data_GEO_master.xlsx",engine='openpyxl', sheet_name = 'Drone mapping')
-# ben_yield['Code'] = ben_yield['Code'].str.upper()
-# ben_yield_GEO['Code'] = ben_yield_GEO['Code'].str.upper()
-
-
-
-ben_nursery = pd.read_excel("./Data/Nurseries.xlsx",engine='openpyxl',)
-
-ben_nursery['Commune'] = ben_nursery['Commune'].str.title()
-ben_nursery['Owner'] = ben_nursery['Owner'].str.title()
-
-#Drop nan columns
-ben_nursery.drop(["Date","Provenance","Regarnissage", "Altitude", "Partenaire"], axis = 1, inplace = True)
-ben_nursery.dropna(inplace=True)
-
-
-
-
-# with open("Data/CajuLab_Plantations.geojson", errors="ignore") as f:
-#         alteia_json = geojson.load(f)
+with open("Data/CajuLab_Plantations.geojson", errors="ignore") as f:
+        alteia_json = geojson.load(f)
 
 with open("ben_adm0.json", errors="ignore") as f:
     benin_adm0_json = geojson.load(f)
@@ -172,82 +52,24 @@ with open("ben_adm1.json", errors="ignore") as f:
 
 with open("ben_adm2.json", errors="ignore") as f:
     benin_adm2_json = geojson.load(f)
+
+
     
-
-#The alteia platform plantation statistics    
-    
-# alteia_stats = alldept.eq(1).reduceRegions(
-#                                 collection = alteia_json,
-#                                 reducer = ee.Reducer.sum(),
-#                                 scale = 1
-#                                 )
-
-# alteia_stats = alteia_stats.select(['Plantation code', 'sum'], ['Code','Cashew_Tree'], retainGeometry=True).getInfo()
-
-# alteia_df = pd.DataFrame()
-# for alt in alteia_stats['features']:
-#     df_a = pd.DataFrame([alt['properties']], columns=alt['properties'].keys())
-#     alteia_df = pd.concat([alteia_df, df_a], axis=0)
-
-# # Reorder columns in dataframe, sort by state name and reset index
-# alteia_df = alteia_df[['Code','Cashew_Tree']]
-# alteia_df = alteia_df.sort_values(by=['Code']).reset_index(drop=True)
-
-
-dist_stats1 = alldept.eq(1).reduceRegions(
-                                collection = benin_adm1,
-                                reducer = ee.Reducer.sum(),
-                                scale = 30
-                                )
-dist_stats1 = dist_stats1.select(['NAME_0','NAME_1', 'sum'], ['Country', 'Districts','Cashew_Yield'], retainGeometry=True).getInfo()
-
-dtstats_df1 = pd.DataFrame()
-for dist1 in dist_stats1['features']:
-    df1 = pd.DataFrame([dist1['properties']], columns=dist1['properties'].keys())
-    dtstats_df1 = pd.concat([dtstats_df1, df1], axis=0)
-
-# Reorder columns in dataframe, sort by state name and reset index
-dtstats_df1 = dtstats_df1[['Country', 'Districts', 'Cashew_Yield']]
-dtstats_df1 = dtstats_df1.sort_values(by=['Districts']).reset_index(drop=True)
-
-# change state names from upper case to title case!!
-dtstats_df1['Districts'] = dtstats_df1['Districts'].str.title()
-
-dist_stats = alldept.eq(1).multiply(ee.Image.pixelArea()).reduceRegions(
-                                    collection = benin_adm2,
-                                    reducer = ee.Reducer.sum(),
-                                    scale = 30,
-                                    )
-dist_stats = dist_stats.select(['NAME_0','NAME_1', 'NAME_2', 'sum'], ['Country', 'Districts', 'Communes','Cashew_Yield'], retainGeometry=True).getInfo()
-
-dtstats_df = pd.DataFrame()
-for dist in dist_stats['features']:
-    df = pd.DataFrame([dist['properties']], columns=dist['properties'].keys())
-    dtstats_df = pd.concat([dtstats_df, df], axis=0)
-
-# Reorder columns in dataframe, sort by state name and reset index
-dtstats_df = dtstats_df[['Country', 'Districts', 'Communes', 'Cashew_Yield']]
-dtstats_df = dtstats_df.sort_values(by=['Districts']).reset_index(drop=True)
-
-# change state names from upper case to title case!!
-dtstats_df['Districts'] = dtstats_df['Districts'].str.title()
-
-
-# list_global = []
-# for item in list(ben_yield_GEO['Code']):
-#     if item in list(ben_yield['Code']):
-#         list_global.append(item)
+list_global = []
+for item in list(ben_yield_GEO['Code']):
+    if item in list(ben_yield['Code']):
+        list_global.append(item)
         
-# GEO_id_tuple = []
-# for unique_id in list_global:
-#     GEO_id_tuple.append((list(ben_yield_GEO[ben_yield_GEO['Code']==unique_id]['Local shape ID or coordinates'])[0], unique_id))
+GEO_id_tuple = []
+for unique_id in list_global:
+    GEO_id_tuple.append((list(ben_yield_GEO[ben_yield_GEO['Code']==unique_id]['Local shape ID or coordinates'])[0], unique_id))
     
-# special_id_tuple = []
-# special_id = []
-# for (id_u, code_u) in GEO_id_tuple:
-#     if id_u in list(alteia_df['Code']):
-#         special_id_tuple.append((id_u, code_u))
-#         special_id.append(id_u)
+special_id_tuple = []
+special_id = []
+for (id_u, code_u) in GEO_id_tuple:
+    if id_u in list(alteia_df['Code']):
+        special_id_tuple.append((id_u, code_u))
+        special_id.append(id_u)
 
 
 basemaps = {
@@ -290,6 +112,7 @@ basemaps = {
                 control = True
             )
         }
+
 
 class my_home():
     # Define a method for displaying Earth Engine image tiles on a folium map.
@@ -578,9 +401,9 @@ class my_home():
 
             sorted_by_second = sorted(z_list, reverse = True, key=lambda tup: tup[1])
             list1, _ = zip(*sorted_by_second)
-            # position = list1.index(name)
+            position = list1.index(name)
 
-            position = 1
+            # position = 1
             my_dict = {'0': "highest", '1': "2nd", '2': "3rd", '3': "4th", '4': "5th", '5': "6th", '6': "7th", '7': "8th", '8': "9th", '9': "10th", '10': "11th", '11':"lowest"}
 
             pred_dept_data = []
@@ -793,9 +616,9 @@ class my_home():
 
             sorted_by_second2 = sorted(z_list_2, reverse = True, key=lambda tup: tup[1])
             list2, _ = zip(*sorted_by_second2)
-            # position2 = list2.index(name)          
+            position2 = list2.index(name)          
 
-            position2 = 1          
+            # position2 = 1          
             my_dict_communes = {'1': 'highest',
                     '2': '2nd',
                     '3': '3rd',
@@ -1016,162 +839,190 @@ class my_home():
         layer2.add_to(m)
 
         #Adding Benin Plantation to the map
-        # layer_alt = folium.FeatureGroup(name='Plantation Locations', show=True, overlay = True)
-        # plantation_cluster = MarkerCluster(name="Benin Plantations")
+        #Adding Benin Plantation to the map
+        layer_alt = folium.FeatureGroup(name='Plantation Locations', show=True, overlay = True)
+        plantation_cluster = MarkerCluster(name="Benin Plantations")
 
-        # temp_geojson_a  = folium.GeoJson(data=alteia_json,
-        #     name='Alteia Plantation Data 2',
-        #     highlight_function = highlight_function)
+        temp_geojson_a  = folium.GeoJson(data=alteia_json,
+            name='Alteia Plantation Data 2',
+            highlight_function = highlight_function)
 
-        # grand_pred_surface = 0
-        # grand_ground_surface = 0
-        # grand_total_yield = 0
-        # counter = 0
-        # average_yield_ha = []
-        # for feature in temp_geojson_a.data['features']:
-        #     # GEOJSON layer consisting of a single feature
-        #     code_sum = feature["properties"]["Plantation code"]
+        grand_pred_surface = 0
+        grand_ground_surface = 0
+        grand_total_yield = 0
+        grand_plantation_size = 0
+        counter = 0
+        average_yield_ha = []
+        for feature in temp_geojson_a.data['features']:
+            # GEOJSON layer consisting of a single feature
+            code_sum = feature["properties"]["Plantation code"]
             
-        #     if code_sum in special_id:
-        #         counter += 1
-        #         indx = special_id.index(code_sum)
-        #         code_2_sum = special_id_tuple[indx][1]
-        #         grand_pred_surface += sum(round(alteia_df[alteia_df['Code']==code_sum].Cashew_Tree/10000,2))
-        #         grand_ground_surface += sum(ben_yield[ben_yield['Code']==code_2_sum]['2020 estimated surface (ha)'])
-        #         grand_total_yield += sum(ben_yield[ben_yield['Code']==code_2_sum]['2020 total yield (kg)'])
-        #         average_yield_ha.append(sum(ben_yield[ben_yield['Code']==code_2_sum]['2020 yield per ha (kg)']))
+            
+            
+            if code_sum in special_id:
+                counter += 1
+                indx = special_id.index(code_sum)
+                code_2_sum = special_id_tuple[indx][1]
+                grand_pred_surface += sum(round(alteia_df[alteia_df['Code']==code_sum].Cashew_Tree/10000,2))
+                grand_ground_surface += sum(ben_yield[ben_yield['Code']==code_2_sum]['2020 estimated surface (ha)'])
+                grand_total_yield += sum(ben_yield[ben_yield['Code']==code_2_sum]['2020 total yield (kg)'])
+                average_yield_ha.append(sum(ben_yield[ben_yield['Code']==code_2_sum]['2020 yield per ha (kg)']))
+                grand_plantation_size += 1.87*area(feature['geometry'])/10000
 
-        # average_pred_yield_ha = 390
-        # average_ground_yield_ha = int(round(np.mean(average_yield_ha)))
-        # average_grand_pred_surface = int(round(grand_pred_surface/counter))
-        # average_grand_ground_surface = int(round(grand_ground_surface/counter))
-        # average_grand_pred_yield = int(round(390*grand_pred_surface/counter))
-        # average_grand_ground_yield = int(round(grand_total_yield/counter))
+        average_pred_yield_ha = 390
+        average_ground_yield_ha = int(round(np.mean(average_yield_ha)))
+        total_grand_pred_surface = int(round(grand_pred_surface))
+        total_grand_ground_surface = int(round(grand_ground_surface))
+        total_grand_pred_yield = int(round(390*grand_pred_surface))
+        total_grand_ground_yield = int(round(grand_total_yield))
+        grand_plantation_size = int(round(grand_plantation_size))
 
-        # for feature in temp_geojson_a.data['features']:
-        #     code = feature["properties"]["Plantation code"]
-        #     if code in special_id:
-        #         indx = special_id.index(code)
-        #         code_2 = special_id_tuple[indx][1]
+        for feature in temp_geojson_a.data['features']:
+            
+            code = feature["properties"]["Plantation code"]
+            
+            if code in special_id:
                 
-        #         temp_layer_a = folium.GeoJson(feature, zoom_on_click = True)
-
-        #         tree_ha_pred_plant = int(round(sum(round(alteia_df[alteia_df['Code']==code].Cashew_Tree/10000,2))))
-        #         surface_areaP =  int(round(sum(ben_yield[ben_yield['Code']==code_2]['2020 estimated surface (ha)'])))
-        #         total_yieldP =  int(round(sum(ben_yield[ben_yield['Code']==code_2]['2020 total yield (kg)'])))
-        #         yield_haP =  int(round(sum(ben_yield[ben_yield['Code']==code_2]['2020 yield per ha (kg)'])))
-        #         nameP = list(ben_yield[ben_yield['Code']==code_2]['Surname'])[0]+' '+list(ben_yield[ben_yield['Code']==code_2]['Given Name'])[0]
-        #         village = list(ben_yield[ben_yield['Code']==code_2]['Village'])[0]
-
-        #         html_a = '''
-        #             <html>
-        #             <head>
-        #                 <style>
-        #                     table {{
-        #                     font-family: arial, sans-serif;
-        #                     border-collapse: collapse;
-        #                     width: 100%;
-        #                     }}
-
-
-        #                     table th {{
-        #                     background-color: #004b55;
-        #                     text-align: left;
-        #                     color: #FFF;
-        #                     padding: 4px 30px 4px 8px;
-        #                     }}
-
-
-        #                     table td {{
-        #                     border: 1px solid #e3e3e3;
-        #                     padding: 4px 8px;
-        #                     }}
-
-
-        #                     table tr:nth-child(odd) td{{
-        #                     background-color: #e7edf0;
-        #                     }}
-        #                     </style>
-        #                 </head>
-        #                 <body>
-
-        #                     <h3>Plantation Owner: {0}</h3>
-        #                     <h4>Plantation ID: {1}</h4>
-        #                     <h4>Village: {2}</h4>
-        #                     <table>
-        #                     <tr>
-        #                         <th></th>
-        #                         <th>Satellite Est</th>
-        #                         <th>TNS Survey</th>
-        #                     </tr>
-        #                     <tr>
-        #                         <td>Cashew Surface Area (ha)</td>
-        #                         <td>{3}</td>
-        #                         <td>{4}</td>
-        #                     </tr>
-        #                     <tr>
-        #                         <td>Cashew Yield (kg)</td>
-        #                         <td>{5}</td>
-        #                         <td>{6}</td>       
-        #                     </tr>
-        #                     <tr>
-        #                         <td>Yield Per Hectare (kg/ha)</td>
-        #                         <td>{7}</td>
-        #                         <td>{8}</td>  
-        #                     </tr>
-        #                     </table>
-                            
-        #                     <h4>
-        #                     Average Surface Area and Cashew Yield Information for Plantations in Benin Republic
-        #                     </h4>
-        #                     <table>
-        #                     <tr>
-        #                         <th></th>
-        #                         <th>Satellite Est</th>
-        #                         <th>TNS Survey</th>
-        #                     </tr>
-        #                     <tr>
-        #                         <td>Average Surface Area (ha)</td>
-        #                         <td>{9}</td>
-        #                         <td>{10}</td>
-                            
-        #                     </tr>
-        #                     <tr>
-        #                         <td>Average Plantation Yield (kg)</td>
-        #                         <td>{11}</td>
-        #                         <td>{12}</td>
-                                
-        #                     </tr>
-        #                     <tr>
-        #                         <td>Average Yield Per Hectare (kg/ha)</td>
-        #                         <td>{13}</td>
-        #                         <td>{14}</td>
-                                
-        #                     </tr>
-        #                     </table>
-        #                 </body>
-        #                 </html>
-        #             '''.format(nameP, code, village, tree_ha_pred_plant, surface_areaP, tree_ha_pred_plant*390,
-        #                     total_yieldP, 390, yield_haP, average_grand_pred_surface, average_grand_ground_surface,
-        #                     average_grand_pred_yield, average_grand_ground_yield, average_pred_yield_ha, average_ground_yield_ha)
-
-        #         iframe = folium.IFrame(html=html_a, width=370, height=380)
-
-        #         folium.Popup(iframe, max_width=1000).add_to(temp_layer_a)
-
-        #         # consolidate individual features back into the main layer
+                plantation_size = area(feature['geometry'])/10000
+                plantation_size = round(plantation_size*1.87)
+                indx = special_id.index(code)
+                code_2 = special_id_tuple[indx][1]
                 
-        #         s = shape(feature["geometry"])
-        #         centre = s.centroid
-        #         folium.Marker(location= [centre.y, centre.x],
-        #                     rise_on_hover=True,
-        #                     rise_offset = 250,
-        #                     icon = folium.Icon(color="green", icon="globe"),
-        #                     popup=None).add_to(plantation_cluster)
+                temp_layer_a = folium.GeoJson(feature, zoom_on_click = True)
 
-        #         temp_layer_a.add_to(layer_alt)
-        # plantation_cluster.add_to(layer_alt)
-        # layer_alt.add_to(m)
+                tree_ha_pred_plant = int(round(sum(round(alteia_df[alteia_df['Code']==code].Cashew_Tree/10000,2))))
+                surface_areaP =  int(round(sum(ben_yield[ben_yield['Code']==code_2]['2020 estimated surface (ha)'])))
+                total_yieldP =  int(round(sum(ben_yield[ben_yield['Code']==code_2]['2020 total yield (kg)'])))
+                yield_haP =  int(round(sum(ben_yield[ben_yield['Code']==code_2]['2020 yield per ha (kg)'])))
+                nameP = list(ben_yield[ben_yield['Code']==code_2]['Surname'])[0]+' '+list(ben_yield[ben_yield['Code']==code_2]['Given Name'])[0]
+                village = list(ben_yield[ben_yield['Code']==code_2]['Village'])[0]
+
+                html_a = '''
+                    <html>
+                    <head>
+                        <style>
+                            table {{
+                            font-family: arial, sans-serif;
+                            border-collapse: collapse;
+                            width: 100%;
+                            }}
+
+
+                            table th {{
+                            background-color: #004b55;
+                            text-align: left;
+                            color: #FFF;
+                            padding: 4px 30px 4px 8px;
+                            }}
+
+
+                            table td {{
+                            border: 1px solid #e3e3e3;
+                            padding: 4px 8px;
+                            }}
+
+
+                            table tr:nth-child(odd) td{{
+                            background-color: #e7edf0;
+                            }}
+                            </style>
+                        </head>
+                        <body>
+
+                            <h3>Plantation Owner: {0}</h3>
+                            <h4>Plantation ID: {1}</h4>
+                            <h4>Village: {2}</h4>
+                            <table>
+                            <tr>
+                                <th></th>
+                                <th>Satellite Estimate</th>
+                                <th>2020 Yield Survey</th>
+                            </tr>
+                            <tr>
+                                <td>Plantation Size(ha)</td>
+                                <td>{3}</td>
+                                <td>{4}</td>
+                            </tr>
+                            <tr>
+                                <td>Cashew Surface Area (ha)</td>
+                                <td>{5}</td>
+                                <td>--</td>
+                            </tr>
+                            <tr>
+                                <td>Cashew Yield (kg)</td>
+                                <td>{6}</td>
+                                <td>{7}</td>       
+                            </tr>
+                            <tr>
+                                <td>Yield Per Hectare (kg/ha)</td>
+                                <td>{8}</td>
+                                <td>{9}</td>  
+                            </tr>
+                            </table>
+                            
+                            <h4>
+                            Average Surface Area and Cashew Yield Information for Plantations in Benin Republic
+                            </h4>
+                            <table>
+                            <tr>
+                                <th></th>
+                                <th>Satellite Estimate</th>
+                                <th>2020 Yield Survey</th>
+                            </tr>
+                            <tr>
+                                <td>Number of Farms</td>
+                                <td>209</td>
+                                <td>209</td>
+                            
+                            </tr>
+                            <tr>
+                                <td>Total Plantation Area (ha)</td>
+                                <td>{10}</td>
+                                <td>{11}</td>
+                            
+                            </tr>
+                            <tr>
+                                <td>Cashew Surface Area (ha)</td>
+                                <td>{12}</td>
+                                <td>--</td>
+                            
+                            </tr>
+                            <tr>
+                                <td>Total Plantation Yield (kg)</td>
+                                <td>{13}</td>
+                                <td>{14}</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>Average Yield Per Hectare (kg/ha)</td>
+                                <td>{15}</td>
+                                <td>{16}</td>
+                                
+                            </tr>
+                            </table>
+                        </body>
+                        </html>
+                    '''.format(nameP, code, village, plantation_size, surface_areaP, tree_ha_pred_plant, tree_ha_pred_plant*390,
+                            total_yieldP, 390, yield_haP, grand_plantation_size, total_grand_ground_surface, total_grand_pred_surface,
+                            total_grand_pred_yield, total_grand_ground_yield, average_pred_yield_ha, average_ground_yield_ha)
+
+                iframe = folium.IFrame(html=html_a, width=370, height=380)
+
+                folium.Popup(iframe, max_width=1000).add_to(temp_layer_a)
+
+                # consolidate individual features back into the main layer
+                
+                s = shape(feature["geometry"])
+                centre = s.centroid
+                folium.Marker(location= [centre.y, centre.x],
+                            rise_on_hover=True,
+                            rise_offset = 250,
+                            icon = folium.Icon(color="green", icon="globe"),
+                            popup=None).add_to(plantation_cluster)
+
+                temp_layer_a.add_to(layer_alt)
+        plantation_cluster.add_to(layer_alt)
+        layer_alt.add_to(m)
 
         m.add_child(folium.LayerControl())
         m=m._repr_html_()
