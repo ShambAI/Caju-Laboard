@@ -852,7 +852,6 @@ class my_home():
         grand_total_yield = 0
         grand_plantation_size = 0
         counter = 0
-        average_yield_ha = 0
         for feature in temp_geojson_a.data['features']:
             # GEOJSON layer consisting of a single feature
             code_sum = feature["properties"]["Plantation code"]
