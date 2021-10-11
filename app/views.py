@@ -852,7 +852,7 @@ class my_home():
         grand_total_yield = 0
         grand_plantation_size = 0
         counter = 0
-        average_yield_ha = []
+        average_yield_ha = 0
         for feature in temp_geojson_a.data['features']:
             # GEOJSON layer consisting of a single feature
             code_sum = feature["properties"]["Plantation code"]
@@ -866,16 +866,16 @@ class my_home():
                 grand_pred_surface += sum(round(alteia_df[alteia_df['Code']==code_sum].Cashew_Tree/10000,2))
                 grand_ground_surface += sum(ben_yield[ben_yield['Code']==code_2_sum]['2020 estimated surface (ha)'])
                 grand_total_yield += sum(ben_yield[ben_yield['Code']==code_2_sum]['2020 total yield (kg)'])
-                average_yield_ha.append(sum(ben_yield[ben_yield['Code']==code_2_sum]['2020 yield per ha (kg)']))
                 grand_plantation_size += 1.87*area(feature['geometry'])/10000
 
-        average_pred_yield_ha = 390
-        average_ground_yield_ha = int(round(np.mean(average_yield_ha)))
-        total_grand_pred_surface = int(round(grand_pred_surface))
+        grand_plantation_size = int(round(grand_plantation_size)) #Size of plantation
+        total_grand_pred_surface = int(round(grand_pred_surface)) #Actual cashew region
         total_grand_ground_surface = int(round(grand_ground_surface))
-        total_grand_pred_yield = int(round(390*grand_pred_surface))
+        total_grand_pred_yield = int(round(390*grand_plantation_size))
         total_grand_ground_yield = int(round(grand_total_yield))
-        grand_plantation_size = int(round(grand_plantation_size))
+        
+        average_pred_yield_ha = 390
+        average_ground_yield_ha = int(total_grand_ground_yield/total_grand_ground_surface)
 
         for feature in temp_geojson_a.data['features']:
             
@@ -1002,7 +1002,7 @@ class my_home():
                             </table>
                         </body>
                         </html>
-                    '''.format(nameP, code, village, plantation_size, surface_areaP, tree_ha_pred_plant, tree_ha_pred_plant*390,
+                    '''.format(nameP, code, village, plantation_size, surface_areaP, tree_ha_pred_plant, plantation_size*390,
                             total_yieldP, 390, yield_haP, grand_plantation_size, total_grand_ground_surface, total_grand_pred_surface,
                             total_grand_pred_yield, total_grand_ground_yield, average_pred_yield_ha, average_ground_yield_ha)
 
