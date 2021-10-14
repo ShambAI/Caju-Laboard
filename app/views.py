@@ -18,6 +18,8 @@ from jinja2 import Template
 from shapely.geometry import shape
 from shapely import geometry
 from area import area
+import locale
+from math import log10, floor
 
 # generic base view
 from django.views.generic import TemplateView
@@ -31,6 +33,7 @@ import ee
 service_account = 'cajulab@benin-cajulab-web-application.iam.gserviceaccount.com'
 credentials = ee.ServiceAccountCredentials(service_account, 'privatekey.json')
 ee.Initialize(credentials)
+locale.setlocale(locale.LC_ALL, '')  # Use '' for auto, or force e.g. to 'en_US.UTF-8'
 
 
 alldept = ee.Image('users/ashamba/allDepartments_v0')
@@ -201,16 +204,27 @@ class my_home():
             temp_layer0 = folium.GeoJson(feature,  zoom_on_click = True, highlight_function = highlight_function)
 
             name = 'Benin Republic'
-            surface_area = round(sum(ben_yield['2020 estimated surface (ha)'].dropna()),2)
-            total_yield = round(sum(ben_yield['2020 total yield (kg)'].dropna()),2)
-            yield_ha = round(np.mean(ben_yield['2020 yield per ha (kg)'].dropna()),2)
-            yield_tree = round(np.mean(ben_yield['2020 yield per tree (kg)'].dropna()),2)
+            surface_area = int(round(sum(ben_yield['2020 estimated surface (ha)'].dropna()),2))
+            total_yield = int(round(sum(ben_yield['2020 total yield (kg)'].dropna()),2))
+            yield_ha = int(round(np.mean(ben_yield['2020 yield per ha (kg)'].dropna()),2))
+            yield_tree = int(round(np.mean(ben_yield['2020 yield per tree (kg)'].dropna()),2))
             num_tree = int(sum(ben_yield['Number of trees'].dropna()))
             sick_tree = int(sum(ben_yield['Number of sick trees'].dropna()))
             out_prod_tree = int(sum(ben_yield['Number of trees out of production'].dropna()))
             dead_tree = int(sum(ben_yield['Number of dead trees'].dropna()))
-            tree_ha_pred = round(sum(dtstats_df[dtstats_df['Country']=='Benin'].Cashew_Yield)/10000,2)
-
+            tree_ha_pred = int(round(sum(dtstats_df[dtstats_df['Country']=='Benin'].Cashew_Yield)/10000,2))
+            yield_pred = 390*tree_ha_pred
+            region_size = area(feature['geometry'])/10000
+            
+            r_surface_area = round(surface_area, 1-int(floor(log10(abs(surface_area))))) if surface_area < 90000 else round(surface_area, 2-int(floor(log10(abs(surface_area)))))
+            r_total_yield = round(total_yield, 1-int(floor(log10(abs(total_yield))))) if total_yield < 90000 else round(total_yield, 2-int(floor(log10(abs(total_yield)))))
+            r_yield_ha = round(yield_ha, 1-int(floor(log10(abs(yield_ha))))) if yield_ha < 90000 else round(yield_ha, 2-int(floor(log10(abs(yield_ha)))))
+            r_yield_tree = round(yield_tree, 1-int(floor(log10(abs(yield_tree))))) if yield_tree < 90000 else round(yield_tree, 2-int(floor(log10(abs(yield_tree)))))
+            r_tree_ha_pred = round(tree_ha_pred, 1-int(floor(log10(abs(tree_ha_pred))))) if tree_ha_pred < 90000 else round(tree_ha_pred, 2-int(floor(log10(abs(tree_ha_pred)))))
+            r_yield_pred = round(yield_pred, 1-int(floor(log10(abs(yield_pred))))) if yield_pred < 90000 else round(yield_pred, 2-int(floor(log10(abs(yield_pred)))))
+            r_num_tree = round(num_tree, 1-int(floor(log10(abs(num_tree))))) if num_tree < 90000 else round(num_tree, 2-int(floor(log10(abs(num_tree)))))
+            r_region_size = round(region_size, 1-int(floor(log10(abs(region_size))))) if region_size < 90000 else round(region_size, 2-int(floor(log10(abs(region_size)))))
+            
             html4 = '''
                     <html>
                         <head>
@@ -314,14 +328,19 @@ class my_home():
                             </tr>
                             <tr>
                                 <td>Total Cashew Yield (kg)</td>
-                                <td>{15}</td>
-                                <td>{3}</td>
+                                <td>{15:n}M</td>
+                                <td>{3:n}M</td>
                                 <td></td>
                             </tr>
                             <tr>
+                                <td>Region/Plantation Area(ha)</td>
+                                <td>{16:n}M</td>
+                                <td>{5:n}K</td>
+                            </tr>
+                            <tr>
                                 <td>Cashew Tree Cover (ha)</td>
-                                <td>{4}</td>
-                                <td>{5}</td>
+                                <td>{4:n}K</td>
+                                <td>NA</td>
                                 <td></td>
                             </tr>
                             <tr>
@@ -339,7 +358,7 @@ class my_home():
                             <tr>
                                 <td>Number of Trees</td>
                                 <td></td>
-                                <td>{10}</td>
+                                <td>{10:n}K</td>
                                 <td></td>
                             </tr>
                             </table>
@@ -355,8 +374,8 @@ class my_home():
                             </table>
 
                         </body>
-                        </html>'''.format(name, pred_ben_data, pred_ground_ben_data, total_yield, tree_ha_pred, surface_area, abs(round(surface_area - tree_ha_pred,2)), '6th',
-                            yield_ha, yield_tree, num_tree, sick_tree, out_prod_tree, dead_tree, num_tree- sick_tree- out_prod_tree- dead_tree, 390*tree_ha_pred)
+                        </html>'''.format(name, pred_ben_data, pred_ground_ben_data, r_total_yield/1000000, r_tree_ha_pred/1000, r_surface_area/1000, abs(round(surface_area - tree_ha_pred,2)), '6th',
+                            r_yield_ha, r_yield_tree, r_num_tree/1000, sick_tree, out_prod_tree, dead_tree, num_tree- sick_tree- out_prod_tree- dead_tree, r_yield_pred/1000000, r_region_size/1000000)
 
 
 
@@ -415,16 +434,61 @@ class my_home():
 
             temp_layer1 = folium.GeoJson(feature, zoom_on_click = True, highlight_function = highlight_function)
 
-            tree_ha_pred_dept = round(sum(dtstats_df[dtstats_df['Districts']==name].Cashew_Yield)/10000,2)
-            surface_areaD = round(sum(ben_yield[ben_yield['Departement']==name]['2020 estimated surface (ha)'].dropna()),2)
-            total_yieldD = round(sum(ben_yield[ben_yield['Departement']==name]['2020 total yield (kg)'].dropna()),2)
-            yield_haD = round(np.mean(ben_yield[ben_yield['Departement']==name]['2020 yield per ha (kg)'].dropna()),2)
-            yield_treeD = round(np.mean(ben_yield[ben_yield['Departement']==name]['2020 yield per tree (kg)'].dropna()),2)
+            tree_ha_pred_dept = int(round(sum(dtstats_df[dtstats_df['Districts']==name].Cashew_Yield)/10000,2))
+            yield_pred_dept = int(390*tree_ha_pred_dept)
+            surface_areaD = int(round(sum(ben_yield[ben_yield['Departement']==name]['2020 estimated surface (ha)'].dropna()),2))
+            total_yieldD = int(round(sum(ben_yield[ben_yield['Departement']==name]['2020 total yield (kg)'].dropna()),2))
+            try:
+                yield_haD = int(round(np.mean(ben_yield[ben_yield['Departement']==name]['2020 yield per ha (kg)'].dropna()),2))
+            except:
+                yield_haD = round(np.mean(ben_yield[ben_yield['Departement']==name]['2020 yield per ha (kg)'].dropna()),2)
+                
+            try:
+                yield_treeD = int(round(np.mean(ben_yield[ben_yield['Departement']==name]['2020 yield per tree (kg)'].dropna()),2))
+            except:
+                yield_treeD = round(np.mean(ben_yield[ben_yield['Departement']==name]['2020 yield per tree (kg)'].dropna()),2)
+                
             num_treeD = int(sum(ben_yield[ben_yield['Departement']==name]['Number of trees'].dropna()))
             sick_treeD = int(sum(ben_yield[ben_yield['Departement']==name]['Number of sick trees'].dropna()))
             out_prod_treeD = int(sum(ben_yield[ben_yield['Departement']==name]['Number of trees out of production'].dropna()))
             dead_treeD = int(sum(ben_yield[ben_yield['Departement']==name]['Number of dead trees'].dropna()))
-
+            region_sizeD = area(feature['geometry'])/10000
+            
+            try:
+                r_tree_ha_pred_dept = round(tree_ha_pred_dept, 1-int(floor(log10(abs(tree_ha_pred_dept))))) if tree_ha_pred_dept < 90000 else round(tree_ha_pred_dept, 2-int(floor(log10(abs(tree_ha_pred_dept)))))
+            except:
+                r_tree_ha_pred_dept = tree_ha_pred_dept
+            try:
+                r_yield_pred_dept = round(yield_pred_dept, 1-int(floor(log10(abs(yield_pred_dept))))) if yield_pred_dept < 90000 else round(yield_pred_dept, 2-int(floor(log10(abs(yield_pred_dept)))))
+            except:
+                r_yield_pred_dept = yield_pred_dept
+            try:
+                r_surface_areaD = round(surface_areaD, 1-int(floor(log10(abs(surface_areaD))))) if surface_areaD < 90000 else round(surface_areaD, 2-int(floor(log10(abs(surface_areaD)))))
+            except:
+                r_surface_areaD = surface_areaD
+            try:
+                r_total_yieldD = round(total_yieldD, 1-int(floor(log10(abs(total_yieldD))))) if total_yieldD < 90000 else round(total_yieldD, 2-int(floor(log10(abs(total_yieldD)))))
+            except:
+                r_total_yieldD = total_yieldD
+            try:
+                r_yield_haD = round(yield_haD, 1-int(floor(log10(abs(yield_haD))))) if yield_haD < 90000 else round(yield_haD, 2-int(floor(log10(abs(yield_haD)))))
+            except:
+                r_yield_haD = yield_haD
+            try:
+                r_yield_treeD = round(yield_treeD, 1-int(floor(log10(abs(yield_treeD))))) if yield_treeD < 90000 else round(yield_treeD, 2-int(floor(log10(abs(yield_treeD)))))
+            except:
+                r_yield_treeD = yield_treeD
+            try:
+                r_num_treeD = round(num_treeD, 1-int(floor(log10(abs(num_treeD))))) if num_treeD < 90000 else round(num_treeD, 2-int(floor(log10(abs(num_treeD)))))
+            except:
+                r_num_treeD = num_treeD
+            
+            try:
+                r_region_sizeD = round(region_sizeD, 1-int(floor(log10(abs(region_sizeD))))) if region_sizeD < 90000 else round(region_sizeD, 2-int(floor(log10(abs(region_sizeD)))))
+            except:
+                r_region_sizeD = region_sizeD
+                
+            
 
             html3 = '''
                     <html>
@@ -530,14 +594,19 @@ class my_home():
                             </tr>
                             <tr>
                                 <td>Total Cashew Yield (kg)</td>
-                                <td>{15}</td>
-                                <td>{3}</td>
+                                <td>{15:n}M</td>
+                                <td>{3:n}M</td>
                                 <td></td>
                             </tr>
                             <tr>
+                                <td>Region/Plantation Area(ha)</td>
+                                <td>{16:n}M</td>
+                                <td>{5:n}K</td>
+                            </tr>
+                            <tr>
                                 <td>Cashew Tree Cover (ha)</td>
-                                <td>{4}</td>
-                                <td>{5}</td>
+                                <td>{4:n}K</td>
+                                <td>NA</td>
                                 <td></td>
                             </tr>
                             <tr>
@@ -555,7 +624,7 @@ class my_home():
                             <tr>
                                 <td>Number of Trees</td>
                                 <td></td>
-                                <td>{10}</td>
+                                <td>{10:n}K</td>
                                 <td></td>
                             </tr>
                             </table>
@@ -571,8 +640,8 @@ class my_home():
                             </table>
                         </body>
                         </html>
-                    '''.format(name, pred_dept_data, pred_ground_dept_data, total_yieldD, tree_ha_pred_dept, surface_areaD, abs(round(surface_areaD - tree_ha_pred_dept,2)), my_dict[str(position)],
-                            yield_haD, yield_treeD, num_treeD, sick_treeD, out_prod_treeD, dead_treeD, num_treeD-sick_treeD-out_prod_treeD-dead_treeD, 390*tree_ha_pred_dept)
+                    '''.format(name, pred_dept_data, pred_ground_dept_data, r_total_yieldD/1000000, r_tree_ha_pred_dept/1000, r_surface_areaD/1000, abs(round(surface_areaD - tree_ha_pred_dept,2)), my_dict[str(position)],
+                            r_yield_haD, r_yield_treeD, r_num_treeD/1000, sick_treeD, out_prod_treeD, dead_treeD, num_treeD-sick_treeD-out_prod_treeD-dead_treeD, r_yield_pred_dept/1000000, r_region_sizeD/1000000)
 
             iframe = folium.IFrame(html=html3, width=450, height=380)
 
@@ -699,15 +768,60 @@ class my_home():
             temp_layer2 = folium.GeoJson(feature,  zoom_on_click = True, highlight_function = highlight_function)
 
             name = feature['properties']['NAME_2']
-            tree_ha_pred_comm = round(sum(dtstats_df[dtstats_df['Communes']==name].Cashew_Yield)/10000,2)
-            surface_areaC = round(sum(ben_yield[ben_yield['Commune']==name]['2020 estimated surface (ha)'].dropna()),2)
-            total_yieldC = round(sum(ben_yield[ben_yield['Commune']==name]['2020 total yield (kg)'].dropna()),2)
-            yield_haC = round(np.mean(ben_yield[ben_yield['Commune']==name]['2020 yield per ha (kg)'].dropna()),2)
-            yield_treeC = round(np.mean(ben_yield[ben_yield['Commune']==name]['2020 yield per tree (kg)'].dropna()),2)
+            tree_ha_pred_comm = int(round(sum(dtstats_df[dtstats_df['Communes']==name].Cashew_Yield)/10000,2))
+            yield_pred_comm = int(390*tree_ha_pred_comm)
+            
+            surface_areaC = int(round(sum(ben_yield[ben_yield['Commune']==name]['2020 estimated surface (ha)'].dropna()),2))
+            total_yieldC = int(round(sum(ben_yield[ben_yield['Commune']==name]['2020 total yield (kg)'].dropna()),2))
+            try:
+                yield_haC = int(round(np.mean(ben_yield[ben_yield['Commune']==name]['2020 yield per ha (kg)'].dropna()),2))
+            except:
+                yield_haC = round(np.mean(ben_yield[ben_yield['Commune']==name]['2020 yield per ha (kg)'].dropna()),2)
+                
+            try:
+                yield_treeC = int(round(np.mean(ben_yield[ben_yield['Commune']==name]['2020 yield per tree (kg)'].dropna()),2))
+            except:
+                yield_treeC = round(np.mean(ben_yield[ben_yield['Commune']==name]['2020 yield per tree (kg)'].dropna()),2)
+                
             num_treeC = int(sum(ben_yield[ben_yield['Commune']==name]['Number of trees'].dropna()))
             sick_treeC = int(sum(ben_yield[ben_yield['Commune']==name]['Number of sick trees'].dropna()))
             out_prod_treeC = int(sum(ben_yield[ben_yield['Commune']==name]['Number of trees out of production'].dropna()))
             dead_treeC = int(sum(ben_yield[ben_yield['Commune']==name]['Number of dead trees'].dropna()))
+            region_sizeC = area(feature['geometry'])/10000
+            
+            try:
+                r_region_sizeC = round(region_sizeC, 1-int(floor(log10(abs(region_sizeC))))) if region_sizeC < 90000 else round(region_sizeC, 2-int(floor(log10(abs(region_sizeC)))))
+            except:
+                r_region_sizeC = region_sizeC
+            
+            try:
+                r_tree_ha_pred_comm = round(tree_ha_pred_comm, 1-int(floor(log10(abs(tree_ha_pred_comm))))) if tree_ha_pred_comm < 90000 else round(tree_ha_pred_comm, 2-int(floor(log10(abs(tree_ha_pred_comm)))))
+            except:
+                r_tree_ha_pred_comm = tree_ha_pred_comm
+            try:
+                r_yield_pred_comm = round(yield_pred_comm, 1-int(floor(log10(abs(yield_pred_comm))))) if yield_pred_comm < 90000 else round(yield_pred_comm, 2-int(floor(log10(abs(yield_pred_comm)))))
+            except:
+                r_yield_pred_comm = yield_pred_comm
+            try:
+                r_surface_areaC = round(surface_areaC, 1-int(floor(log10(abs(surface_areaC))))) if surface_areaC < 90000 else round(surface_areaC, 2-int(floor(log10(abs(surface_areaC)))))
+            except:
+                r_surface_areaC = surface_areaC
+            try:
+                r_total_yieldC = round(total_yieldC, 1-int(floor(log10(abs(total_yieldC))))) if total_yieldC < 90000 else round(total_yieldC, 2-int(floor(log10(abs(total_yieldC)))))
+            except:
+                r_total_yieldC = total_yieldC
+            try:
+                r_yield_haC = round(yield_haC, 1-int(floor(log10(abs(yield_haC))))) if yield_haC < 90000 else round(yield_haC, 2-int(floor(log10(abs(yield_haC)))))
+            except:
+                r_yield_haC = yield_haC
+            try:
+                r_yield_treeC = round(yield_treeC, 1-int(floor(log10(abs(yield_treeC))))) if yield_treeC < 90000 else round(yield_treeC, 2-int(floor(log10(abs(yield_treeC)))))
+            except:
+                r_yield_treeC = yield_treeC
+            try:
+                r_num_treeC = round(num_treeC, 1-int(floor(log10(abs(num_treeC))))) if num_treeC < 90000 else round(num_treeC, 2-int(floor(log10(abs(num_treeC)))))
+            except:
+                r_num_treeC = num_treeC
 
 
             html3 = '''
@@ -783,14 +897,19 @@ class my_home():
                             </tr>
                             <tr>
                                 <td>Total Cashew Yield (kg)</td>
-                                <td>{13}</td>
-                                <td>{1}</td>
+                                <td>{13:n}M</td>
+                                <td>{1:n}M</td>
                                 <td></td>
                             </tr>
                             <tr>
+                                <td>Region/Plantation Area(ha)</td>
+                                <td>{14:n}K</td>
+                                <td>{3:n}K</td>
+                            </tr>
+                            <tr>
                                 <td>Cashew Tree Cover (ha)</td>
-                                <td>{2}</td>
-                                <td>{3}</td>
+                                <td>{2:n}K</td>
+                                <td>NA</td>
                                 <td></td>
                             </tr>
                             <tr>
@@ -808,7 +927,7 @@ class my_home():
                             <tr>
                                 <td>Number of Trees</td>
                                 <td></td>
-                                <td>{8}</td>
+                                <td>{8:n}K</td>
                                 <td></td>
                             </tr>
                             </table>
@@ -818,8 +937,8 @@ class my_home():
                             </table>
                         </body>
                         </html>
-                    '''.format(name, total_yieldC, tree_ha_pred_comm, surface_areaC, abs(round(surface_areaC - tree_ha_pred_comm,2)), my_dict_communes[str(position2+1)],
-                            yield_haC, yield_treeC, num_treeC, sick_treeC, out_prod_treeC, dead_treeC,num_treeC-sick_treeC-out_prod_treeC-dead_treeC, 390*tree_ha_pred_comm)
+                    '''.format(name, r_total_yieldC/1000000, r_tree_ha_pred_comm/1000, r_surface_areaC/1000, abs(round(surface_areaC - tree_ha_pred_comm,2)), my_dict_communes[str(position2+1)],
+                            r_yield_haC, r_yield_treeC, r_num_treeC/1000, sick_treeC, out_prod_treeC, dead_treeC,num_treeC-sick_treeC-out_prod_treeC-dead_treeC, r_yield_pred_comm/1000000, r_region_sizeC/1000)
 
             iframe = folium.IFrame(html=html3, width=450, height=380)
 
@@ -852,12 +971,10 @@ class my_home():
         grand_total_yield = 0
         grand_plantation_size = 0
         counter = 0
+        grand_num_tree = 0
         for feature in temp_geojson_a.data['features']:
             # GEOJSON layer consisting of a single feature
             code_sum = feature["properties"]["Plantation code"]
-            
-            
-            
             if code_sum in special_id:
                 counter += 1
                 indx = special_id.index(code_sum)
@@ -865,16 +982,23 @@ class my_home():
                 grand_pred_surface += sum(round(alteia_df[alteia_df['Code']==code_sum].Cashew_Tree/10000,2))
                 grand_ground_surface += sum(ben_yield[ben_yield['Code']==code_2_sum]['2020 estimated surface (ha)'])
                 grand_total_yield += sum(ben_yield[ben_yield['Code']==code_2_sum]['2020 total yield (kg)'])
-                grand_plantation_size += 1.87*area(feature['geometry'])/10000
+                grand_plantation_size += area(feature['geometry'])/10000
+                
+                grand_num_tree += sum(ben_yield[ben_yield['Code']==code_2_sum]['Number of trees'])
 
-        grand_plantation_size = int(round(grand_plantation_size)) #Size of plantation
-        total_grand_pred_surface = int(round(grand_pred_surface)) #Actual cashew region
-        total_grand_ground_surface = int(round(grand_ground_surface))
-        total_grand_pred_yield = int(round(390*grand_plantation_size))
-        total_grand_ground_yield = int(round(grand_total_yield))
-        
         average_pred_yield_ha = 390
+        total_grand_pred_surface = int(round(grand_pred_surface))
+        total_grand_ground_surface = int(round(grand_ground_surface))
+        total_grand_pred_yield = int(round(390*grand_pred_surface))
+        total_grand_ground_yield = int(round(grand_total_yield))
+        grand_plantation_size = int(round(grand_plantation_size))
         average_ground_yield_ha = int(total_grand_ground_yield/total_grand_ground_surface)
+        total_grand_num_tree = int(round(grand_num_tree))
+        total_grand_yield_tree = int(round(total_grand_ground_yield/total_grand_num_tree))
+
+        r_total_grand_num_tree = round(total_grand_num_tree, 1-int(floor(log10(abs(total_grand_num_tree))))) if total_grand_num_tree < 90000 else round(total_grand_num_tree, 2-int(floor(log10(abs(total_grand_num_tree)))))
+        r_total_grand_pred_yield = round(total_grand_pred_yield, 1-int(floor(log10(abs(total_grand_pred_yield))))) if total_grand_pred_yield < 90000 else round(total_grand_pred_yield, 2-int(floor(log10(abs(total_grand_pred_yield)))))
+        r_total_grand_ground_yield = round(total_grand_ground_yield, 1-int(floor(log10(abs(total_grand_ground_yield))))) if total_grand_ground_yield < 90000 else round(total_grand_ground_yield, 2-int(floor(log10(abs(total_grand_ground_yield)))))
 
         for feature in temp_geojson_a.data['features']:
             
@@ -883,19 +1007,32 @@ class my_home():
             if code in special_id:
                 
                 plantation_size = area(feature['geometry'])/10000
-                plantation_size = round(plantation_size*1.87)
+                plantation_size = round(plantation_size,1)
                 indx = special_id.index(code)
                 code_2 = special_id_tuple[indx][1]
                 
                 temp_layer_a = folium.GeoJson(feature, zoom_on_click = True)
-
-                tree_ha_pred_plant = int(round(sum(round(alteia_df[alteia_df['Code']==code].Cashew_Tree/10000,2))))
-                surface_areaP =  int(round(sum(ben_yield[ben_yield['Code']==code_2]['2020 estimated surface (ha)'])))
-                total_yieldP =  int(round(sum(ben_yield[ben_yield['Code']==code_2]['2020 total yield (kg)'])))
-                yield_haP =  int(round(sum(ben_yield[ben_yield['Code']==code_2]['2020 yield per ha (kg)'])))
+                length2 = len(ben_yield[ben_yield['Code']==code_2]['2020 estimated surface (ha)'])
+                tree_ha_pred_plant = round(sum(round(alteia_df[alteia_df['Code']==code].Cashew_Tree/10000,2)),1)
+                yield_pred_plant = int(tree_ha_pred_plant*390)
+                surface_areaP =  round(sum(ben_yield[ben_yield['Code']==code_2]['2020 estimated surface (ha)'])/length2,1)
+                total_yieldP =  int(round(sum(ben_yield[ben_yield['Code']==code_2]['2020 total yield (kg)'])/length2))
+                yield_haP =  int(total_yieldP/surface_areaP)
+                num_treeP = int(sum(ben_yield[ben_yield['Code']==code_2]['Number of trees']))
+                yield_treeP = int(round(total_yieldP/num_treeP))
+                
                 nameP = list(ben_yield[ben_yield['Code']==code_2]['Surname'])[0]+' '+list(ben_yield[ben_yield['Code']==code_2]['Given Name'])[0]
                 village = list(ben_yield[ben_yield['Code']==code_2]['Village'])[0]
 
+                try:
+                    r_total_yieldP = round(total_yieldP, 1-int(floor(log10(abs(total_yieldP))))) if total_yieldP < 90000 else round(total_yieldP, 2-int(floor(log10(abs(total_yieldP)))))
+                except:
+                    r_total_yieldP = total_yieldP
+                try:
+                    r_yield_pred_plant = round(yield_pred_plant, 1-int(floor(log10(abs(yield_pred_plant))))) if yield_pred_plant < 90000 else round(yield_pred_plant, 2-int(floor(log10(abs(yield_pred_plant)))))
+                except:
+                    r_yield_pred_plant = yield_pred_plant
+                    
                 html_a = '''
                     <html>
                     <head>
@@ -938,6 +1075,11 @@ class my_home():
                                 <th>2020 Yield Survey</th>
                             </tr>
                             <tr>
+                                <td>Cashew Yield(kg)</td>
+                                <td>{6:n}K</td>
+                                <td>{7:n}K</td>       
+                            </tr>
+                            <tr>
                                 <td>Plantation Size(ha)</td>
                                 <td>{3}</td>
                                 <td>{4}</td>
@@ -945,22 +1087,28 @@ class my_home():
                             <tr>
                                 <td>Cashew Surface Area (ha)</td>
                                 <td>{5}</td>
-                                <td>--</td>
-                            </tr>
-                            <tr>
-                                <td>Cashew Yield (kg)</td>
-                                <td>{6}</td>
-                                <td>{7}</td>       
+                                <td>NA</td>
                             </tr>
                             <tr>
                                 <td>Yield Per Hectare (kg/ha)</td>
                                 <td>{8}</td>
                                 <td>{9}</td>  
                             </tr>
+                            <tr>
+                                <td>Number of Trees</td>
+                                <td>NA</td>
+                                <td>{20}</td>
+                            </tr>
+                            <tr>
+                                <td>Yield per Tree (kg/tree)</td>
+                                <td>NA</td>
+                                <td>{21}</td>
+                            </tr>
+                            
                             </table>
                             
                             <h4>
-                            Total Surface Area and Cashew Yield Information for 209 Plantations in Benin Republic
+                            Average Surface Area and Cashew Yield Information for Plantations in Benin Republic
                             </h4>
                             <table>
                             <tr>
@@ -970,40 +1118,52 @@ class my_home():
                             </tr>
                             <tr>
                                 <td>Number of Farms</td>
-                                <td>209</td>
-                                <td>209</td>
+                                <td>{17}</td>
+                                <td>{17}</td>
                             
                             </tr>
                             <tr>
-                                <td>Total Plantation Area (ha)</td>
+                                <td>Total Plantation Yield(kg)</td>
+                                <td>{13:n}K</td>
+                                <td>{14:n}K</td>
+                                
+                            </tr>
+                            <tr>
+                                <td>Total Plantation Area(ha)</td>
                                 <td>{10}</td>
                                 <td>{11}</td>
                             
                             </tr>
                             <tr>
-                                <td>Cashew Surface Area (ha)</td>
+                                <td>Cashew Surface Area(ha)</td>
                                 <td>{12}</td>
-                                <td>--</td>
+                                <td>NA</td>
                             
                             </tr>
+                            
                             <tr>
-                                <td>Total Plantation Yield (kg)</td>
-                                <td>{13}</td>
-                                <td>{14}</td>
-                                
-                            </tr>
-                            <tr>
-                                <td>Average Yield Per Hectare (kg/ha)</td>
+                                <td>Average Yield Per Hectare(kg/ha)</td>
                                 <td>{15}</td>
                                 <td>{16}</td>
                                 
                             </tr>
+                            <tr>
+                                <td>Total Number of Trees</td>
+                                <td>NA</td>
+                                <td>{18:n}K</td>
+                            </tr>
+                            <tr>
+                                <td>Average Yield per Tree (kg/tree)</td>
+                                <td>NA</td>
+                                <td>{19}</td>
+                            </tr>
+                            
                             </table>
                         </body>
                         </html>
-                    '''.format(nameP, code, village, plantation_size, surface_areaP, tree_ha_pred_plant, plantation_size*390,
-                            total_yieldP, 390, yield_haP, grand_plantation_size, total_grand_ground_surface, total_grand_pred_surface,
-                            total_grand_pred_yield, total_grand_ground_yield, average_pred_yield_ha, average_ground_yield_ha)
+                    '''.format(nameP, code, village, plantation_size, surface_areaP, tree_ha_pred_plant, r_yield_pred_plant/1000,
+                            r_total_yieldP/1000, 390, yield_haP, grand_plantation_size, total_grand_ground_surface, total_grand_pred_surface,
+                            r_total_grand_pred_yield/1000, r_total_grand_ground_yield/1000, average_pred_yield_ha, average_ground_yield_ha, counter, r_total_grand_num_tree/1000, total_grand_yield_tree, num_treeP, yield_treeP)
 
                 iframe = folium.IFrame(html=html_a, width=370, height=380)
 
