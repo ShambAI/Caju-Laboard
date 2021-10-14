@@ -442,8 +442,7 @@ class my_home():
             try:
                 yield_haD = int(round(total_yieldD/surface_areaD))
             except:
-                yield_haD = round(total_yieldD/surface_areaD)
-                
+                yield_haD = round(np.mean(ben_yield[ben_yield['Departement']==name]['2020 yield per ha (kg)'].dropna()),2) 
             try:
                 yield_treeD = int(round(np.mean(ben_yield[ben_yield['Departement']==name]['2020 yield per tree (kg)'].dropna()),2))
             except:
@@ -777,7 +776,7 @@ class my_home():
             try:
                 yield_haC = int(round(total_yieldC/surface_areaC))
             except:
-                yield_haC = round(total_yieldC/surface_areaC)
+                yield_haC = round(np.mean(ben_yield[ben_yield['Commune']==name]['2020 yield per ha (kg)'].dropna()),2)
                 
             try:
                 yield_treeC = int(round(np.mean(ben_yield[ben_yield['Commune']==name]['2020 yield per tree (kg)'].dropna()),2))
