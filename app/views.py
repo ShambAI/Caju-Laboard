@@ -129,7 +129,7 @@ class my_home():
     def get_context_data(self, **kwargs):
 
                 # figure = folium.Figure()
-        
+
         m = folium.Map(
             location=[9.0, 2.4],
             zoom_start=8,
@@ -206,6 +206,7 @@ class my_home():
             name = 'Benin Republic'
             surface_area = int(round(sum(ben_yield['2020 estimated surface (ha)'].dropna()),2))
             total_yield = int(round(sum(ben_yield['2020 total yield (kg)'].dropna()),2))
+            yield_ha = int(round(np.mean(ben_yield['2020 yield per ha (kg)'].dropna()),2))
             yield_tree = int(round(np.mean(ben_yield['2020 yield per tree (kg)'].dropna()),2))
             num_tree = int(sum(ben_yield['Number of trees'].dropna()))
             sick_tree = int(sum(ben_yield['Number of sick trees'].dropna()))
@@ -214,8 +215,6 @@ class my_home():
             tree_ha_pred = int(round(sum(dtstats_df[dtstats_df['Country']=='Benin'].Cashew_Yield)/10000,2))
             yield_pred = 390*tree_ha_pred
             region_size = area(feature['geometry'])/10000
-            yield_ha = int(total_yield/surface_area)
-
             
             r_surface_area = round(surface_area, 1-int(floor(log10(abs(surface_area))))) if surface_area < 90000 else round(surface_area, 2-int(floor(log10(abs(surface_area)))))
             r_total_yield = round(total_yield, 1-int(floor(log10(abs(total_yield))))) if total_yield < 90000 else round(total_yield, 2-int(floor(log10(abs(total_yield)))))
@@ -325,13 +324,12 @@ class my_home():
                                 <th></th>
                                 <th>Satellite Est</th>
                                 <th>TNS Survey</th>
-                                <th>Port Data</th>
                             </tr>
                             <tr>
                                 <td>Total Cashew Yield (kg)</td>
                                 <td>{15:n}M</td>
                                 <td>{3:n}M</td>
-                                <td></td>
+                                
                             </tr>
                             <tr>
                                 <td>Region/Plantation Area(ha)</td>
@@ -342,25 +340,25 @@ class my_home():
                                 <td>Cashew Tree Cover (ha)</td>
                                 <td>{4:n}K</td>
                                 <td>NA</td>
-                                <td></td>
+                                
                             </tr>
                             <tr>
                                 <td>Yield/Hectare (kg/ha)</td>
                                 <td>390</td>
                                 <td>{8}</td>
-                                <td></td>
+                                
                             </tr>
                             <tr>
                                 <td>Yield per Tree (kg/tree)</td>
-                                <td></td>
+                                <td>NA</td>
                                 <td>{9}</td>
-                                <td></td>
+                                
                             </tr>
                             <tr>
                                 <td>Number of Trees</td>
-                                <td></td>
+                                <td>NA</td>
                                 <td>{10:n}K</td>
-                                <td></td>
+                                
                             </tr>
                             </table>
                             
@@ -375,7 +373,7 @@ class my_home():
                             </table>
 
                         </body>
-                        </html>'''.format(name, pred_ben_data, pred_ground_ben_data, r_total_yield/1000000, r_tree_ha_pred/1000, r_surface_area/1000, abs(round(surface_area - tree_ha_pred,2)), '6th',
+                        </html>'''.format(name, pred_ben_data, pred_ground_ben_data, r_total_yield/1000000, r_tree_ha_pred/1000, r_surface_area/1000, abs(round(surface_area - tree_ha_pred,2)), '9th',
                             r_yield_ha, r_yield_tree, r_num_tree/1000, sick_tree, out_prod_tree, dead_tree, num_tree- sick_tree- out_prod_tree- dead_tree, r_yield_pred/1000000, r_region_size/1000000)
 
 
@@ -401,6 +399,7 @@ class my_home():
             highlight_function = highlight_function)
 
 
+        dept_yieldHa = {}
         for feature in temp_geojson.data['features']:
             # GEOJSON layer consisting of a single feature
             name = feature["properties"]["NAME_1"]
@@ -440,9 +439,10 @@ class my_home():
             surface_areaD = int(round(sum(ben_yield[ben_yield['Departement']==name]['2020 estimated surface (ha)'].dropna()),2))
             total_yieldD = int(round(sum(ben_yield[ben_yield['Departement']==name]['2020 total yield (kg)'].dropna()),2))
             try:
-                yield_haD = int(round(total_yieldD/surface_areaD))
+                yield_haD = int(round(np.mean(ben_yield[ben_yield['Departement']==name]['2020 yield per ha (kg)'].dropna()),2))
             except:
-                yield_haD = round(np.mean(ben_yield[ben_yield['Departement']==name]['2020 yield per ha (kg)'].dropna()),2) 
+                yield_haD = round(np.mean(ben_yield[ben_yield['Departement']==name]['2020 yield per ha (kg)'].dropna()),2)
+                
             try:
                 yield_treeD = int(round(np.mean(ben_yield[ben_yield['Departement']==name]['2020 yield per tree (kg)'].dropna()),2))
             except:
@@ -489,7 +489,7 @@ class my_home():
                 r_region_sizeD = region_sizeD
                 
             
-
+            dept_yieldHa[name] = yield_haD
             html3 = '''
                     <html>
                         <head>
@@ -590,13 +590,13 @@ class my_home():
                                 <th></th>
                                 <th>Satellite Est</th>
                                 <th>TNS Survey</th>
-                                <th>Port Data</th>
+                                
                             </tr>
                             <tr>
                                 <td>Total Cashew Yield (kg)</td>
                                 <td>{15:n}M</td>
                                 <td>{3:n}M</td>
-                                <td></td>
+                                
                             </tr>
                             <tr>
                                 <td>Region/Plantation Area(ha)</td>
@@ -607,25 +607,25 @@ class my_home():
                                 <td>Cashew Tree Cover (ha)</td>
                                 <td>{4:n}K</td>
                                 <td>NA</td>
-                                <td></td>
+                                
                             </tr>
                             <tr>
                                 <td>Yield/Hectare (kg/ha)</td>
                                 <td>390</td>
                                 <td>{8}</td>
-                                <td></td>
+                                
                             </tr>
                             <tr>
                                 <td>Yield per Tree (kg/tree)</td>
-                                <td></td>
+                                <td>NA</td>
                                 <td>{9}</td>
-                                <td></td>
+                                
                             </tr>
                             <tr>
                                 <td>Number of Trees</td>
-                                <td></td>
+                                <td>NA</td>
                                 <td>{10:n}K</td>
-                                <td></td>
+                            
                             </tr>
                             </table>
                             
@@ -774,7 +774,7 @@ class my_home():
             surface_areaC = int(round(sum(ben_yield[ben_yield['Commune']==name]['2020 estimated surface (ha)'].dropna()),2))
             total_yieldC = int(round(sum(ben_yield[ben_yield['Commune']==name]['2020 total yield (kg)'].dropna()),2))
             try:
-                yield_haC = int(round(total_yieldC/surface_areaC))
+                yield_haC = int(round(np.mean(ben_yield[ben_yield['Commune']==name]['2020 yield per ha (kg)'].dropna()),2))
             except:
                 yield_haC = round(np.mean(ben_yield[ben_yield['Commune']==name]['2020 yield per ha (kg)'].dropna()),2)
                 
@@ -893,13 +893,13 @@ class my_home():
                                 <th></th>
                                 <th>Satellite Est</th>
                                 <th>TNS Survey</th>
-                                <th>Port Data</th>
+                                
                             </tr>
                             <tr>
                                 <td>Total Cashew Yield (kg)</td>
                                 <td>{13:n}M</td>
                                 <td>{1:n}M</td>
-                                <td></td>
+                                
                             </tr>
                             <tr>
                                 <td>Region/Plantation Area(ha)</td>
@@ -910,25 +910,25 @@ class my_home():
                                 <td>Cashew Tree Cover (ha)</td>
                                 <td>{2:n}K</td>
                                 <td>NA</td>
-                                <td></td>
+                                
                             </tr>
                             <tr>
                                 <td>Yield/Hectare (kg/ha)</td>
                                 <td>390</td>
                                 <td>{6}</td>
-                                <td></td>
+                            
                             </tr>
                             <tr>
                                 <td>Yield per Tree (kg/tree)</td>
-                                <td></td>
+                                <td>NA</td>
                                 <td>{7}</td>
-                                <td></td>
+                            
                             </tr>
                             <tr>
                                 <td>Number of Trees</td>
-                                <td></td>
+                                <td>NA</td>
                                 <td>{8:n}K</td>
-                                <td></td>
+                                
                             </tr>
                             </table>
                             
@@ -1011,10 +1011,12 @@ class my_home():
                 indx = special_id.index(code)
                 code_2 = special_id_tuple[indx][1]
                 
+                
                 temp_layer_a = folium.GeoJson(feature, zoom_on_click = True)
+                department_name = list(ben_yield[ben_yield['Code']==code_2]['Departement'])[0]
                 length2 = len(ben_yield[ben_yield['Code']==code_2]['2020 estimated surface (ha)'])
                 tree_ha_pred_plant = round(sum(round(alteia_df[alteia_df['Code']==code].Cashew_Tree/10000,2)),1)
-                yield_pred_plant = int(tree_ha_pred_plant*390)
+                yield_pred_plant = int(tree_ha_pred_plant*dept_yieldHa[department_name])
                 surface_areaP =  round(sum(ben_yield[ben_yield['Code']==code_2]['2020 estimated surface (ha)'])/length2,1)
                 total_yieldP =  int(round(sum(ben_yield[ben_yield['Code']==code_2]['2020 total yield (kg)'])/length2))
                 yield_haP =  int(total_yieldP/surface_areaP)
@@ -1162,7 +1164,7 @@ class my_home():
                         </body>
                         </html>
                     '''.format(nameP, code, village, plantation_size, surface_areaP, tree_ha_pred_plant, r_yield_pred_plant/1000,
-                            r_total_yieldP/1000, 390, yield_haP, grand_plantation_size, total_grand_ground_surface, total_grand_pred_surface,
+                            r_total_yieldP/1000, dept_yieldHa[department_name], yield_haP, grand_plantation_size, total_grand_ground_surface, total_grand_pred_surface,
                             r_total_grand_pred_yield/1000, r_total_grand_ground_yield/1000, average_pred_yield_ha, average_ground_yield_ha, counter, r_total_grand_num_tree/1000, total_grand_yield_tree, num_treeP, yield_treeP)
 
                 iframe = folium.IFrame(html=html_a, width=370, height=380)
@@ -1184,6 +1186,7 @@ class my_home():
         layer_alt.add_to(m)
 
         m.add_child(folium.LayerControl())
+
         m=m._repr_html_()
         context = {'my_map': m}
 
