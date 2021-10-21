@@ -43,6 +43,8 @@ alteia_df = pd.read_excel("./new_data/alteia_df.xlsx", engine='openpyxl')
 ben_yield = pd.read_excel("./new_data/ben_yield.xlsx", engine='openpyxl')
 ben_nursery = pd.read_excel("./new_data/ben_nursery.xlsx", engine='openpyxl')
 ben_yield_GEO = pd.read_excel("./new_data/ben_yield_GEO.xlsx", engine='openpyxl')
+drone_df = pd.read_excel("./plant_drone_data/drone_dataframe_reviewed.xlsx", engine='openpyxl')
+drone_directory = "./plant_drone_data/Images"
 
 with open("Data/CajuLab_Plantations.geojson", errors="ignore") as f:
         alteia_json = geojson.load(f)
@@ -116,6 +118,31 @@ basemaps = {
             )
         }
 
+
+
+feature_group_drone = folium.map.FeatureGroup(name='TNS Drone Images')
+for root, subdirectories, files in os.walk(drone_directory):
+    for file in files:
+        image_path = os.path.join(root, file)
+        if not os.path.isfile(image_path):
+            continue
+        else:
+            drone_code = file.split('.')[0]
+            upper_lat = list(drone_df[drone_df['plantation_id']==drone_code]['upper_lat'])[0]
+            upper_lon = list(drone_df[drone_df['plantation_id']==drone_code]['upper_lon'])[0]
+            lower_lat = list(drone_df[drone_df['plantation_id']==drone_code]['lower_lat'])[0]
+            lower_lon = list(drone_df[drone_df['plantation_id']==drone_code]['lower_lon'])[0]
+            
+            img = folium.raster_layers.ImageOverlay(
+                name="Dronez",
+                image=image_path,
+                bounds=[[upper_lat, upper_lon], [lower_lat, lower_lon]],
+                opacity=1.0,
+                interactive=True,
+                cross_origin=False,
+                zindex=1,
+            )
+            feature_group_drone.add_child(img)
 
 class my_home():
     # Define a method for displaying Earth Engine image tiles on a folium map.
@@ -355,7 +382,7 @@ class my_home():
                                 <td><div id="donutchart" style="width: 400; height: 350;border: 3px solid #00a5a7"></div></td>
                             </table>
                             <table>
-                                <td><div style= "text-align: center"><h5>Source: Technoserve yield survey 2020</h5></div>
+                                <td><div style= "text-align: center"><h5>Source: TNS/BeninCaju Yield Surveys 2020</h5></div>
                             </table>    
 
                         </body>
@@ -406,9 +433,9 @@ class my_home():
 
             sorted_by_second = sorted(z_list, reverse = True, key=lambda tup: tup[1])
             list1, _ = zip(*sorted_by_second)
-            # position = list1.index(name)
+            position = list1.index(name)
 
-            position = 1
+            # position = 1
             my_dict = {'0': "highest", '1': "2nd", '2': "3rd", '3': "4th", '4': "5th", '5': "6th", '6': "7th", '7': "8th", '8': "9th", '9': "10th", '10': "11th", '11':"lowest"}
 
             pred_dept_data = []
@@ -612,7 +639,7 @@ class my_home():
                                 <td><div id="donutchart" style="width: 400; height: 350;border: 3px solid #00a5a7"></div></td>
                             </table>
                             <table>
-                                <td><div style= "text-align: center"><h5>Source: Technoserve yield survey 2020</h5></div>
+                                <td><div style= "text-align: center"><h5>Source: TNS/BeninCaju Yield Surveys 2020</h5></div>
                             </table> 
                         </body>
                         </html>
@@ -661,9 +688,9 @@ class my_home():
 
             sorted_by_second2 = sorted(z_list_2, reverse = True, key=lambda tup: tup[1])
             list2, _ = zip(*sorted_by_second2)
-            # position2 = list2.index(name)          
+            position2 = list2.index(name)          
 
-            position2 = 1          
+            # position2 = 1          
             my_dict_communes = {'1': 'highest',
                     '2': '2nd',
                     '3': '3rd',
@@ -920,7 +947,7 @@ class my_home():
                                 <td><div id="donutchart" style="width: 400; height: 350;border: 3px solid #00a5a7"></div></td>
                             </table>
                             <table>
-                                <td><div style= "text-align: center"><h5>Source: Technoserve yield survey 2020</h5></div>
+                                <td><div style= "text-align: center"><h5>Source: TNS/BeninCaju Yield Surveys 2020</h5></div>
                             </table> 
                         </body>
                         </html>
@@ -1149,7 +1176,7 @@ class my_home():
                             
                             </table>
                             <table>
-                                <td><div style= "text-align: center"><h6>Source: Technoserve yield survey 2020</h6></div>
+                                <td><div style= "text-align: center"><h6>Source: TNS/BeninCaju Yield Surveys 2020</h6></div>
                             </table> 
                         </body>
                         </html>
@@ -1173,8 +1200,9 @@ class my_home():
 
                 temp_layer_a.add_to(layer_alt)
         plantation_cluster.add_to(layer_alt)
-        layer_alt.add_to(m)
 
+        layer_alt.add_to(m)
+        feature_group_drone.add_to(m)
         m.add_child(folium.LayerControl())
 
         m=m._repr_html_()
