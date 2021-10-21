@@ -119,31 +119,6 @@ basemaps = {
         }
 
 
-
-feature_group_drone = folium.map.FeatureGroup(name='TNS Drone Images')
-for root, subdirectories, files in os.walk(drone_directory):
-    for file in files:
-        image_path = os.path.join(root, file)
-        if not os.path.isfile(image_path):
-            continue
-        else:
-            drone_code = file.split('.')[0]
-            upper_lat = list(drone_df[drone_df['plantation_id']==drone_code]['upper_lat'])[0]
-            upper_lon = list(drone_df[drone_df['plantation_id']==drone_code]['upper_lon'])[0]
-            lower_lat = list(drone_df[drone_df['plantation_id']==drone_code]['lower_lat'])[0]
-            lower_lon = list(drone_df[drone_df['plantation_id']==drone_code]['lower_lon'])[0]
-            
-            img = folium.raster_layers.ImageOverlay(
-                name="Dronez",
-                image=image_path,
-                bounds=[[upper_lat, upper_lon], [lower_lat, lower_lon]],
-                opacity=1.0,
-                interactive=True,
-                cross_origin=False,
-                zindex=1,
-            )
-            feature_group_drone.add_child(img)
-
 class my_home():
     # Define a method for displaying Earth Engine image tiles on a folium map.
 
@@ -1207,7 +1182,31 @@ class my_home():
         plantation_cluster.add_to(layer_alt)
 
         layer_alt.add_to(m)
-        feature_group_drone.add_to(m)
+
+        feature_group_drone = folium.map.FeatureGroup(name='TNS Drone Images').add_to(m)
+        for root, subdirectories, files in os.walk(drone_directory):
+            for file in files:
+                image_path = os.path.join(root, file)
+                if not os.path.isfile(image_path):
+                    continue
+                else:
+                    drone_code = file.split('.')[0]
+                    upper_lat = list(drone_df[drone_df['plantation_id']==drone_code]['upper_lat'])[0]
+                    upper_lon = list(drone_df[drone_df['plantation_id']==drone_code]['upper_lon'])[0]
+                    lower_lat = list(drone_df[drone_df['plantation_id']==drone_code]['lower_lat'])[0]
+                    lower_lon = list(drone_df[drone_df['plantation_id']==drone_code]['lower_lon'])[0]
+                    
+                    img = folium.raster_layers.ImageOverlay(
+                        name="Dronez",
+                        image=image_path,
+                        bounds=[[upper_lat, upper_lon], [lower_lat, lower_lon]],
+                        opacity=1.0,
+                        interactive=True,
+                        cross_origin=False,
+                        zindex=1,
+                    )
+                    feature_group_drone.add_child(img)
+
         m.add_child(folium.LayerControl())
 
         m=m._repr_html_()
