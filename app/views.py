@@ -207,7 +207,7 @@ class my_home():
             surface_area = int(round(sum(ben_yield['2020 estimated surface (ha)'].dropna()),2))
             total_yield = int(round(sum(ben_yield['2020 total yield (kg)'].dropna()),2))
             yield_ha = int(round(np.mean(ben_yield['2020 yield per ha (kg)'].dropna()),2))
-            yield_tree = int(round(np.mean(ben_yield['2020 yield per tree (kg)'].dropna()),2))
+            # yield_tree = int(round(np.mean(ben_yield['2020 yield per tree (kg)'].dropna()),2))
             num_tree = int(sum(ben_yield['Number of trees'].dropna()))
             sick_tree = int(sum(ben_yield['Number of sick trees'].dropna()))
             out_prod_tree = int(sum(ben_yield['Number of trees out of production'].dropna()))
@@ -215,16 +215,19 @@ class my_home():
             tree_ha_pred = int(round(sum(dtstats_df[dtstats_df['Country']=='Benin'].Cashew_Yield)/10000,2))
             yield_pred = 390*tree_ha_pred
             region_size = area(feature['geometry'])/10000
+            active_trees = num_tree- sick_tree- out_prod_tree- dead_tree
             
             r_surface_area = round(surface_area, 1-int(floor(log10(abs(surface_area))))) if surface_area < 90000 else round(surface_area, 2-int(floor(log10(abs(surface_area)))))
             r_total_yield = round(total_yield, 1-int(floor(log10(abs(total_yield))))) if total_yield < 90000 else round(total_yield, 2-int(floor(log10(abs(total_yield)))))
             r_yield_ha = round(yield_ha, 1-int(floor(log10(abs(yield_ha))))) if yield_ha < 90000 else round(yield_ha, 2-int(floor(log10(abs(yield_ha)))))
-            r_yield_tree = round(yield_tree, 1-int(floor(log10(abs(yield_tree))))) if yield_tree < 90000 else round(yield_tree, 2-int(floor(log10(abs(yield_tree)))))
+            # r_yield_tree = round(yield_tree, 1-int(floor(log10(abs(yield_tree))))) if yield_tree < 90000 else round(yield_tree, 2-int(floor(log10(abs(yield_tree)))))
             r_tree_ha_pred = round(tree_ha_pred, 1-int(floor(log10(abs(tree_ha_pred))))) if tree_ha_pred < 90000 else round(tree_ha_pred, 2-int(floor(log10(abs(tree_ha_pred)))))
             r_yield_pred = round(yield_pred, 1-int(floor(log10(abs(yield_pred))))) if yield_pred < 90000 else round(yield_pred, 2-int(floor(log10(abs(yield_pred)))))
             r_num_tree = round(num_tree, 1-int(floor(log10(abs(num_tree))))) if num_tree < 90000 else round(num_tree, 2-int(floor(log10(abs(num_tree)))))
             r_region_size = round(region_size, 1-int(floor(log10(abs(region_size))))) if region_size < 90000 else round(region_size, 2-int(floor(log10(abs(region_size)))))
             
+            r_yield_tree = round(r_total_yield/active_trees)
+
             html4 = '''
                     <html>
                         <head>
@@ -269,31 +272,13 @@ class my_home():
                                 pie_data.addColumn('number', 'Cashew Tree Cover (ha)');
                                 pie_data.addRows({1});
 
-                                var piechart_options = {{title:'Pie Chart: Departments Cashew Tree Cover Statistics In {0}',
+                                var piechart_options = {{title:'Departments Cashew Tree Cover Statistics In {0}',
                                                             is3D: true,
                                                         }};
                                 var piechart = new google.visualization.PieChart(document.getElementById('piechart_div'));
                                 piechart.draw(pie_data, piechart_options);
 
-                                var data = new google.visualization.arrayToDataTable({2});
-
-                                var options = {{
-                                    chart: {{
-                                        title: 'Cashew Tree Cover Relative Statistics in {0}',
-                                    }},
-                                    bars: 'horizontal', // Required for Material Bar Charts.
-                                    colors: ['#02a8b1', '#242526'],
-                                    is3D: true,
-
-                                    axes: {{
-                                            x: {{
-                                            0: {{label: 'Cashew Tree Cover (ha)'}}, // Bottom x-axis.
-                                            }}
-                                        }}
-                                        }};
-
-                                var chart = new google.charts.Bar(document.getElementById('dual_x_div'));
-                                chart.draw(data, options);
+                                
 
 
                                 var data_donut = google.visualization.arrayToDataTable([
@@ -305,6 +290,7 @@ class my_home():
                                 ]);
 
                                 var options_donut = {{
+                               
                                 title: 'Cashew Trees Status in {0}',
                                 pieHole: 0.5,
                                 colors: ['007f00', '#02a8b1', '9e1a1a', '#242526'],
@@ -332,7 +318,7 @@ class my_home():
                                 
                             </tr>
                             <tr>
-                                <td>Region/Plantation Area(ha)</td>
+                                <td>Total Area (ha)</td>
                                 <td>{16:n}M</td>
                                 <td>{5:n}K</td>
                             </tr>
@@ -366,15 +352,15 @@ class my_home():
                                 <td><div id="piechart_div" style="width: 400; height: 350;border: 3px solid #00a5a7"></div></td>
                             </table>
                             <table>
-                                <td><div id="dual_x_div" style="width: 400; height: 350;border: 3px solid #00a5a7"></div></td>
-                            </table>
-                            <table>
                                 <td><div id="donutchart" style="width: 400; height: 350;border: 3px solid #00a5a7"></div></td>
                             </table>
+                            <table>
+                                <td><div style= "text-align: center"><h5>Source: Technoserve yield survey 2020</h5></div>
+                            </table>    
 
                         </body>
                         </html>'''.format(name, pred_ben_data, pred_ground_ben_data, r_total_yield/1000000, r_tree_ha_pred/1000, r_surface_area/1000, abs(round(surface_area - tree_ha_pred,2)), '9th',
-                            r_yield_ha, r_yield_tree, r_num_tree/1000, sick_tree, out_prod_tree, dead_tree, num_tree- sick_tree- out_prod_tree- dead_tree, r_yield_pred/1000000, r_region_size/1000000)
+                            r_yield_ha, r_yield_tree, r_num_tree/1000, sick_tree, out_prod_tree, dead_tree, active_trees, r_yield_pred/1000000, r_region_size/1000000)
 
 
 
@@ -420,9 +406,9 @@ class my_home():
 
             sorted_by_second = sorted(z_list, reverse = True, key=lambda tup: tup[1])
             list1, _ = zip(*sorted_by_second)
-            position = list1.index(name)
+            # position = list1.index(name)
 
-            # position = 1
+            position = 1
             my_dict = {'0': "highest", '1': "2nd", '2': "3rd", '3': "4th", '4': "5th", '5': "6th", '6': "7th", '7': "8th", '8': "9th", '9': "10th", '10': "11th", '11':"lowest"}
 
             pred_dept_data = []
@@ -442,7 +428,8 @@ class my_home():
                 yield_haD = int(round(np.mean(ben_yield[ben_yield['Departement']==name]['2020 yield per ha (kg)'].dropna()),2))
             except:
                 yield_haD = round(np.mean(ben_yield[ben_yield['Departement']==name]['2020 yield per ha (kg)'].dropna()),2)
-                
+
+            #Used only in case of error in the try and except catch    
             try:
                 yield_treeD = int(round(np.mean(ben_yield[ben_yield['Departement']==name]['2020 yield per tree (kg)'].dropna()),2))
             except:
@@ -453,7 +440,10 @@ class my_home():
             out_prod_treeD = int(sum(ben_yield[ben_yield['Departement']==name]['Number of trees out of production'].dropna()))
             dead_treeD = int(sum(ben_yield[ben_yield['Departement']==name]['Number of dead trees'].dropna()))
             region_sizeD = area(feature['geometry'])/10000
+
+            active_treesD = num_treeD- sick_treeD- out_prod_treeD- dead_treeD
             
+
             try:
                 r_tree_ha_pred_dept = round(tree_ha_pred_dept, 1-int(floor(log10(abs(tree_ha_pred_dept))))) if tree_ha_pred_dept < 90000 else round(tree_ha_pred_dept, 2-int(floor(log10(abs(tree_ha_pred_dept)))))
             except:
@@ -474,8 +464,12 @@ class my_home():
                 r_yield_haD = round(yield_haD, 1-int(floor(log10(abs(yield_haD))))) if yield_haD < 90000 else round(yield_haD, 2-int(floor(log10(abs(yield_haD)))))
             except:
                 r_yield_haD = yield_haD
+            # try:
+            #     r_yield_treeD = round(yield_treeD, 1-int(floor(log10(abs(yield_treeD))))) if yield_treeD < 90000 else round(yield_treeD, 2-int(floor(log10(abs(yield_treeD)))))
+            # except:
+            #     r_yield_treeD = yield_treeD
             try:
-                r_yield_treeD = round(yield_treeD, 1-int(floor(log10(abs(yield_treeD))))) if yield_treeD < 90000 else round(yield_treeD, 2-int(floor(log10(abs(yield_treeD)))))
+                r_yield_treeD = round(r_total_yieldD/active_treesD)
             except:
                 r_yield_treeD = yield_treeD
             try:
@@ -535,32 +529,14 @@ class my_home():
                                 pie_data.addColumn('number', 'Cashew Tree Cover');
                                 pie_data.addRows({1});
 
-                                var piechart_options = {{title:'Pie Chart: Predicted Cashew Tree Cover Communes Statistics In {0}',
+                                var piechart_options = {{title:'Predicted Cashew Tree Cover: Communes Statistics In {0}',
                                             width:400,
                                             height:350,
                                             is3D: true}};
                                 var piechart = new google.visualization.PieChart(document.getElementById('piechart_div'));
                                 piechart.draw(pie_data, piechart_options);
 
-                                var data = new google.visualization.arrayToDataTable({2});
-
-                                var options = {{
-                                    chart: {{
-                                        title: 'Cashew Tree Cover Relative Statistics in {0}',
-                                    }},
-                                    bars: 'horizontal', // Required for Material Bar Charts.
-                                    colors: ['#02a8b1', '#242526'],
-                                    is3D: true,
-
-                                    axes: {{
-                                            x: {{
-                                            0: {{label: 'Cashew Tree Cover (ha)'}}, // Bottom x-axis.
-                                            }}
-                                        }}
-                                        }};
-
-                                var chart = new google.charts.Bar(document.getElementById('dual_x_div'));
-                                chart.draw(data, options);
+                                
 
                                 var data_donut = google.visualization.arrayToDataTable([
                                 ['Tree Type', 'Number of Trees'],
@@ -599,7 +575,7 @@ class my_home():
                                 
                             </tr>
                             <tr>
-                                <td>Region/Plantation Area(ha)</td>
+                                <td>Total Area (ha)</td>
                                 <td>{16:n}M</td>
                                 <td>{5:n}K</td>
                             </tr>
@@ -631,13 +607,13 @@ class my_home():
                             
                             <table>
                                 <td><div id="piechart_div" style="border: 3px solid #00a5a7"></div></td>
-                            </table>
-                            <table>
-                                <td><div id="dual_x_div" style="width: 400; height: 350;border: 3px solid #00a5a7"></div></td>
-                            </table>
+                            </table>                           
                             <table>
                                 <td><div id="donutchart" style="width: 400; height: 350;border: 3px solid #00a5a7"></div></td>
                             </table>
+                            <table>
+                                <td><div style= "text-align: center"><h5>Source: Technoserve yield survey 2020</h5></div>
+                            </table> 
                         </body>
                         </html>
                     '''.format(name, pred_dept_data, pred_ground_dept_data, r_total_yieldD/1000000, r_tree_ha_pred_dept/1000, r_surface_areaD/1000, abs(round(surface_areaD - tree_ha_pred_dept,2)), my_dict[str(position)],
@@ -685,9 +661,9 @@ class my_home():
 
             sorted_by_second2 = sorted(z_list_2, reverse = True, key=lambda tup: tup[1])
             list2, _ = zip(*sorted_by_second2)
-            position2 = list2.index(name)          
+            # position2 = list2.index(name)          
 
-            # position2 = 1          
+            position2 = 1          
             my_dict_communes = {'1': 'highest',
                     '2': '2nd',
                     '3': '3rd',
@@ -788,6 +764,8 @@ class my_home():
             out_prod_treeC = int(sum(ben_yield[ben_yield['Commune']==name]['Number of trees out of production'].dropna()))
             dead_treeC = int(sum(ben_yield[ben_yield['Commune']==name]['Number of dead trees'].dropna()))
             region_sizeC = area(feature['geometry'])/10000
+
+            active_treesC = num_treeC- sick_treeC- out_prod_treeC- dead_treeC
             
             try:
                 r_region_sizeC = round(region_sizeC, 1-int(floor(log10(abs(region_sizeC))))) if region_sizeC < 90000 else round(region_sizeC, 2-int(floor(log10(abs(region_sizeC)))))
@@ -814,10 +792,16 @@ class my_home():
                 r_yield_haC = round(yield_haC, 1-int(floor(log10(abs(yield_haC))))) if yield_haC < 90000 else round(yield_haC, 2-int(floor(log10(abs(yield_haC)))))
             except:
                 r_yield_haC = yield_haC
+            # try:
+            #     r_yield_treeC = round(yield_treeC, 1-int(floor(log10(abs(yield_treeC))))) if yield_treeC < 90000 else round(yield_treeC, 2-int(floor(log10(abs(yield_treeC)))))
+            # except:
+            #     r_yield_treeC = yield_treeC
+
             try:
-                r_yield_treeC = round(yield_treeC, 1-int(floor(log10(abs(yield_treeC))))) if yield_treeC < 90000 else round(yield_treeC, 2-int(floor(log10(abs(yield_treeC)))))
+                r_yield_treeC = round(r_total_yieldC/active_treesC)
             except:
                 r_yield_treeC = yield_treeC
+
             try:
                 r_num_treeC = round(num_treeC, 1-int(floor(log10(abs(num_treeC))))) if num_treeC < 90000 else round(num_treeC, 2-int(floor(log10(abs(num_treeC)))))
             except:
@@ -902,7 +886,7 @@ class my_home():
                                 
                             </tr>
                             <tr>
-                                <td>Region/Plantation Area(ha)</td>
+                                <td>Total Area (ha)</td>
                                 <td>{14:n}K</td>
                                 <td>{3:n}K</td>
                             </tr>
@@ -935,10 +919,13 @@ class my_home():
                             <table>
                                 <td><div id="donutchart" style="width: 400; height: 350;border: 3px solid #00a5a7"></div></td>
                             </table>
+                            <table>
+                                <td><div style= "text-align: center"><h5>Source: Technoserve yield survey 2020</h5></div>
+                            </table> 
                         </body>
                         </html>
                     '''.format(name, r_total_yieldC/1000000, r_tree_ha_pred_comm/1000, r_surface_areaC/1000, abs(round(surface_areaC - tree_ha_pred_comm,2)), my_dict_communes[str(position2+1)],
-                            r_yield_haC, r_yield_treeC, r_num_treeC/1000, sick_treeC, out_prod_treeC, dead_treeC,num_treeC-sick_treeC-out_prod_treeC-dead_treeC, r_yield_pred_comm/1000000, r_region_sizeC/1000)
+                            r_yield_haC, r_yield_treeC, r_num_treeC/1000, sick_treeC, out_prod_treeC, dead_treeC, active_treesC, r_yield_pred_comm/1000000, r_region_sizeC/1000)
 
             iframe = folium.IFrame(html=html3, width=450, height=380)
 
@@ -1077,12 +1064,12 @@ class my_home():
                                 <th>2020 Yield Survey</th>
                             </tr>
                             <tr>
-                                <td>Cashew Yield(kg)</td>
+                                <td>Cashew Yield (kg)</td>
                                 <td>{6:n}K</td>
                                 <td>{7:n}K</td>       
                             </tr>
                             <tr>
-                                <td>Plantation Size(ha)</td>
+                                <td>Plantation Size (ha)</td>
                                 <td>{3}</td>
                                 <td>{4}</td>
                             </tr>
@@ -1125,26 +1112,26 @@ class my_home():
                             
                             </tr>
                             <tr>
-                                <td>Total Plantation Yield(kg)</td>
+                                <td>Total Plantation Yield (kg)</td>
                                 <td>{13:n}K</td>
                                 <td>{14:n}K</td>
                                 
                             </tr>
                             <tr>
-                                <td>Total Plantation Area(ha)</td>
+                                <td>Total Plantation Area (ha)</td>
                                 <td>{10}</td>
                                 <td>{11}</td>
                             
                             </tr>
                             <tr>
-                                <td>Cashew Surface Area(ha)</td>
+                                <td>Cashew Surface Area (ha)</td>
                                 <td>{12}</td>
                                 <td>NA</td>
                             
                             </tr>
                             
                             <tr>
-                                <td>Average Yield Per Hectare(kg/ha)</td>
+                                <td>Average Yield Per Hectare (kg/ha)</td>
                                 <td>{15}</td>
                                 <td>{16}</td>
                                 
@@ -1161,6 +1148,9 @@ class my_home():
                             </tr>
                             
                             </table>
+                            <table>
+                                <td><div style= "text-align: center"><h6>Source: Technoserve yield survey 2020</h6></div>
+                            </table> 
                         </body>
                         </html>
                     '''.format(nameP, code, village, plantation_size, surface_areaP, tree_ha_pred_plant, r_yield_pred_plant/1000,
