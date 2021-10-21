@@ -331,7 +331,7 @@ class my_home():
                         </head>
                         <body>
                             <h2>{0}</h2>
-                            <h4>{0} is ranked <b>{7}</b> in the world in terms of total cashew yield.</h4>
+                            <h4>{0} is ranked <b>{7}</b> globally in terms of total cashew yield.</h4>
                             <table>
                             <tr>
                                 <th></th>
