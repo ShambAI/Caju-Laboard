@@ -135,6 +135,7 @@ class my_home():
         m = folium.Map(
             location=[9.0, 2.4],
             zoom_start=8,
+            prefer_canvas=True,
             tiles = None
         )
 
