@@ -34,7 +34,7 @@ service_account = 'cajulab@benin-cajulab-web-application.iam.gserviceaccount.com
 credentials = ee.ServiceAccountCredentials(service_account, 'privatekey.json')
 ee.Initialize(credentials)
 locale.setlocale(locale.LC_ALL, '')  # Use '' for auto, or force e.g. to 'en_US.UTF-8'
-heroku = False
+heroku = True
 
 alldept = ee.Image('users/ashamba/allDepartments_v0')
 dtstats_df = pd.read_excel("./new_data/dtstats_df.xlsx", engine='openpyxl')
