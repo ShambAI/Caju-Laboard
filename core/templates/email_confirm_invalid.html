@@ -1,4 +1,6 @@
 {% extends 'layouts/base-fullscreen.html' %}
+{% load i18n %}
+
 
 {% block title %} Error 403 {% endblock title %}
 
@@ -15,21 +17,21 @@
             <div class="card-header bg-transparent pb-5">
 
               <div class="text-muted text-center mt-2 mb-3">
-                Ooops activation link is invalid!      
+               {% trans " Ooops activation link is invalid!" %}      
               </div>
 
               <div class="text-center mb-4">
-                Please reach out to us through this <a href="https://www.technoserve.org/contact-us/">link</a>.
+                {% trans "Please reach out to us through this" %} <a href="https://www.technoserve.org/contact-us/">{% trans "link" %}</a>.
               </div>
 
             </div>
           </div>
           <div class="row mt-3">
             <div class="col-6">
-              <a href="/" class="text-light"><small>Home</small></a>
+              <a href="/" class="text-light"><small>{% trans "Home" %}</small></a>
             </div>          
             <div class="col-6 text-right">
-              <a target="_blank" href="https://www.technoserve.org/contact-us/" class="text-light"><small>Contact Us</small></a>
+              <a target="_blank" href="https://www.technoserve.org/contact-us/" class="text-light"><small>{% trans "Contact Us" %}</small></a>
             </div>
           </div>
         </div>

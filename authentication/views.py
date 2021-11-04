@@ -21,6 +21,9 @@ from . import utils
 import datetime
 import logging
 import uuid
+import folium
+import ee
+
 
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
@@ -545,3 +548,59 @@ def shipment(request):
     context['segment'] = 'nurseries'
     context['page_range'] = page_range
     return render(request, 'shipment.html', context)
+
+@login_required(login_url="/login/")
+def drone(request, plant_id):
+    basemaps = {
+                    'Google Satellite': folium.TileLayer(
+                        tiles = 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
+                        attr = 'Google',
+                        name = 'Satelite',
+                        max_zoom = 18,
+                        overlay = True,
+                        show=True,
+                        control = True
+                    ),
+                    'Google Satellite Hybrid': folium.TileLayer(
+                        tiles = 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
+                        attr = 'Google',
+                        name = 'Google Satellite',
+                        overlay = True,
+                        control = True
+                    ),
+                }
+                # figure = folium.Figure()
+
+    rgb = ee.Image('users/ashamba/RGB_TEST')
+
+
+    m = folium.Map(
+        location=[9.45716831, 2.64341728],
+        zoom_start=18,
+        prefer_canvas=True,
+        tiles = None
+    )
+
+    m.add_child(basemaps['Google Satellite'])
+
+    print(plant_id)
+
+    def add_ee_layer(self, ee_image_object, vis_params, name):
+            map_id_dict = ee.Image(ee_image_object).getMapId(vis_params)
+            folium.raster_layers.TileLayer(
+                tiles=map_id_dict['tile_fetcher'].url_format,
+                attr='Map Data &copy; <a href="https://earthengine.google.com/">Google Earth Engine</a>',
+                name=name,
+                overlay=True,
+                control=True
+            ).add_to(self)
+
+    folium.Map.add_ee_layer = add_ee_layer
+    m.add_ee_layer(rgb, {}, 'DRONE')
+
+    m=m._repr_html_()
+    context = {'my_map': m}
+    context['segment'] = 'index'
+
+    html_template = loader.get_template('index.html')
+    return HttpResponse(html_template.render(context, request))

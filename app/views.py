@@ -20,6 +20,10 @@ from shapely import geometry
 from area import area
 import locale
 from math import log10, floor
+from django.utils.translation import gettext
+from django.utils.translation import activate, get_language
+from django.utils.translation import gettext_lazy
+
 
 # generic base view
 from django.views.generic import TemplateView
@@ -34,7 +38,7 @@ service_account = 'cajulab@benin-cajulab-web-application.iam.gserviceaccount.com
 credentials = ee.ServiceAccountCredentials(service_account, 'privatekey.json')
 ee.Initialize(credentials)
 locale.setlocale(locale.LC_ALL, '')  # Use '' for auto, or force e.g. to 'en_US.UTF-8'
-heroku = True
+heroku = False
 
 alldept = ee.Image('users/ashamba/allDepartments_v0')
 dtstats_df = pd.read_excel("./new_data/dtstats_df.xlsx", engine='openpyxl')
@@ -76,60 +80,66 @@ for (id_u, code_u) in GEO_id_tuple:
         special_id_tuple.append((id_u, code_u))
         special_id.append(id_u)
 
-
-basemaps = {
-            'Google Maps': folium.TileLayer(
-                tiles = 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
-                attr = 'Google',
-                name = 'Maps',
-                max_zoom =18,
-                overlay = True,
-                control = False
-            ),
-            'Google Satellite': folium.TileLayer(
-                tiles = 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
-                attr = 'Google',
-                name = 'Satellite View',
-                max_zoom = 18,
-                overlay = True,
-                show=False,
-                control = True
-            ),
-            'Google Terrain': folium.TileLayer(
-                tiles = 'https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',
-                attr = 'Google',
-                name = 'Google Terrain',
-                overlay = True,
-                control = True
-            ),
-            'Google Satellite Hybrid': folium.TileLayer(
-                tiles = 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
-                attr = 'Google',
-                name = 'Google Satellite',
-                overlay = True,
-                control = True
-            ),
-            'Esri Satellite': folium.TileLayer(
-                tiles = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-                attr = 'Esri',
-                name = 'Esri Satellite',
-                overlay = True,
-                control = True
-            )
-        }
-
-
 class my_home():
     # Define a method for displaying Earth Engine image tiles on a folium map.
 
-    def __init__(self):
+    def __init__(self, language):
+
+        try:
+            activate(language)
+        finally:
+            current_language = get_language()
+            activate(current_language)
+
         self.figure = folium.Figure()
-        self.m = ""
-        self.value2 = ""
-        self.name = ""
+        # self.m = ""
+        # self.value2 = ""
+        # self.name = ""
+        # # self.st_fr = gettext('Satellite View')
+        # # self.name_b = gettext('Benin Republic')
 
-    def get_context_data(self, **kwargs):
-
+    def get_context_data(self, path_link, **kwargs):
+        
+        basemaps = {
+                    'Google Maps': folium.TileLayer(
+                        tiles = 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+                        attr = gettext('Google'),
+                        name = 'Maps',
+                        max_zoom =18,
+                        overlay = True,
+                        control = False
+                    ),
+                    'Google Satellite': folium.TileLayer(
+                        tiles = 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
+                        attr = 'Google',
+                        name = gettext('Satellite View'),
+                        max_zoom = 18,
+                        overlay = True,
+                        show=False,
+                        control = True
+                    ),
+                    'Google Terrain': folium.TileLayer(
+                        tiles = 'https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',
+                        attr = 'Google',
+                        name = 'Google Terrain',
+                        overlay = True,
+                        control = True
+                    ),
+                    'Google Satellite Hybrid': folium.TileLayer(
+                        tiles = 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
+                        attr = 'Google',
+                        name = 'Google Satellite',
+                        overlay = True,
+                        control = True
+                    ),
+                    'Esri Satellite': folium.TileLayer(
+                        tiles = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                        attr = 'Esri',
+                        name = 'Esri Satellite',
+                        overlay = True,
+                        control = True
+                    )
+                }
                 # figure = folium.Figure()
 
         m = folium.Map(
@@ -147,21 +157,31 @@ class my_home():
         def highlight_function(feature):
             return {"fillColor": "#ffaf00", "color": "green", "weight": 3, "dashArray": "1, 1"}
 
-        marker_cluster = MarkerCluster(name="Nursery Information").add_to(m)
+       
+        marker_cluster = MarkerCluster(name=gettext("Nursery Information")).add_to(m)
+
+
+        Commune_Name = gettext('Commune Name')
+        Nursery_Owner = gettext("Nursery Owner")
+        Nursery_Area = gettext("Nursery Area (ha)")
+        Number_of_Plants = gettext("Number of Plants")
+       
         for i in range(len(ben_nursery)):
+
             folium.Marker(location= [ben_nursery[i:i+1]['Latitude'].values[0], ben_nursery[i:i+1]['Longitude'].values[0]],
                         rise_on_hover=True,
                         rise_offset = 250,
                         icon = folium.Icon(color="red", icon="leaf"),
-                        popup='''
+                        popup=f'''
                         <div style="border: 3px solid #808080">
-                        <h4 style="font-family: 'Trebuchet MS', sans-serif">Commune Name: <b>{}</b></h4>
-                        <h5 style="font-family: 'Trebuchet MS', sans-serif">Nursery Owner: <i>{}</i></h5>
-                        <h5 style="font-family: 'Trebuchet MS', sans-serif">Nursery Area (ha): <b>{}</b></h5>
-                        <h5 style="font-family: 'Trebuchet MS', sans-serif">Number of Plants: <b>{}</b></h5>
+                        <h4 style="font-family: 'Trebuchet MS', sans-serif">{Commune_Name}: <b>{ben_nursery[i:i+1].Commune.values[0]}</b></h4>
+                        <h5 style="font-family: 'Trebuchet MS', sans-serif">{Nursery_Owner}: <i>{ben_nursery[i:i+1].Owner.values[0]}</i></h5>
+                        <h5 style="font-family: 'Trebuchet MS', sans-serif">{Nursery_Area}: <b>{ben_nursery[i:i+1]['Area (ha)'].values[0]}</b></h5>
+                        <h5 style="font-family: 'Trebuchet MS', sans-serif">{Number_of_Plants}: <b>{ben_nursery[i:i+1]['Numebr of Plants'].values[0]}</b></h5>
+                        <a href="http://127.0.0.1:8000{path_link}drone/{ben_nursery[i:i+1].Owner.values[0]}/"target="_blank">website</a>
                         <a href="https://www.technoserve.org/our-work/agriculture/cashew/?_ga=2.159985149.1109250972.1626437600-1387218312.1616379774"target="_blank">click link to website</a>
                         <img src="https://gumlet.assettype.com/deshdoot/import/2019/12/tripXOXO-e1558439144643.jpg?w=1200&h=750&auto=format%2Ccompress&fit=max" width="200" height="70">
-                        </div>'''.format(ben_nursery[i:i+1].Commune.values[0], ben_nursery[i:i+1].Owner.values[0], ben_nursery[i:i+1]['Area (ha)'].values[0], ben_nursery[i:i+1]['Numebr of Plants'].values[0])).add_to(marker_cluster)
+                        </div>''').add_to(marker_cluster)
 
         def add_ee_layer(self, ee_image_object, vis_params, name):
             map_id_dict = ee.Image(ee_image_object).getMapId(vis_params)
@@ -179,16 +199,39 @@ class my_home():
         zones = alldept.eq(1)
         zones = zones.updateMask(zones.neq(0));
 
-        m.add_ee_layer(zones, {'palette': "red"}, 'Satellite Prediction')
+        m.add_ee_layer(zones, {'palette': "red"}, gettext('Satellite Prediction'))
 
-        layer3 = folium.FeatureGroup(name='No Boundary', show=False, overlay = False)
+        layer3 = folium.FeatureGroup(name=gettext('No Boundary'), show=False, overlay = False)
         layer3.add_to(m)
 
-        layer0 = folium.FeatureGroup(name='Benin Republic', show=False, overlay = False)
+        layer0 = folium.FeatureGroup(name=gettext('Benin Republic'), show=False, overlay = False)
         temp_geojson0  = folium.GeoJson(data=benin_adm0_json,
             name='Benin-Adm0 Department',
             highlight_function = highlight_function)
 
+
+
+        #Variables for translation
+        Departments_Cashew_Tree = gettext('Departments Cashew Tree Cover Statistics In')
+        Active_Trees = gettext("Active Trees")
+        Sick_Trees = gettext("Sick Trees")
+        Dead_Trees = gettext("Dead Trees")
+        Out_of_Production = gettext("Out of Production Trees")
+        Cashew_Trees_Status = gettext("Cashew Trees Status in")
+        is_ranked = gettext("is ranked")
+        globally_in_terms = gettext("globally in terms of total cashew yield")
+        Satellite_Est = gettext("Satellite Est")
+        TNS_Survey = gettext("TNS Survey")
+
+        #All 3 shapefiles share these variables
+        Total_Cashew_Yield = gettext("Total Cashew Yield (kg)")
+        Total_Area = gettext("Total Area (ha)")
+        Cashew_Tree_Cover = gettext("Cashew Tree Cover (ha)")
+        Yield_Hectare = gettext("Yield/Hectare (kg/ha)")
+        Yield_per_Tree = gettext("Yield per Tree (kg/tree)")
+        Number_of_Trees = gettext("Number of Trees")
+        nine_9 = gettext('9th')
+        Source_TNS = gettext("Source: TNS/BeninCaju Yield Surveys 2020")
 
         for feature in temp_geojson0.data['features']:
             # GEOJSON layer consisting of a single feature
@@ -206,7 +249,7 @@ class my_home():
 
             temp_layer0 = folium.GeoJson(feature,  zoom_on_click = True, highlight_function = highlight_function)
 
-            name = 'Benin Republic'
+            name = gettext('Benin Republic')
             surface_area = int(round(sum(ben_yield['2020 estimated surface (ha)'].dropna()),2))
             total_yield = int(round(sum(ben_yield['2020 total yield (kg)'].dropna()),2))
             yield_ha = int(round(np.mean(ben_yield['2020 yield per ha (kg)'].dropna()),2))
@@ -231,7 +274,8 @@ class my_home():
             
             r_yield_tree = round(r_total_yield/active_trees)
 
-            html4 = '''
+
+            html4 = f'''
                     <html>
                         <head>
                             <style>
@@ -273,9 +317,9 @@ class my_home():
                                 var pie_data = new google.visualization.DataTable();
                                 pie_data.addColumn('string', 'Commune');
                                 pie_data.addColumn('number', 'Cashew Tree Cover (ha)');
-                                pie_data.addRows({1});
+                                pie_data.addRows({pred_ben_data});
 
-                                var piechart_options = {{title:'Departments Cashew Tree Cover Statistics In {0}',
+                                var piechart_options = {{title:'{Departments_Cashew_Tree} {name}',
                                                             is3D: true,
                                                         }};
                                 var piechart = new google.visualization.PieChart(document.getElementById('piechart_div'));
@@ -286,15 +330,15 @@ class my_home():
 
                                 var data_donut = google.visualization.arrayToDataTable([
                                 ['Tree Type', 'Number of Trees'],
-                                ['Active Trees',      {14}],
-                                ['Sick Trees',      {11}],
-                                ['Dead Trees',     {13}],
-                                ['Out of Production Trees',      {12}],
+                                ["Active Trees",      {active_trees}],
+                                ["Sick Trees",      {sick_tree}],
+                                ["Dead Trees",     {dead_tree}],
+                                ["Out of Production Trees",      {out_prod_tree}],
                                 ]);
 
                                 var options_donut = {{
                                
-                                title: 'Cashew Trees Status in {0}',
+                                title: '{Cashew_Trees_Status} {name}',
                                 pieHole: 0.5,
                                 colors: ['007f00', '#02a8b1', '9e1a1a', '#242526'],
                                 }};
@@ -306,47 +350,47 @@ class my_home():
                             </script>
                         </head>
                         <body>
-                            <h2>{0}</h2>
-                            <h4>{0} is ranked <b>{7}</b> globally in terms of total cashew yield.</h4>
+                            <h2>{name}</h2>
+                            <h4>{name} {is_ranked} <b>{nine_9}</b> {globally_in_terms}.</h4>
                             <table>
                             <tr>
                                 <th></th>
-                                <th>Satellite Est</th>
-                                <th>TNS Survey</th>
+                                <th>{Satellite_Est}</th>
+                                <th>{TNS_Survey}</th>
                             </tr>
                             <tr>
-                                <td>Total Cashew Yield (kg)</td>
-                                <td>{15:n}M</td>
-                                <td>{3:n}M</td>
+                                <td>{Total_Cashew_Yield}</td>
+                                <td>{r_yield_pred/1000000:n}M</td>
+                                <td>{r_total_yield/1000000:n}M</td>
                                 
                             </tr>
                             <tr>
-                                <td>Total Area (ha)</td>
-                                <td>{16:n}M</td>
-                                <td>{5:n}K</td>
+                                <td>{Total_Area}</td>
+                                <td>{r_region_size/1000000:n}M</td>
+                                <td>{r_surface_area/1000:n}K</td>
                             </tr>
                             <tr>
-                                <td>Cashew Tree Cover (ha)</td>
-                                <td>{4:n}K</td>
+                                <td>{Cashew_Tree_Cover}</td>
+                                <td>{r_tree_ha_pred/1000:n}K</td>
                                 <td>NA</td>
                                 
                             </tr>
                             <tr>
-                                <td>Yield/Hectare (kg/ha)</td>
+                                <td>{Yield_Hectare}</td>
                                 <td>390</td>
-                                <td>{8}</td>
+                                <td>{r_yield_ha}</td>
                                 
                             </tr>
                             <tr>
-                                <td>Yield per Tree (kg/tree)</td>
+                                <td>{Yield_per_Tree}</td>
                                 <td>NA</td>
-                                <td>{9}</td>
+                                <td>{r_yield_tree}</td>
                                 
                             </tr>
                             <tr>
-                                <td>Number of Trees</td>
+                                <td>{Number_of_Trees}</td>
                                 <td>NA</td>
-                                <td>{10:n}K</td>
+                                <td>{r_num_tree/1000:n}K</td>
                                 
                             </tr>
                             </table>
@@ -358,12 +402,15 @@ class my_home():
                                 <td><div id="donutchart" style="width: 400; height: 350;border: 3px solid #00a5a7"></div></td>
                             </table>
                             <table>
-                                <td><div style= "text-align: center"><h5>Source: TNS/BeninCaju Yield Surveys 2020</h5></div>
+                                <td><div style= "text-align: center"><h5>{Source_TNS}</h5></div>
                             </table>    
 
                         </body>
-                        </html>'''.format(name, pred_ben_data, pred_ground_ben_data, r_total_yield/1000000, r_tree_ha_pred/1000, r_surface_area/1000, abs(round(surface_area - tree_ha_pred,2)), '9th',
-                            r_yield_ha, r_yield_tree, r_num_tree/1000, sick_tree, out_prod_tree, dead_tree, active_trees, r_yield_pred/1000000, r_region_size/1000000)
+                        </html>'''
+                        
+                        
+            # .format(name, pred_ben_data, pred_ground_ben_data, r_total_yield/1000000, r_tree_ha_pred/1000, r_surface_area/1000, abs(round(surface_area - tree_ha_pred,2)), '9th',
+                            # r_yield_ha, r_yield_tree, r_num_tree/1000, sick_tree, out_prod_tree, dead_tree, active_trees, r_yield_pred/1000000, r_region_size/1000000)
 
 
 
@@ -380,7 +427,7 @@ class my_home():
 
         layer0.add_to(m)
 
-        layer = folium.FeatureGroup(name='Benin Departments', show=False, overlay = False)
+        layer = folium.FeatureGroup(name=gettext('Benin Departments'), show=False, overlay = False)
 
 
         temp_geojson  = folium.GeoJson(data=benin_adm1_json,
@@ -389,6 +436,11 @@ class my_home():
 
 
         dept_yieldHa = {}
+
+        #Variables for departmental translation
+        Predicted_Cashew_TreeD = gettext("Predicted Cashew Tree Cover: Communes Statistics In")
+        among_Benin_departments = gettext("among Benin departments in terms of total cashew yield according to the TNS Yield Survey")
+
         for feature in temp_geojson.data['features']:
             # GEOJSON layer consisting of a single feature
             name = feature["properties"]["NAME_1"]
@@ -486,10 +538,12 @@ class my_home():
                 r_region_sizeD = round(region_sizeD, 1-int(floor(log10(abs(region_sizeD))))) if region_sizeD < 90000 else round(region_sizeD, 2-int(floor(log10(abs(region_sizeD)))))
             except:
                 r_region_sizeD = region_sizeD
-                
-            
+
             dept_yieldHa[name] = yield_haD
-            html3 = '''
+
+            
+
+            html3 = f'''
                     <html>
                         <head>
                         <style>
@@ -532,9 +586,9 @@ class my_home():
                                 var pie_data = new google.visualization.DataTable();
                                 pie_data.addColumn('string', 'Commune');
                                 pie_data.addColumn('number', 'Cashew Tree Cover');
-                                pie_data.addRows({1});
+                                pie_data.addRows({pred_dept_data});
 
-                                var piechart_options = {{title:'Predicted Cashew Tree Cover: Communes Statistics In {0}',
+                                var piechart_options = {{title:'{Predicted_Cashew_TreeD} {name}',
                                             width:400,
                                             height:350,
                                             is3D: true}};
@@ -545,14 +599,14 @@ class my_home():
 
                                 var data_donut = google.visualization.arrayToDataTable([
                                 ['Tree Type', 'Number of Trees'],
-                                ['Active Trees',      {14}],
-                                ['Sick Trees',      {11}],
-                                ['Dead Trees',     {13}],
-                                ['Out of Production Trees',      {12}],
+                                ['Active Trees',      {active_treesD}],
+                                ['Sick Trees',      {sick_treeD}],
+                                ['Dead Trees',     {dead_treeD}],
+                                ['Out of Production Trees',      {out_prod_treeD}],
                                 ]);
 
                                 var options_donut = {{
-                                title: 'Cashew Trees Status in {0}',
+                                title: '{Cashew_Trees_Status} {name}',
                                 pieHole: 0.5,
                                 colors: ['007f00', '#02a8b1', '9e1a1a', '#242526'],
                                 }};
@@ -564,48 +618,48 @@ class my_home():
                             </script>
                         </head>
                         <body>
-                            <h2>{0}</h2>
-                            <h4>In 2020, {0} was ranked <b>{7}</b> among Benin departments in terms of total cashew yield according to the TNS Yield Survey.</h4>
+                            <h2>{name}</h2>
+                            <h4>In 2020, {name} {is_ranked} <b>{my_dict[str(position)]}</b> {among_Benin_departments}.</h4>
                             <table>
                             <tr>
                                 <th></th>
-                                <th>Satellite Est</th>
-                                <th>TNS Survey</th>
+                                <th>{Satellite_Est}</th>
+                                <th>{TNS_Survey}</th>
                                 
                             </tr>
                             <tr>
-                                <td>Total Cashew Yield (kg)</td>
-                                <td>{15:n}M</td>
-                                <td>{3:n}M</td>
+                                <td>{Total_Cashew_Yield}</td>
+                                <td>{r_yield_pred_dept/1000000:n}M</td>
+                                <td>{r_total_yieldD/1000000:n}M</td>
                                 
                             </tr>
                             <tr>
-                                <td>Total Area (ha)</td>
-                                <td>{16:n}M</td>
-                                <td>{5:n}K</td>
+                                <td>{Total_Area}</td>
+                                <td>{r_region_sizeD/1000000:n}M</td>
+                                <td>{r_surface_areaD/1000:n}K</td>
                             </tr>
                             <tr>
-                                <td>Cashew Tree Cover (ha)</td>
-                                <td>{4:n}K</td>
+                                <td>{Cashew_Tree_Cover}</td>
+                                <td>{r_tree_ha_pred_dept/1000:n}K</td>
                                 <td>NA</td>
                                 
                             </tr>
                             <tr>
-                                <td>Yield/Hectare (kg/ha)</td>
+                                <td>{Yield_Hectare}</td>
                                 <td>390</td>
-                                <td>{8}</td>
+                                <td>{r_yield_haD}</td>
                                 
                             </tr>
                             <tr>
-                                <td>Yield per Tree (kg/tree)</td>
+                                <td>{Yield_per_Tree}</td>
                                 <td>NA</td>
-                                <td>{9}</td>
+                                <td>{r_yield_treeD}</td>
                                 
                             </tr>
                             <tr>
-                                <td>Number of Trees</td>
+                                <td>{Number_of_Trees}</td>
                                 <td>NA</td>
-                                <td>{10:n}K</td>
+                                <td>{r_num_treeD/1000:n}K</td>
                             
                             </tr>
                             </table>
@@ -617,12 +671,13 @@ class my_home():
                                 <td><div id="donutchart" style="width: 400; height: 350;border: 3px solid #00a5a7"></div></td>
                             </table>
                             <table>
-                                <td><div style= "text-align: center"><h5>Source: TNS/BeninCaju Yield Surveys 2020</h5></div>
+                                <td><div style= "text-align: center"><h5>{Source_TNS}</h5></div>
                             </table> 
                         </body>
                         </html>
-                    '''.format(name, pred_dept_data, pred_ground_dept_data, r_total_yieldD/1000000, r_tree_ha_pred_dept/1000, r_surface_areaD/1000, abs(round(surface_areaD - tree_ha_pred_dept,2)), my_dict[str(position)],
-                            r_yield_haD, r_yield_treeD, r_num_treeD/1000, sick_treeD, out_prod_treeD, dead_treeD, num_treeD-sick_treeD-out_prod_treeD-dead_treeD, r_yield_pred_dept/1000000, r_region_sizeD/1000000)
+                    '''
+                    # .format(name, pred_dept_data, pred_ground_dept_data, r_total_yieldD/1000000, r_tree_ha_pred_dept/1000, r_surface_areaD/1000, abs(round(surface_areaD - tree_ha_pred_dept,2)), my_dict[str(position)],
+                    #         r_yield_haD, r_yield_treeD, r_num_treeD/1000, sick_treeD, out_prod_treeD, dead_treeD, num_treeD-sick_treeD-out_prod_treeD-dead_treeD, r_yield_pred_dept/1000000, r_region_sizeD/1000000)
 
             iframe = folium.IFrame(html=html3, width=450, height=380)
 
@@ -645,13 +700,15 @@ class my_home():
 
         # Communes section
 
-        layer2 = folium.FeatureGroup(name='Benin Communes', show=False, overlay = False)
+        layer2 = folium.FeatureGroup(name=gettext('Benin Communes'), show=False, overlay = False)
 
 
         temp_geojson2 = folium.GeoJson(data = benin_adm2_json,
             name = 'Benin-Adm2 Communes',
             highlight_function = highlight_function)
 
+        # Commune translation variable
+        among_Benin_communes = gettext("among Benin communes in terms of total cashew yield according to the TNS Yield Survey")
 
         for feature in temp_geojson2.data['features']:
             # GEOJSON layer consisting of a single feature
@@ -815,8 +872,10 @@ class my_home():
             except:
                 r_num_treeC = num_treeC
 
+            
 
-            html3 = '''
+
+            html3 = f'''
                     <html>
                     <head>
                         <style>
@@ -858,14 +917,14 @@ class my_home():
 
                                 var data_donut = google.visualization.arrayToDataTable([
                                 ['Tree Type', 'Number of Trees'],
-                                ['Active Trees',      {12}],
-                                ['Sick Trees',      {9}],
-                                ['Dead Trees',     {11}],
-                                ['Out of Production Trees',      {10}],
+                                ['Active Trees',      {active_treesC}],
+                                ['Sick Trees',      {sick_treeC}],
+                                ['Dead Trees',     {dead_treeC}],
+                                ['Out of Production Trees',      {out_prod_treeC}],
                                 ]);
 
                                 var options_donut = {{
-                                title: 'Cashew Trees Status in {0}',
+                                title: '{Cashew_Trees_Status} {name}',
                                 pieHole: 0.5,
                                 colors: ['007f00', '#02a8b1', '9e1a1a', '#242526'],
                                 }};
@@ -878,48 +937,48 @@ class my_home():
                         </head>
                         <body>
 
-                            <h2>{0}</h2>
-                            <h4>In 2020, {0} was ranked <b>{5}</b> among Benin communes in terms of total cashew yield according to the TNS Yield Survey.</h4>
+                            <h2>{name}</h2>
+                            <h4>In 2020, {name} {is_ranked} <b>{my_dict_communes[str(position2+1)]}</b> {among_Benin_communes}.</h4>
                             <table>
                             <tr>
                                 <th></th>
-                                <th>Satellite Est</th>
-                                <th>TNS Survey</th>
+                                <th>{Satellite_Est}</th>
+                                <th>{TNS_Survey}</th>
                                 
                             </tr>
                             <tr>
-                                <td>Total Cashew Yield (kg)</td>
-                                <td>{13:n}M</td>
-                                <td>{1:n}M</td>
+                                <td>{Total_Cashew_Yield}</td>
+                                <td>{r_yield_pred_comm/1000000:n}M</td>
+                                <td>{r_total_yieldC/1000000:n}M</td>
                                 
                             </tr>
                             <tr>
-                                <td>Total Area (ha)</td>
-                                <td>{14:n}K</td>
-                                <td>{3:n}K</td>
+                                <td>{Total_Area}</td>
+                                <td>{r_region_sizeC/1000:n}K</td>
+                                <td>{r_surface_areaC/1000:n}K</td>
                             </tr>
                             <tr>
-                                <td>Cashew Tree Cover (ha)</td>
-                                <td>{2:n}K</td>
+                                <td>{Cashew_Tree_Cover}</td>
+                                <td>{r_tree_ha_pred_comm/1000:n}K</td>
                                 <td>NA</td>
                                 
                             </tr>
                             <tr>
-                                <td>Yield/Hectare (kg/ha)</td>
+                                <td>{Yield_Hectare}</td>
                                 <td>390</td>
-                                <td>{6}</td>
+                                <td>{r_yield_haC}</td>
                             
                             </tr>
                             <tr>
-                                <td>Yield per Tree (kg/tree)</td>
+                                <td>{Yield_per_Tree}</td>
                                 <td>NA</td>
-                                <td>{7}</td>
+                                <td>{r_yield_treeC}</td>
                             
                             </tr>
                             <tr>
-                                <td>Number of Trees</td>
+                                <td>{Number_of_Trees}</td>
                                 <td>NA</td>
-                                <td>{8:n}K</td>
+                                <td>{r_num_treeC/1000:n}K</td>
                                 
                             </tr>
                             </table>
@@ -928,12 +987,14 @@ class my_home():
                                 <td><div id="donutchart" style="width: 400; height: 350;border: 3px solid #00a5a7"></div></td>
                             </table>
                             <table>
-                                <td><div style= "text-align: center"><h5>Source: TNS/BeninCaju Yield Surveys 2020</h5></div>
+                                <td><div style= "text-align: center"><h5>{Source_TNS}</h5></div>
                             </table> 
                         </body>
                         </html>
-                    '''.format(name, r_total_yieldC/1000000, r_tree_ha_pred_comm/1000, r_surface_areaC/1000, abs(round(surface_areaC - tree_ha_pred_comm,2)), my_dict_communes[str(position2+1)],
-                            r_yield_haC, r_yield_treeC, r_num_treeC/1000, sick_treeC, out_prod_treeC, dead_treeC, active_treesC, r_yield_pred_comm/1000000, r_region_sizeC/1000)
+                    '''
+                    
+                    # .format(name, r_total_yieldC/1000000, r_tree_ha_pred_comm/1000, r_surface_areaC/1000, abs(round(surface_areaC - tree_ha_pred_comm,2)), my_dict_communes[str(position2+1)],
+                    #         r_yield_haC, r_yield_treeC, r_num_treeC/1000, sick_treeC, out_prod_treeC, dead_treeC, active_treesC, r_yield_pred_comm/1000000, r_region_sizeC/1000)
 
             iframe = folium.IFrame(html=html3, width=450, height=380)
 
@@ -954,8 +1015,8 @@ class my_home():
 
         #Adding Benin Plantation to the map
         #Adding Benin Plantation to the map
-        layer_alt = folium.FeatureGroup(name='Plantation Locations', show=True, overlay = True)
-        plantation_cluster = MarkerCluster(name="Benin Plantations")
+        layer_alt = folium.FeatureGroup(name=gettext('Plantation Locations'), show=True, overlay = True)
+        plantation_cluster = MarkerCluster(name=gettext("Benin Plantations"))
 
         temp_geojson_a  = folium.GeoJson(data=alteia_json,
             name='Alteia Plantation Data 2',
@@ -995,6 +1056,28 @@ class my_home():
         r_total_grand_pred_yield = round(total_grand_pred_yield, 1-int(floor(log10(abs(total_grand_pred_yield))))) if total_grand_pred_yield < 90000 else round(total_grand_pred_yield, 2-int(floor(log10(abs(total_grand_pred_yield)))))
         r_total_grand_ground_yield = round(total_grand_ground_yield, 1-int(floor(log10(abs(total_grand_ground_yield))))) if total_grand_ground_yield < 90000 else round(total_grand_ground_yield, 2-int(floor(log10(abs(total_grand_ground_yield)))))
 
+        #Plantation translation variables
+        Plantation_Owner = gettext("Plantation Owner")
+        Plantation_ID = gettext("Plantation ID")
+        Village = gettext("Village")
+        Satellite_Estimate = gettext("Satellite Estimate")
+        Yield_Survey = gettext("2020 Yield Survey")
+        Cashew_Yield = gettext("Cashew Yield (kg)")
+        Plantation_Size = gettext("Plantation Size (ha)")
+        Cashew_Surface_Area = gettext("Cashew Surface Area (ha)")
+        Yield_Per_Hectare = gettext("Yield Per Hectare (kg/ha)")
+        Number_of_TreesP = gettext("Number of Trees")
+        Yield_per_TreeP = gettext("Yield per Tree (kg/tree)")
+        Average_Surface_AreaP = gettext("Average Surface Area and Cashew Yield Information for Plantations in Benin Republic")
+
+        Number_of_Farms = gettext("Number of Farms")
+        Total_Plantation_Yield = gettext("Total Plantation Yield (kg)")
+        Total_Plantation_Area = gettext("Total Plantation Area (ha)")
+        Cashew_Surface_Area = gettext("Cashew Surface Area (ha)")
+        Average_Yield_Per = gettext("Average Yield Per Hectare (kg/ha)")
+        Total_Number_of = gettext("Total Number of Trees")
+        Average_Yield_per = gettext("Average Yield per Tree (kg/tree)")
+
         for feature in temp_geojson_a.data['features']:
             
             code = feature["properties"]["Plantation code"]
@@ -1029,8 +1112,11 @@ class my_home():
                     r_yield_pred_plant = round(yield_pred_plant, 1-int(floor(log10(abs(yield_pred_plant))))) if yield_pred_plant < 90000 else round(yield_pred_plant, 2-int(floor(log10(abs(yield_pred_plant)))))
                 except:
                     r_yield_pred_plant = yield_pred_plant
+
+
+                
                     
-                html_a = '''
+                html_a = f'''
                     <html>
                     <head>
                         <style>
@@ -1061,109 +1147,112 @@ class my_home():
                             </style>
                         </head>
                         <body>
+                        
 
-                            <h3>Plantation Owner: {0}</h3>
-                            <h4>Plantation ID: {1}</h4>
-                            <h4>Village: {2}</h4>
+                            <h3>{Plantation_Owner}: {nameP}</h3>
+                            <h4>{Plantation_ID}: {code}</h4>
+                            <h4>{Village}: {village}</h4>
                             <table>
                             <tr>
                                 <th></th>
-                                <th>Satellite Estimate</th>
-                                <th>2020 Yield Survey</th>
+                                <th>{Satellite_Estimate}</th>
+                                <th>{Yield_Survey}</th>
                             </tr>
                             <tr>
-                                <td>Cashew Yield (kg)</td>
-                                <td>{6:n}K</td>
-                                <td>{7:n}K</td>       
+                                <td>{Cashew_Yield}</td>
+                                <td>{r_yield_pred_plant/1000:n}K</td>
+                                <td>{r_total_yieldP/1000:n}K</td>       
                             </tr>
                             <tr>
-                                <td>Plantation Size (ha)</td>
-                                <td>{3}</td>
-                                <td>{4}</td>
+                                <td>{Plantation_Size}</td>
+                                <td>{plantation_size}</td>
+                                <td>{surface_areaP}</td>
                             </tr>
                             <tr>
-                                <td>Cashew Surface Area (ha)</td>
-                                <td>{5}</td>
+                                <td>{Cashew_Surface_Area}</td>
+                                <td>{tree_ha_pred_plant}</td>
                                 <td>NA</td>
                             </tr>
                             <tr>
-                                <td>Yield Per Hectare (kg/ha)</td>
-                                <td>{8}</td>
-                                <td>{9}</td>  
+                                <td>{Yield_Per_Hectare}</td>
+                                <td>{dept_yieldHa[department_name]}</td>
+                                <td>{yield_haP}</td>  
                             </tr>
                             <tr>
-                                <td>Number of Trees</td>
+                                <td>{Number_of_TreesP}</td>
                                 <td>NA</td>
-                                <td>{20}</td>
+                                <td>{num_treeP}</td>
                             </tr>
                             <tr>
-                                <td>Yield per Tree (kg/tree)</td>
+                                <td>{Yield_per_TreeP}</td>
                                 <td>NA</td>
-                                <td>{21}</td>
+                                <td>{yield_treeP}</td>
                             </tr>
                             
                             </table>
                             
                             <h4>
-                            Average Surface Area and Cashew Yield Information for Plantations in Benin Republic
+                            {Average_Surface_AreaP}
                             </h4>
                             <table>
                             <tr>
                                 <th></th>
-                                <th>Satellite Estimate</th>
-                                <th>2020 Yield Survey</th>
+                                <th>{Satellite_Estimate}</th>
+                                <th>{Yield_Survey}</th>
                             </tr>
                             <tr>
-                                <td>Number of Farms</td>
-                                <td>{17}</td>
-                                <td>{17}</td>
+                                <td>{Number_of_Farms}</td>
+                                <td>{counter}</td>
+                                 <td>{counter}</td>
                             
                             </tr>
                             <tr>
-                                <td>Total Plantation Yield (kg)</td>
-                                <td>{13:n}K</td>
-                                <td>{14:n}K</td>
+                                <td>{Total_Plantation_Yield}</td>
+                                <td>{r_total_grand_pred_yield/1000:n}K</td>
+                                <td>{r_total_grand_ground_yield/1000:n}K</td>
                                 
                             </tr>
                             <tr>
-                                <td>Total Plantation Area (ha)</td>
-                                <td>{10}</td>
-                                <td>{11}</td>
+                                <td>{Total_Plantation_Area}</td>
+                                <td>{grand_plantation_size}</td>
+                                <td>{total_grand_ground_surface}</td>
                             
                             </tr>
                             <tr>
-                                <td>Cashew Surface Area (ha)</td>
-                                <td>{12}</td>
+                                <td>{Cashew_Surface_Area}</td>
+                                <td>{total_grand_pred_surface}</td>
                                 <td>NA</td>
                             
                             </tr>
                             
                             <tr>
-                                <td>Average Yield Per Hectare (kg/ha)</td>
-                                <td>{15}</td>
-                                <td>{16}</td>
+                                <td>{Average_Yield_Per}</td>
+                                <td>{average_pred_yield_ha}</td>
+                                <td>{average_ground_yield_ha}</td>
                                 
                             </tr>
                             <tr>
-                                <td>Total Number of Trees</td>
+                                <td>{Total_Number_of}</td>
                                 <td>NA</td>
-                                <td>{18:n}K</td>
+                                <td>{r_total_grand_num_tree/1000:n}K</td>
                             </tr>
                             <tr>
-                                <td>Average Yield per Tree (kg/tree)</td>
+                                <td>{Average_Yield_per}</td>
                                 <td>NA</td>
-                                <td>{19}</td>
+                                <td>{total_grand_yield_tree}</td>
                             </tr>
                             
                             </table>
                             <table>
-                                <td><div style= "text-align: center"><h6>Source: TNS/BeninCaju Yield Surveys 2020</h6></div>
+                                <td><div style= "text-align: center"><h6>{Source_TNS}</h6></div>
                             </table> 
                         </body>
                         </html>
-                    '''.format(nameP, code, village, plantation_size, surface_areaP, tree_ha_pred_plant, r_yield_pred_plant/1000,
-                            r_total_yieldP/1000, dept_yieldHa[department_name], yield_haP, grand_plantation_size, total_grand_ground_surface, total_grand_pred_surface,
-                            r_total_grand_pred_yield/1000, r_total_grand_ground_yield/1000, average_pred_yield_ha, average_ground_yield_ha, counter, r_total_grand_num_tree/1000, total_grand_yield_tree, num_treeP, yield_treeP)
+                    '''
+                    
+                    # .format(nameP, code, village, plantation_size, surface_areaP, tree_ha_pred_plant, r_yield_pred_plant/1000,
+                    #         r_total_yieldP/1000, dept_yieldHa[department_name], yield_haP, grand_plantation_size, total_grand_ground_surface, total_grand_pred_surface,
+                    #         r_total_grand_pred_yield/1000, r_total_grand_ground_yield/1000, average_pred_yield_ha, average_ground_yield_ha, counter, r_total_grand_num_tree/1000, total_grand_yield_tree, num_treeP, yield_treeP)
 
                 iframe = folium.IFrame(html=html_a, width=370, height=380)
 
@@ -1184,7 +1273,7 @@ class my_home():
 
         layer_alt.add_to(m)
 
-        feature_group_drone = folium.map.FeatureGroup(name='TNS Drone Images').add_to(m)
+        feature_group_drone = folium.map.FeatureGroup(name= gettext('TNS Drone Images')).add_to(m)
         for root, subdirectories, files in os.walk(drone_directory):
             for file in files:
                 image_path = os.path.join(root, file)
@@ -1219,9 +1308,10 @@ class my_home():
 
 @login_required(login_url="/login/")
 def index(request):
-
-    home_obj = my_home()
-    context = home_obj.get_context_data()
+    language = request.path_info.replace('/', '')
+    path_link = request.path
+    home_obj = my_home(language)
+    context = home_obj.get_context_data(path_link)
     context['segment'] = 'index'
 
     html_template = loader.get_template('index.html')

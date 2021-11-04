@@ -1,0 +1,968 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-11-03 23:41+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\app\views.py:106 .\core\templates\login.html:26
+#: .\core\templates\register.html:27
+msgid "Google"
+msgstr ""
+
+#: .\app\views.py:115
+msgid "Satellite View"
+msgstr ""
+
+#: .\app\views.py:161
+msgid "Nursery Information"
+msgstr ""
+
+#: .\app\views.py:164
+msgid "Commune Name"
+msgstr ""
+
+#: .\app\views.py:165
+msgid "Nursery Owner"
+msgstr ""
+
+#: .\app\views.py:166
+msgid "Nursery Area (ha)"
+msgstr ""
+
+#: .\app\views.py:167 .\core\templates\nurseries.html:59
+msgid "Number of Plants"
+msgstr ""
+
+#: .\app\views.py:202
+msgid "Satellite Prediction"
+msgstr ""
+
+#: .\app\views.py:204
+msgid "No Boundary"
+msgstr ""
+
+#: .\app\views.py:207 .\app\views.py:252
+msgid "Benin Republic"
+msgstr ""
+
+#: .\app\views.py:215
+msgid "Departments Cashew Tree Cover Statistics In"
+msgstr ""
+
+#: .\app\views.py:216
+msgid "Active Trees"
+msgstr ""
+
+#: .\app\views.py:217 .\core\templates\yield.html:66
+msgid "Sick Trees"
+msgstr ""
+
+#: .\app\views.py:218 .\core\templates\yield.html:67
+msgid "Dead Trees"
+msgstr ""
+
+#: .\app\views.py:219
+msgid "Out of Production Trees"
+msgstr ""
+
+#: .\app\views.py:220
+msgid "Cashew Trees Status in"
+msgstr ""
+
+#: .\app\views.py:221
+msgid "is ranked"
+msgstr ""
+
+#: .\app\views.py:222
+msgid "globally in terms of total cashew yield"
+msgstr ""
+
+#: .\app\views.py:223
+msgid "Satellite Est"
+msgstr ""
+
+#: .\app\views.py:224
+msgid "TNS Survey"
+msgstr ""
+
+#: .\app\views.py:227
+msgid "Total Cashew Yield (kg)"
+msgstr ""
+
+#: .\app\views.py:228
+msgid "Total Area (ha)"
+msgstr ""
+
+#: .\app\views.py:229
+msgid "Cashew Tree Cover (ha)"
+msgstr ""
+
+#: .\app\views.py:230
+msgid "Yield/Hectare (kg/ha)"
+msgstr ""
+
+#: .\app\views.py:231 .\app\views.py:1070
+msgid "Yield per Tree (kg/tree)"
+msgstr ""
+
+#: .\app\views.py:232 .\app\views.py:1069
+msgid "Number of Trees"
+msgstr ""
+
+#: .\app\views.py:233
+msgid "9th"
+msgstr ""
+
+#: .\app\views.py:234
+msgid "Source: TNS/BeninCaju Yield Surveys 2020"
+msgstr ""
+
+#: .\app\views.py:430
+msgid "Benin Departments"
+msgstr ""
+
+#: .\app\views.py:441
+msgid "Predicted Cashew Tree Cover: Communes Statistics In"
+msgstr ""
+
+#: .\app\views.py:442
+msgid ""
+"among Benin departments in terms of total cashew yield according to the TNS "
+"Yield Survey"
+msgstr ""
+
+#: .\app\views.py:703
+msgid "Benin Communes"
+msgstr ""
+
+#: .\app\views.py:711
+msgid ""
+"among Benin communes in terms of total cashew yield according to the TNS "
+"Yield Survey"
+msgstr ""
+
+#: .\app\views.py:1018
+msgid "Plantation Locations"
+msgstr ""
+
+#: .\app\views.py:1019
+msgid "Benin Plantations"
+msgstr ""
+
+#: .\app\views.py:1060
+msgid "Plantation Owner"
+msgstr ""
+
+#: .\app\views.py:1061
+msgid "Plantation ID"
+msgstr ""
+
+#: .\app\views.py:1062 .\core\templates\plantations.html:58
+msgid "Village"
+msgstr ""
+
+#: .\app\views.py:1063
+msgid "Satellite Estimate"
+msgstr ""
+
+#: .\app\views.py:1064
+msgid "2020 Yield Survey"
+msgstr ""
+
+#: .\app\views.py:1065
+msgid "Cashew Yield (kg)"
+msgstr ""
+
+#: .\app\views.py:1066
+msgid "Plantation Size (ha)"
+msgstr ""
+
+#: .\app\views.py:1067 .\app\views.py:1076
+msgid "Cashew Surface Area (ha)"
+msgstr ""
+
+#: .\app\views.py:1068
+msgid "Yield Per Hectare (kg/ha)"
+msgstr ""
+
+#: .\app\views.py:1071
+msgid ""
+"Average Surface Area and Cashew Yield Information for Plantations in Benin "
+"Republic"
+msgstr ""
+
+#: .\app\views.py:1073
+msgid "Number of Farms"
+msgstr ""
+
+#: .\app\views.py:1074
+msgid "Total Plantation Yield (kg)"
+msgstr ""
+
+#: .\app\views.py:1075
+msgid "Total Plantation Area (ha)"
+msgstr ""
+
+#: .\app\views.py:1077
+msgid "Average Yield Per Hectare (kg/ha)"
+msgstr ""
+
+#: .\app\views.py:1078
+msgid "Total Number of Trees"
+msgstr ""
+
+#: .\app\views.py:1079
+msgid "Average Yield per Tree (kg/tree)"
+msgstr ""
+
+#: .\app\views.py:1276
+msgid "TNS Drone Images"
+msgstr ""
+
+#: .\authentication\models.py:76 .\authentication\models.py:137
+#: .\authentication\models.py:221 .\authentication\models.py:287
+#: .\authentication\utils.py:18
+msgid "Male"
+msgstr ""
+
+#: .\authentication\models.py:77 .\authentication\models.py:138
+#: .\authentication\models.py:222 .\authentication\models.py:288
+#: .\authentication\utils.py:19
+msgid "Female"
+msgstr ""
+
+#: .\authentication\models.py:78 .\authentication\models.py:139
+#: .\authentication\models.py:223 .\authentication\models.py:289
+#: .\authentication\utils.py:20
+msgid "Others"
+msgstr ""
+
+#: .\core\templates\accounts\acc_active_email.html:112
+#: .\core\templates\accounts\password_reset_email.html:112
+msgid ""
+"We're thrilled to have you here! Get ready to dive into your new account."
+msgstr ""
+
+#: .\core\templates\accounts\acc_active_email.html:130
+msgid "Welcome"
+msgstr ""
+
+#: .\core\templates\accounts\acc_active_email.html:169
+msgid "Confirm Account"
+msgstr ""
+
+#: .\core\templates\accounts\acc_active_email.html:207
+msgid "Technoserve Team"
+msgstr ""
+
+#: .\core\templates\accounts\acc_active_email.html:235
+msgid "If these emails get annoying, please feel free to "
+msgstr ""
+
+#: .\core\templates\accounts\acc_active_email.html:236
+#: .\core\templates\accounts\password_reset_email.html:241
+msgid "unsubscribe"
+msgstr ""
+
+#: .\core\templates\accounts\full_login.html:21
+#: .\core\templates\accounts\register.html:20
+msgid "Sign Up"
+msgstr ""
+
+#: .\core\templates\accounts\full_login.html:30
+#: .\core\templates\accounts\login.html:29
+#: .\core\templates\accounts\password_reset_form.html:28
+#: .\core\templates\accounts\register.html:29
+#: .\core\templates\accounts\register_org.html:30
+#: .\core\templates\accounts\register_role.html:30
+msgid "Add your credentials"
+msgstr ""
+
+#: .\core\templates\accounts\full_login.html:77
+msgid "Gender:"
+msgstr ""
+
+#: .\core\templates\accounts\full_login.html:90
+msgid "Date of Birth:"
+msgstr ""
+
+#: .\core\templates\accounts\full_login.html:123
+#: .\core\templates\accounts\register.html:96
+msgid "Organization Name:"
+msgstr ""
+
+#: .\core\templates\accounts\full_login.html:136
+#: .\core\templates\accounts\register.html:109
+msgid "Role:"
+msgstr ""
+
+#: .\core\templates\accounts\full_login.html:198
+#: .\core\templates\accounts\register.html:141
+#: .\core\templates\accounts\register_org.html:126
+#: .\core\templates\accounts\register_role.html:69
+#: .\core\templates\register.html:66
+msgid "Privacy Policy"
+msgstr ""
+
+#: .\core\templates\accounts\full_login.html:204
+#: .\core\templates\accounts\register.html:147
+#: .\core\templates\register.html:72
+msgid "Create account"
+msgstr ""
+
+#: .\core\templates\accounts\full_login.html:219
+#: .\core\templates\accounts\register.html:162
+#: .\core\templates\accounts\register_org.html:147
+#: .\core\templates\accounts\register_role.html:90
+#: .\core\templates\includes\langnav.html:14
+#: .\core\templates\includes\navigation-fullscreen.html:29
+#: .\core\templates\includes\sidenav.html:57 .\core\templates\page-403.html:24
+msgid "Login"
+msgstr ""
+
+#: .\core\templates\accounts\full_login.html:222
+#: .\core\templates\accounts\login.html:77
+#: .\core\templates\accounts\new_password.html:73
+#: .\core\templates\accounts\password_change_failed.html:34
+#: .\core\templates\accounts\password_reset_form.html:63
+#: .\core\templates\accounts\register.html:165
+#: .\core\templates\accounts\register_org.html:150
+#: .\core\templates\accounts\register_role.html:93
+#: .\core\templates\email_confirm_invalid.html:34
+#: .\core\templates\email_confirmed.html:33 .\core\templates\login.html:68
+msgid "Contact Us"
+msgstr ""
+
+#: .\core\templates\accounts\login.html:19
+msgid "Sign In"
+msgstr ""
+
+#: .\core\templates\accounts\login.html:60 .\core\templates\login.html:54
+msgid "Remember me"
+msgstr ""
+
+#: .\core\templates\accounts\login.html:64 .\core\templates\login.html:58
+msgid "Sign in"
+msgstr ""
+
+#: .\core\templates\accounts\login.html:67
+msgid "Forgot password"
+msgstr ""
+
+#: .\core\templates\accounts\login.html:74
+#: .\core\templates\accounts\new_password.html:70
+#: .\core\templates\accounts\password_reset_form.html:60
+#: .\core\templates\includes\langnav.html:19
+#: .\core\templates\includes\navigation-fullscreen.html:34
+msgid "Register"
+msgstr ""
+
+#: .\core\templates\accounts\new_password.html:19
+#: .\core\templates\accounts\password_reset_form.html:18
+msgid "Forgot Password"
+msgstr ""
+
+#: .\core\templates\accounts\new_password.html:26
+#: .\core\templates\email_confirmed.html:23
+msgid "login"
+msgstr ""
+
+#: .\core\templates\accounts\new_password.html:26
+msgid "your account."
+msgstr ""
+
+#: .\core\templates\accounts\new_password.html:30
+msgid "Add and confirm your new password"
+msgstr ""
+
+#: .\core\templates\accounts\new_password.html:62
+msgid "Save"
+msgstr ""
+
+#: .\core\templates\accounts\password_change_failed.html:20
+msgid "Ooops password change link is invalid!"
+msgstr ""
+
+#: .\core\templates\accounts\password_change_failed.html:24
+#: .\core\templates\email_confirm_invalid.html:24
+msgid "Please reach out to us through this"
+msgstr ""
+
+#: .\core\templates\accounts\password_change_failed.html:24
+#: .\core\templates\email_confirm_invalid.html:24
+msgid "link"
+msgstr ""
+
+#: .\core\templates\accounts\password_change_failed.html:31
+#: .\core\templates\email_confirm_invalid.html:31
+#: .\core\templates\email_confirmed.html:30 .\core\templates\page-403.html:31
+#: .\core\templates\page-404.html:24 .\core\templates\page-404.html:31
+#: .\core\templates\page-500.html:24 .\core\templates\page-500.html:31
+msgid "Home"
+msgstr ""
+
+#: .\core\templates\accounts\password_reset_email.html:145
+msgid "To initiate the password reset process for your"
+msgstr ""
+
+#: .\core\templates\accounts\password_reset_email.html:145
+msgid "Satellite Data Visualisation Dashboard account, click the link below."
+msgstr ""
+
+#: .\core\templates\accounts\password_reset_email.html:170
+msgid "Confirm Password Reset"
+msgstr ""
+
+#: .\core\templates\accounts\password_reset_email.html:184
+msgid ""
+"If that doesn't work, copy and paste the following link in your browser:"
+msgstr ""
+
+#: .\core\templates\accounts\password_reset_email.html:203
+msgid ""
+"If you have any questions, just reply to this email—we're always happy to "
+"help out."
+msgstr ""
+
+#: .\core\templates\accounts\password_reset_email.html:210
+msgid "Regards,"
+msgstr ""
+
+#: .\core\templates\accounts\password_reset_email.html:210
+msgid "Caju-Lab Support Team."
+msgstr ""
+
+#: .\core\templates\accounts\password_reset_email.html:222
+msgid "Need more help?"
+msgstr ""
+
+#: .\core\templates\accounts\password_reset_email.html:239
+msgid "If these emails get annoying, please feel free to"
+msgstr ""
+
+#: .\core\templates\accounts\password_reset_form.html:52
+msgid "Change Password"
+msgstr ""
+
+#: .\core\templates\accounts\register.html:141
+#: .\core\templates\accounts\register_org.html:126
+#: .\core\templates\accounts\register_role.html:69
+#: .\core\templates\register.html:66
+msgid "I agree with the"
+msgstr ""
+
+#: .\core\templates\accounts\register_org.html:21
+msgid "Register Organization"
+msgstr ""
+
+#: .\core\templates\accounts\register_org.html:132
+msgid "Create Organization"
+msgstr ""
+
+#: .\core\templates\accounts\register_role.html:21
+msgid "Register Role"
+msgstr ""
+
+#: .\core\templates\accounts\register_role.html:75
+msgid "Create Role"
+msgstr ""
+
+#: .\core\templates\accounts\role_options.html:2
+msgid "Not Listed"
+msgstr ""
+
+#: .\core\templates\companies.html:14
+msgid "Tables"
+msgstr ""
+
+#: .\core\templates\companies.html:39
+msgid "Organizations"
+msgstr ""
+
+#: .\core\templates\companies.html:46
+msgid "Organization Name"
+msgstr ""
+
+#: .\core\templates\companies.html:47
+msgid "Description"
+msgstr ""
+
+#: .\core\templates\companies.html:48 .\core\templates\companies.html:171
+msgid "Phone Number"
+msgstr ""
+
+#: .\core\templates\companies.html:49
+msgid "Email"
+msgstr ""
+
+#: .\core\templates\companies.html:50 .\core\templates\companies.html:176
+msgid "Website"
+msgstr ""
+
+#: .\core\templates\companies.html:51 .\core\templates\profile.html:135
+msgid "Address"
+msgstr ""
+
+#: .\core\templates\companies.html:106 .\core\templates\companies.html:222
+#: .\core\templates\nurseries.html:152 .\core\templates\plantations.html:162
+#: .\core\templates\shipment.html:126 .\core\templates\yield.html:156
+msgid "Previous"
+msgstr ""
+
+#: .\core\templates\companies.html:117 .\core\templates\companies.html:233
+#: .\core\templates\nurseries.html:188 .\core\templates\nurseries.html:196
+#: .\core\templates\plantations.html:198 .\core\templates\plantations.html:206
+#: .\core\templates\shipment.html:162 .\core\templates\shipment.html:170
+#: .\core\templates\yield.html:192 .\core\templates\yield.html:200
+msgid "Next"
+msgstr ""
+
+#: .\core\templates\companies.html:160
+msgid "Plantation"
+msgstr ""
+
+#: .\core\templates\companies.html:167 .\core\templates\plantations.html:48
+#: .\core\templates\shipment.html:50 .\core\templates\yield.html:59
+msgid "Plantation Name"
+msgstr ""
+
+#: .\core\templates\companies.html:168 .\core\templates\plantations.html:49
+msgid "Plantation Code"
+msgstr ""
+
+#: .\core\templates\companies.html:169
+msgid "Plantation Age"
+msgstr ""
+
+#: .\core\templates\companies.html:170
+msgid "Owner Name"
+msgstr ""
+
+#: .\core\templates\companies.html:172
+msgid "Plantation Address"
+msgstr ""
+
+#: .\core\templates\companies.html:173
+msgid "Owner Address"
+msgstr ""
+
+#: .\core\templates\companies.html:174 .\core\templates\plantations.html:53
+msgid "Total Trees"
+msgstr ""
+
+#: .\core\templates\companies.html:175 .\core\templates\nurseries.html:58
+msgid "Partner"
+msgstr ""
+
+#: .\core\templates\email_confirm_invalid.html:20
+msgid " Ooops activation link is invalid!"
+msgstr ""
+
+#: .\core\templates\email_confirmed.html:19
+msgid "Thank you for your email confirmation."
+msgstr ""
+
+#: .\core\templates\email_confirmed.html:23
+msgid "Now you can"
+msgstr ""
+
+#: .\core\templates\email_confirmed.html:23
+msgid "your account"
+msgstr ""
+
+#: .\core\templates\includes\footer.html:9
+msgid "More Dashboards"
+msgstr ""
+
+#: .\core\templates\includes\footer.html:15
+msgid "Creative-Tim"
+msgstr ""
+
+#: .\core\templates\includes\footer.html:16
+msgid "AppSeed"
+msgstr ""
+
+#: .\core\templates\includes\langnav.html:27
+msgid "Language"
+msgstr ""
+
+#: .\core\templates\includes\langnav.html:46
+msgid "Like us on Facebook"
+msgstr ""
+
+#: .\core\templates\includes\langnav.html:48
+#: .\core\templates\includes\navigation-fullscreen.html:44
+msgid "Facebook"
+msgstr ""
+
+#: .\core\templates\includes\langnav.html:53
+msgid "Follow us on Twitter"
+msgstr ""
+
+#: .\core\templates\includes\langnav.html:55
+#: .\core\templates\includes\navigation-fullscreen.html:51
+msgid "Twitter"
+msgstr ""
+
+#: .\core\templates\includes\langnav.html:60
+msgid "Support Technoserve"
+msgstr ""
+
+#: .\core\templates\includes\langnav.html:62
+msgid "Support"
+msgstr ""
+
+#: .\core\templates\includes\langnav.html:69
+msgid "Search"
+msgstr ""
+
+#: .\core\templates\includes\navigation-fullscreen.html:60
+msgid "Caju-Support"
+msgstr ""
+
+#: .\core\templates\includes\navigation.html:43
+msgid "You have"
+msgstr ""
+
+#: .\core\templates\includes\navigation.html:43
+msgid "notifications"
+msgstr ""
+
+#: .\core\templates\includes\sidenav.html:7
+msgid "Cashew Dashboard"
+msgstr ""
+
+#: .\core\templates\includes\sidenav.html:38
+msgid "Map"
+msgstr ""
+
+#: .\core\templates\includes\sidenav.html:44
+msgid "Profile"
+msgstr ""
+
+#: .\core\templates\includes\sidenav.html:70
+msgid "Registration"
+msgstr ""
+
+#: .\core\templates\includes\sidenav.html:80
+msgid "New Member"
+msgstr ""
+
+#: .\core\templates\includes\sidenav.html:91
+msgid "New Organization"
+msgstr ""
+
+#: .\core\templates\includes\sidenav.html:117
+#: .\core\templates\plantations.html:14
+msgid "Plantations"
+msgstr ""
+
+#: .\core\templates\includes\sidenav.html:124
+msgid "Yield"
+msgstr ""
+
+#: .\core\templates\includes\sidenav.html:131 .\core\templates\shipment.html:16
+#: .\core\templates\shipment.html:43
+msgid "Shipment"
+msgstr ""
+
+#: .\core\templates\includes\sidenav.html:138
+#: .\core\templates\nurseries.html:14 .\core\templates\nurseries.html:41
+msgid "Nurseries"
+msgstr ""
+
+#: .\core\templates\includes\sidenav.html:145
+msgid "Logout"
+msgstr ""
+
+#: .\core\templates\includes\sidenav.html:153
+msgid "Resources"
+msgstr ""
+
+#: .\core\templates\includes\sidenav.html:163
+msgid "About TechnoServe"
+msgstr ""
+
+#: .\core\templates\includes\sidenav.html:172
+msgid "Visit TechnoServe"
+msgstr ""
+
+#: .\core\templates\layouts\base-fullscreen.html:12
+#: .\core\templates\layouts\base.html:12
+msgid "Technoserve"
+msgstr ""
+
+#: .\core\templates\layouts\base-fullscreen.html:46
+msgid "Cajúlab Presents"
+msgstr ""
+
+#: .\core\templates\login.html:18
+msgid "Sign in with"
+msgstr ""
+
+#: .\core\templates\login.html:22 .\core\templates\register.html:23
+msgid "Github"
+msgstr ""
+
+#: .\core\templates\login.html:32
+msgid "Or sign in with credentials"
+msgstr ""
+
+#: .\core\templates\login.html:65
+msgid "Create Account"
+msgstr ""
+
+#: .\core\templates\nurseries.html:48
+msgid "Nursery Name"
+msgstr ""
+
+#: .\core\templates\nurseries.html:49
+msgid "Owner First Name"
+msgstr ""
+
+#: .\core\templates\nurseries.html:50
+msgid "Owner Last Name"
+msgstr ""
+
+#: .\core\templates\nurseries.html:51
+msgid "Nursery Address"
+msgstr ""
+
+#: .\core\templates\nurseries.html:52 .\core\templates\plantations.html:54
+#: .\core\templates\profile.html:149
+msgid "Country"
+msgstr ""
+
+#: .\core\templates\nurseries.html:53 .\core\templates\plantations.html:56
+#: .\core\templates\shipment.html:55
+msgid "Commune"
+msgstr ""
+
+#: .\core\templates\nurseries.html:54
+msgid "Current Area"
+msgstr ""
+
+#: .\core\templates\nurseries.html:55 .\core\templates\plantations.html:60
+msgid "Latitude"
+msgstr ""
+
+#: .\core\templates\nurseries.html:56 .\core\templates\plantations.html:61
+msgid "Longitude"
+msgstr ""
+
+#: .\core\templates\nurseries.html:57 .\core\templates\plantations.html:62
+msgid "Altitude"
+msgstr ""
+
+#: .\core\templates\page-403.html:20
+msgid "Oups! Error 403"
+msgstr ""
+
+#: .\core\templates\page-403.html:24
+msgid "Access denied - Please authenticate"
+msgstr ""
+
+#: .\core\templates\page-403.html:35 .\core\templates\page-404.html:35
+#: .\core\templates\page-500.html:35
+msgid "Get Support"
+msgstr ""
+
+#: .\core\templates\page-404.html:20
+msgid "Oups! Error 404"
+msgstr ""
+
+#: .\core\templates\page-404.html:24
+msgid "Page not found"
+msgstr ""
+
+#: .\core\templates\page-500.html:20
+msgid "Oups! Error 500"
+msgstr ""
+
+#: .\core\templates\page-500.html:24
+msgid "Server error, please contact support"
+msgstr ""
+
+#: .\core\templates\plantations.html:41
+msgid "Plantations Data"
+msgstr ""
+
+#: .\core\templates\plantations.html:50
+msgid "Owner First name"
+msgstr ""
+
+#: .\core\templates\plantations.html:51
+msgid "Owner Last name"
+msgstr ""
+
+#: .\core\templates\plantations.html:52
+msgid "Gender"
+msgstr ""
+
+#: .\core\templates\plantations.html:55 .\core\templates\shipment.html:54
+msgid "Department"
+msgstr ""
+
+#: .\core\templates\plantations.html:57
+msgid "Arrondissement"
+msgstr ""
+
+#: .\core\templates\plantations.html:59
+msgid "Area(Ha)"
+msgstr ""
+
+#: .\core\templates\profile.html:18
+msgid "Hello"
+msgstr ""
+
+#: .\core\templates\profile.html:20
+msgid ""
+"This is your profile page. You can see the progress you've made with your "
+"work and manage your projects or assigned tasks"
+msgstr ""
+
+#: .\core\templates\profile.html:21 .\core\templates\profile.html:88
+msgid "Edit profile"
+msgstr ""
+
+#: .\core\templates\profile.html:43
+msgid "Connect"
+msgstr ""
+
+#: .\core\templates\profile.html:44
+msgid "Message"
+msgstr ""
+
+#: .\core\templates\profile.html:97
+msgid "User information"
+msgstr ""
+
+#: .\core\templates\profile.html:102
+msgid "Username"
+msgstr ""
+
+#: .\core\templates\profile.html:108
+msgid "Email address"
+msgstr ""
+
+#: .\core\templates\profile.html:116
+msgid "First name"
+msgstr ""
+
+#: .\core\templates\profile.html:122
+msgid "Last name"
+msgstr ""
+
+#: .\core\templates\profile.html:130
+msgid "Contact information"
+msgstr ""
+
+#: .\core\templates\profile.html:143
+msgid "City"
+msgstr ""
+
+#: .\core\templates\profile.html:155
+msgid "Organization"
+msgstr ""
+
+#: .\core\templates\profile.html:163
+msgid "About me"
+msgstr ""
+
+#: .\core\templates\profile.html:166
+msgid "About Me"
+msgstr ""
+
+#: .\core\templates\profile.html:167
+msgid "Something about me, does not update for now."
+msgstr ""
+
+#: .\core\templates\register.html:19
+msgid "Sign up with"
+msgstr ""
+
+#: .\core\templates\register.html:33
+msgid "Or sign up with credentials"
+msgstr ""
+
+#: .\core\templates\register.html:60
+msgid "password strength:"
+msgstr ""
+
+#: .\core\templates\register.html:60
+msgid "strong"
+msgstr ""
+
+#: .\core\templates\shipment.html:51
+msgid "Shipment Date"
+msgstr ""
+
+#: .\core\templates\shipment.html:52
+msgid "Port Number"
+msgstr ""
+
+#: .\core\templates\shipment.html:53
+msgid "Cashew Quantity"
+msgstr ""
+
+#: .\core\templates\shipment.html:56
+msgid "Plantation Area"
+msgstr ""
+
+#: .\core\templates\yield.html:14
+msgid "Yields"
+msgstr ""
+
+#: .\core\templates\yield.html:60
+msgid "Product ID"
+msgstr ""
+
+#: .\core\templates\yield.html:61
+msgid "Year"
+msgstr ""
+
+#: .\core\templates\yield.html:62
+msgid "Total Plants"
+msgstr ""
+
+#: .\core\templates\yield.html:63
+msgid "Yields (Kg)"
+msgstr ""
+
+#: .\core\templates\yield.html:64
+msgid "Yields/Ha (Kg)"
+msgstr ""
+
+#: .\core\templates\yield.html:65
+msgid "Yields/Tree (Kg)"
+msgstr ""
+
+#: .\core\templates\yield.html:68
+msgid "Out of Prod. Trees"
+msgstr ""
+
+#: .\gettingstarted\settings.py:162
+msgid "English"
+msgstr ""
+
+#: .\gettingstarted\settings.py:163
+msgid "French"
+msgstr ""
+
+#: .\gettingstarted\urls.py:13
+msgid "admin/"
+msgstr ""
