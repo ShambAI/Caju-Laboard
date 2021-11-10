@@ -553,22 +553,32 @@ def shipment(request):
 @login_required(login_url="/login/")
 def drone(request, plant_id):
     basemaps = {
+                    'Google Maps': folium.TileLayer(
+                        tiles = 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+                        attr = gettext('Google'),
+                        name = 'Maps',
+                        max_zoom =18,
+                        overlay = True,
+                        control = False
+                    ),
                     'Google Satellite': folium.TileLayer(
                         tiles = 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
                         attr = 'Google',
-                        name = 'Satelite',
+                        name = gettext('Satellite'),
                         max_zoom = 18,
                         overlay = True,
-                        show=True,
+                        show=False,
                         control = True
                     ),
-                    'Google Satellite Hybrid': folium.TileLayer(
-                        tiles = 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
-                        attr = 'Google',
-                        name = 'Google Satellite',
+                    'Mapbox Satellite': folium.TileLayer(
+                        tiles='https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2hha2F6IiwiYSI6ImNrczMzNTl3ejB6eTYydnBlNzR0dHUwcnUifQ.vHqPio3Pe0PehWpIuf5QUg',
+                        attr = 'Mapbox',
+                        name = gettext('Satellite View'),
+                        max_zoom = 30,
                         overlay = True,
+                        show=False,
                         control = True
-                    ),
+                    )
                 }
                 # figure = folium.Figure()
 
@@ -582,7 +592,7 @@ def drone(request, plant_id):
         tiles = None
     )
 
-    m.add_child(basemaps['Google Satellite'])
+    m.add_child(basemaps['Mapbox Satellite'])
 
     def add_ee_layer(self, ee_image_object, vis_params, name):
             map_id_dict = ee.Image(ee_image_object).getMapId(vis_params)

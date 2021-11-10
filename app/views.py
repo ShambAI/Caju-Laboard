@@ -53,7 +53,16 @@ class my_home():
                     'Google Satellite': folium.TileLayer(
                         tiles = 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
                         attr = 'Google',
-                        name = gettext('Satellite View'),
+                        name = gettext('Google Satellite'),
+                        max_zoom = 18,
+                        overlay = True,
+                        show=False,
+                        control = True
+                    ),
+                    'Mapbox Satellite': folium.TileLayer(
+                        tiles='https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2hha2F6IiwiYSI6ImNrczMzNTl3ejB6eTYydnBlNzR0dHUwcnUifQ.vHqPio3Pe0PehWpIuf5QUg',
+                        attr = 'Mapbox',
+                        name = gettext('Mapbox Satellite'),
                         max_zoom = 18,
                         overlay = True,
                         show=False,
@@ -71,6 +80,7 @@ class my_home():
 
         m.add_child(basemaps['Google Maps'])
         m.add_child(basemaps['Google Satellite'])
+        m.add_child(basemaps['Mapbox Satellite'])
 
         plugins.Fullscreen(position='topright', title='Full Screen', title_cancel='Exit Full Screen', force_separate_button=False).add_to(m)
        

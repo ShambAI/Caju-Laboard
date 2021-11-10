@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-10 21:47+0100\n"
+"POT-Creation-Date: 2021-11-10 23:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -195,7 +195,7 @@ msgstr ""
 msgid "9th"
 msgstr ""
 
-#: .\app\benin_republic.py:62 .\app\views.py:100
+#: .\app\benin_republic.py:62 .\app\views.py:110
 msgid "Benin Republic"
 msgstr ""
 
@@ -215,36 +215,40 @@ msgstr ""
 msgid "Number of Plants"
 msgstr ""
 
-#: .\app\views.py:47 .\core\templates\login.html:26
-#: .\core\templates\register.html:27
+#: .\app\views.py:47 .\authentication\views.py:558
+#: .\core\templates\login.html:26 .\core\templates\register.html:27
 msgid "Google"
 msgstr ""
 
 #: .\app\views.py:56
-msgid "Satellite View"
+msgid "Google Satellite"
 msgstr ""
 
-#: .\app\views.py:77
+#: .\app\views.py:65
+msgid "Mapbox Satellite"
+msgstr ""
+
+#: .\app\views.py:87
 msgid "Nursery Information"
 msgstr ""
 
-#: .\app\views.py:95
+#: .\app\views.py:105
 msgid "Satellite Prediction"
 msgstr ""
 
-#: .\app\views.py:97
+#: .\app\views.py:107
 msgid "No Boundary"
 msgstr ""
 
-#: .\app\views.py:104
+#: .\app\views.py:114
 msgid "Benin Departments"
 msgstr ""
 
-#: .\app\views.py:108
+#: .\app\views.py:118
 msgid "Benin Communes"
 msgstr ""
 
-#: .\app\views.py:112
+#: .\app\views.py:122
 msgid "Plantation Locations"
 msgstr ""
 
@@ -308,6 +312,14 @@ msgstr ""
 
 #: .\authentication\views.py:367
 msgid "Organization created - please <a href=\"/register\">register user</a>."
+msgstr ""
+
+#: .\authentication\views.py:567
+msgid "Satellite"
+msgstr ""
+
+#: .\authentication\views.py:576
+msgid "Satellite View"
 msgstr ""
 
 #: .\core\templates\accounts\acc_active_email.html:112
