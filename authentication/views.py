@@ -583,8 +583,6 @@ def drone(request, plant_id):
 
     m.add_child(basemaps['Google Satellite'])
 
-    print(plant_id)
-
     def add_ee_layer(self, ee_image_object, vis_params, name):
             map_id_dict = ee.Image(ee_image_object).getMapId(vis_params)
             folium.raster_layers.TileLayer(

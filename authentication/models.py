@@ -383,4 +383,91 @@ class YieldHistory(models.Model):
     # updated_date = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
-        return str(self.product_id) + str(self.year) + str(self.season)
+        return str(self.product_id) + str(self.year)
+
+
+
+class BeninYield(models.Model):
+
+    
+    class Status():
+        ACTIVE = 1
+        INACTIVE = 0
+
+
+    ACTIVE = 1
+    INACTIVE = 0
+    Status = [
+        (ACTIVE, 'Active'),
+        (INACTIVE, 'Inactive'),
+    ]
+
+    plantation_name = models.CharField(max_length=200, unique=True)
+    plantation_code = models.CharField(max_length=200, unique=True)
+    department = models.CharField(max_length=200)
+    commune = models.CharField(max_length=200)
+    arrondissement = models.CharField(max_length=200)
+    village = models.CharField(max_length=200)
+    owner_first_name = models.CharField(max_length=200)
+    owner_last_name = models.CharField(max_length=200)
+    plantation_code = models.CharField(max_length=200)
+    surface_area = models.FloatField(null=True)
+    total_yield_kg = models.FloatField()
+    total_yield_per_ha_kg = models.FloatField()
+    total_yield_per_tree_kg = models.FloatField()
+    sex = models.CharField(max_length=200)
+    plantation_id = models.ForeignKey(Plantation, on_delete=models.CASCADE, null=True)
+    product_id = models.CharField(unique=True, max_length=60)
+    total_number_trees = models.FloatField()
+    total_sick_trees = models.FloatField()
+    total_dead_trees = models.FloatField()
+    total_trees_out_of_prod = models.FloatField()
+    plantation_age = models.FloatField()
+    latitude = models.FloatField(null=False, blank=False)
+    longitude = models.FloatField(null=True)
+    altitude = models.FloatField(null=True)
+    status = models.IntegerField(choices=Status, default=ACTIVE,)
+    year = models.IntegerField()
+
+
+    def __str__(self):
+        return str(self.product_id)
+
+
+class AlteiaData(models.Model):
+
+    plantation_code = models.CharField(max_length=200, unique=True)
+    cashew_tree_cover = models.FloatField(null=True)
+
+
+    def __str__(self):
+        return str(self.plantation_code)
+
+
+class DeptSatellite(models.Model):
+
+    country = models.CharField(max_length=200)
+    department = models.CharField(max_length=200, unique=True)
+    cashew_tree_cover = models.FloatField(null=True)
+
+    def __str__(self):
+        return str(self.department)
+
+class CommuneSatellite(models.Model):
+
+    country = models.CharField(max_length=200)
+    department = models.CharField(max_length=200)
+    commune = models.CharField(max_length=200, unique=True)
+    cashew_tree_cover = models.FloatField(null=True)
+
+    def __str__(self):
+        return str(self.commune)
+
+class SpecialTuple(models.Model):
+
+    special_id_tuple = models.CharField(max_length=200, unique=True)
+    special_id = models.CharField(max_length=200, unique=True)
+    
+
+    def __str__(self):
+        return str(self.special_id)
