@@ -6,6 +6,7 @@ Copyright (c) 2021 - present Technoserve x Damilola
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext
 
 # Create your views here.
 from django.shortcuts import render, redirect
@@ -58,7 +59,7 @@ def login_view(request):
                 login(request, user)
                 return redirect("/")
             else:
-                msg = 'Invalid credentials'
+                msg = gettext('Invalid credentials')
                 # rem_user = RemUser.objects.filter(user_name=username)
                 # _pass = rem_user.values()[0]['password']
                 # if password == _pass:
@@ -86,7 +87,7 @@ def forgot_password(request):
             user = User.objects.get(email=email)
 
             current_site = get_current_site(request)
-            mail_subject = 'Reset your Password'
+            mail_subject = gettext('Reset your Password')
             message = loader.get_template('accounts/password_reset_email.html').render(
                 {
                     'user': user,
@@ -112,14 +113,14 @@ def forgot_password(request):
 
             email.send()
 
-            msg     = "We've emailed you instructions for setting your password. \
+            msg     = gettext("We have emailed you instructions for setting your password. \
                         If an account exists with the email you have entered, you should receive them shortly.\
-                        If you don't receive an email, please make sure you've entered the address you registered with correctly, \
-                        and check your spam folder."
+                        If you do not receive an email, please make sure you've entered the address you registered with correctly, \
+                        and check your spam folder.")
             success = True
             # return HttpResponse('Please confirm your email address to complete the registration')
         else:
-            msg = 'Form is not valid'
+            msg = gettext('Form is not valid')
     else:
         form = custom_forms.ForgotPassword()
     return render(request, 'accounts/password_reset_form.html', {"form": form, "msg" : msg, "success" : success})
@@ -151,11 +152,11 @@ def password_reset_confirm(request, uidb64, token):
                 user.save()
 
 
-                msg     = 'Password change successful. Now you can'
+                msg     = gettext('Password change successful. Now you can')
                 success = True
                 # return HttpResponse('Please confirm your email address to complete the registration')
             else:
-                msg = 'Form is not valid'
+                msg = gettext('Form is not valid')
         else:
             form = custom_forms.NewPassword()
         return render(request, 'accounts/new_password.html', {"form": form, "msg" : msg, "success" : success})
@@ -200,7 +201,7 @@ def register_user(request):
 
 
             current_site = get_current_site(request)
-            mail_subject = 'Activate your Cashew Remote Sensing account.'
+            mail_subject = gettext('Activate your Cashew Remote Sensing account.')
             message = loader.get_template('accounts/acc_active_email.html').render(
                 {
                     'user': user,
@@ -226,11 +227,11 @@ def register_user(request):
 
             email.send()
 
-            msg     = 'Please confirm your email address to complete the registration'
+            msg     = gettext('Please confirm your email address to complete the registration')
             success = True
             # return HttpResponse('Please confirm your email address to complete the registration')
         else:
-            msg = 'Form is not valid'
+            msg = gettext('Form is not valid')
     else:
         form = SignUpForm()
     return render(request, 'accounts/register.html', {"form": form, "msg" : msg, "success" : success})
@@ -330,10 +331,10 @@ def register_user_full(request):
                 #return redirect("/login/")
             
             else:
-                msg = 'Form is not valid - Passwords do not match'
+                msg = gettext('Form is not valid - Passwords do not match')
 
         else:
-            msg = 'Form is not valid'    
+            msg = gettext('Form is not valid')   
     else:
         form = FullSignUpForm()
 
@@ -363,11 +364,11 @@ def register_org(request):
                 print("")
             
             obj.save()
-            msg     = 'Organization created - please <a href="/register">register user</a>.'
+            msg     = gettext('Organization created - please <a href="/register">register user</a>.')
             success = True
 
         else:
-            msg = 'Form is not valid'    
+            msg = gettext('Form is not valid')  
     else:
         form = RegisterOrganization()
 
@@ -412,7 +413,7 @@ def register_role(request):
                 success = False
 
         else:
-            msg = 'Form is not valid'    
+            msg = gettext('Form is not valid')   
     else:
         form = RegisterRole()
 

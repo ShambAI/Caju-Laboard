@@ -16,269 +16,259 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: .\app\benin_commune.py:29 .\app\benin_republic.py:28
 msgid "Departments Cashew Tree Cover Statistics In"
-msgstr "Départements Statistiques de Couverture des Anacardiers en"
+msgstr ""
 
 #: .\app\benin_commune.py:30 .\app\benin_department.py:35
 #: .\app\benin_republic.py:29
 msgid "Active Trees"
-msgstr "Arbres Actifs"
+msgstr ""
 
 #: .\app\benin_commune.py:31 .\app\benin_department.py:36
 #: .\app\benin_republic.py:30 .\core\templates\yield.html:66
 msgid "Sick Trees"
-msgstr "Arbres Malades"
+msgstr ""
 
 #: .\app\benin_commune.py:32 .\app\benin_department.py:37
 #: .\app\benin_republic.py:31 .\core\templates\yield.html:67
 msgid "Dead Trees"
-msgstr "Arbres Morts"
+msgstr ""
 
 #: .\app\benin_commune.py:33 .\app\benin_department.py:38
 #: .\app\benin_republic.py:32
 msgid "Out of Production Trees"
-msgstr "Arbres Hors Production"
+msgstr ""
 
 #: .\app\benin_commune.py:34 .\app\benin_department.py:39
 #: .\app\benin_republic.py:33
 msgid "Cashew Trees Status in"
-msgstr "Statut des Anacardiers en"
+msgstr ""
 
 #: .\app\benin_commune.py:35 .\app\benin_department.py:40
 #: .\app\benin_republic.py:34
 msgid "is ranked"
-msgstr "est classé"
+msgstr ""
 
 #: .\app\benin_commune.py:36 .\app\benin_department.py:42
 #: .\app\benin_republic.py:36
 msgid "Satellite Est"
-msgstr "Satellite Est"
+msgstr ""
 
 #: .\app\benin_commune.py:37 .\app\benin_department.py:43
 #: .\app\benin_republic.py:37
 msgid "TNS Survey"
-msgstr "Enquête de TNS"
+msgstr ""
 
 #: .\app\benin_commune.py:40 .\app\benin_department.py:46
 #: .\app\benin_republic.py:40
 msgid "Total Cashew Yield (kg)"
-msgstr "Rendement Total de Noix de Cajou (kg)"
+msgstr ""
 
 #: .\app\benin_commune.py:41 .\app\benin_department.py:47
 #: .\app\benin_republic.py:41
 msgid "Total Area (ha)"
-msgstr "Superficie Totale (ha)"
+msgstr ""
 
 #: .\app\benin_commune.py:42 .\app\benin_department.py:48
 #: .\app\benin_republic.py:42
 msgid "Cashew Tree Cover (ha)"
-msgstr "Couverture de l'Anacardier (ha)"
+msgstr ""
 
 #: .\app\benin_commune.py:43 .\app\benin_department.py:49
 #: .\app\benin_republic.py:43
 msgid "Yield/Hectare (kg/ha)"
-msgstr "Rendement/Hectare (kg/ha)"
+msgstr ""
 
 #: .\app\benin_commune.py:44 .\app\benin_department.py:50
 #: .\app\benin_plantations.py:36 .\app\benin_republic.py:44
 msgid "Yield per Tree (kg/tree)"
-msgstr "Rendement par Arbre (kg/arbre)"
+msgstr ""
 
 #: .\app\benin_commune.py:45 .\app\benin_department.py:51
 #: .\app\benin_plantations.py:35 .\app\benin_republic.py:45
 msgid "Number of Trees"
-msgstr " Nombre d'arbres"
+msgstr ""
 
 #: .\app\benin_commune.py:46 .\app\benin_department.py:52
 #: .\app\benin_plantations.py:46 .\app\benin_republic.py:47
 msgid "Source: TNS/BeninCaju Yield Surveys 2020"
-msgstr "Source : Enquêtes de rendement TNS/BéninCaju 2020"
+msgstr ""
 
 #: .\app\benin_commune.py:47
 msgid ""
 "among Benin communes in terms of total cashew yield according to the TNS "
 "Yield Survey"
 msgstr ""
-"parmi les communes béninoises en termes de rendement total de cajou selon "
-"l'enquête de rendement TNS"
 
 #: .\app\benin_department.py:53
 msgid "Predicted Cashew Tree Cover Communes Statistics In"
-msgstr "Couverture prevue de l anacardier statistiques des Communes En"
+msgstr ""
 
 #: .\app\benin_department.py:54
 msgid ""
 "among Benin departments in terms of total cashew yield according to the TNS "
 "Yield Survey"
 msgstr ""
-"entre les departements du Benin en termes de rendement total de cajou selon "
-"l'enquete de rendement TNS"
 
 #: .\app\benin_plantations.py:26
 msgid "Plantation Owner"
-msgstr "Propriétaire de la Plantation"
+msgstr ""
 
 #: .\app\benin_plantations.py:27
 msgid "Plantation ID"
-msgstr "ID de la Plantation"
+msgstr ""
 
 #: .\app\benin_plantations.py:28 .\core\templates\plantations.html:58
 msgid "Village"
-msgstr "Village"
+msgstr ""
 
 #: .\app\benin_plantations.py:29
 msgid "Satellite Estimate"
-msgstr "Estimation Satellite"
+msgstr ""
 
 #: .\app\benin_plantations.py:30
 msgid "2020 Yield Survey"
-msgstr "Enquête de Rendement 2020"
+msgstr ""
 
 #: .\app\benin_plantations.py:31
 msgid "Cashew Yield (kg)"
-msgstr "Rendement de Noix de cajou (kg)"
+msgstr ""
 
 #: .\app\benin_plantations.py:32
 msgid "Plantation Size (ha)"
-msgstr "Surperficie de la Plantation (ha)"
+msgstr ""
 
 #: .\app\benin_plantations.py:33 .\app\benin_plantations.py:42
 msgid "Cashew Surface Area (ha)"
-msgstr "Superficie du cajou (ha)"
+msgstr ""
 
 #: .\app\benin_plantations.py:34
 msgid "Yield Per Hectare (kg/ha)"
-msgstr "Rendement par hectare (kg/ha)"
+msgstr ""
 
 #: .\app\benin_plantations.py:37
 msgid ""
 "Average Surface Area and Cashew Yield Information for Plantations in Benin "
 "Republic"
 msgstr ""
-"Information sur la superficie moyenne et le rendement de noix de cajou des "
-"plantations en République du Bénin"
 
 #: .\app\benin_plantations.py:39
 msgid "Number of Farms"
-msgstr "Nombre de fermes"
+msgstr ""
 
 #: .\app\benin_plantations.py:40
 msgid "Total Plantation Yield (kg)"
-msgstr "Rendement Total de la Plantation (kg)"
+msgstr ""
 
 #: .\app\benin_plantations.py:41
 msgid "Total Plantation Area (ha)"
-msgstr "Superficie Totale des Plantations (ha)"
+msgstr ""
 
 #: .\app\benin_plantations.py:43
 msgid "Average Yield Per Hectare (kg/ha)"
-msgstr "Rendement Moyen Par Hectare (kg/ha)"
+msgstr ""
 
 #: .\app\benin_plantations.py:44
 msgid "Total Number of Trees"
-msgstr "Nombre Total d'Arbres"
+msgstr ""
 
 #: .\app\benin_plantations.py:45
 msgid "Average Yield per Tree (kg/tree)"
-msgstr "Rendement Moyen par Arbre (kg/arbre)"
+msgstr ""
 
 #: .\app\benin_plantations.py:49
 msgid "Benin Plantations"
-msgstr "Plantations du Bénin"
+msgstr ""
 
 #: .\app\benin_republic.py:35
 msgid "globally in terms of total cashew yield"
-msgstr "à l'échelle mondiale en termes de rendement total de noix de cajou"
+msgstr ""
 
 #: .\app\benin_republic.py:46
 msgid "9th"
-msgstr "9e"
+msgstr ""
 
 #: .\app\benin_republic.py:62 .\app\views.py:100
 msgid "Benin Republic"
-msgstr "République du Bénin"
+msgstr ""
 
 #: .\app\nursery_information.py:10
 msgid "Commune Name"
-msgstr "Nom de la Commune"
+msgstr ""
 
 #: .\app\nursery_information.py:11
 msgid "Nursery Owner"
-msgstr "Propriétaire de la Pépinière"
+msgstr ""
 
 #: .\app\nursery_information.py:12
 msgid "Nursery Area (ha)"
-msgstr "Superficie de la Pépinière (ha)"
+msgstr ""
 
 #: .\app\nursery_information.py:13 .\core\templates\nurseries.html:59
 msgid "Number of Plants"
-msgstr "Nombre de plantes"
+msgstr ""
 
 #: .\app\views.py:47 .\core\templates\login.html:26
 #: .\core\templates\register.html:27
 msgid "Google"
-msgstr "Google"
+msgstr ""
 
 #: .\app\views.py:56
 msgid "Satellite View"
-msgstr "Vue Satellite"
+msgstr ""
 
 #: .\app\views.py:77
 msgid "Nursery Information"
-msgstr "Informations sur la Pépinière"
+msgstr ""
 
 #: .\app\views.py:95
 msgid "Satellite Prediction"
-msgstr "Prédiction Satellite"
+msgstr ""
 
 #: .\app\views.py:97
 msgid "No Boundary"
-msgstr "Pas de Limite"
+msgstr ""
 
 #: .\app\views.py:104
 msgid "Benin Departments"
-msgstr "Départements du Bénin"
+msgstr ""
 
 #: .\app\views.py:108
 msgid "Benin Communes"
-msgstr "Communes du Bénin"
+msgstr ""
 
 #: .\app\views.py:112
 msgid "Plantation Locations"
-msgstr "Emplacements des Plantations"
+msgstr ""
 
 #: .\authentication\models.py:76 .\authentication\models.py:137
 #: .\authentication\models.py:221 .\authentication\models.py:287
 #: .\authentication\utils.py:18
 msgid "Male"
-msgstr "Mâle"
+msgstr ""
 
 #: .\authentication\models.py:77 .\authentication\models.py:138
 #: .\authentication\models.py:222 .\authentication\models.py:288
 #: .\authentication\utils.py:19
 msgid "Female"
-msgstr "Femelle"
+msgstr ""
 
 #: .\authentication\models.py:78 .\authentication\models.py:139
 #: .\authentication\models.py:223 .\authentication\models.py:289
 #: .\authentication\utils.py:20
 msgid "Others"
-msgstr "Autres"
+msgstr ""
 
 #: .\authentication\views.py:62
-#, fuzzy
-#| msgid "Add your credentials"
 msgid "Invalid credentials"
-msgstr "Ajoutez vos identifiants"
+msgstr ""
 
 #: .\authentication\views.py:90
-#, fuzzy
-#| msgid "Forgot Password"
 msgid "Reset your Password"
-msgstr "Mot de passe oublié"
+msgstr ""
 
 #: .\authentication\views.py:116
 msgid ""
@@ -289,68 +279,57 @@ msgid ""
 "registered with correctly,                         and check your spam "
 "folder."
 msgstr ""
-"Nous vous avons envoyé par e-mail des instructions pour définir votre mot de "
-"passe.Si un compte existe avec l'email que vous avez entré, vous devriez le "
-"recevoir sous peu.Si vous ne recevez pas d'e-mail, assurez-vous d'avoir "
-"entré correctement l'adresse aveclaquelle vous vous êtes inscrit et vérifiez "
-"votre dossier de courrier indésirable."
 
 #: .\authentication\views.py:123 .\authentication\views.py:159
 #: .\authentication\views.py:234 .\authentication\views.py:337
 #: .\authentication\views.py:371 .\authentication\views.py:416
 msgid "Form is not valid"
-msgstr "Le formulaire n'est pas valide"
+msgstr ""
 
 #: .\authentication\views.py:155
 msgid "Password change successful. Now you can"
-msgstr "Changement de mot de passe réussi. Maintenant vous pouvez"
+msgstr ""
 
 #: .\authentication\views.py:204
 msgid "Activate your Cashew Remote Sensing account."
-msgstr "Activez votre compte de télédétection de cajou."
+msgstr ""
 
 #: .\authentication\views.py:230
 msgid "Please confirm your email address to complete the registration"
-msgstr "Veuillez confirmer votre adresse e-mail pour terminer l'inscription"
+msgstr ""
 
 #: .\authentication\views.py:334
 msgid "Form is not valid - Passwords do not match"
 msgstr ""
-"Le formulaire n'est pas valide - Les mots de passe ne correspondent pas"
 
 #: .\authentication\views.py:367
 msgid "Organization created - please <a href=\"/register\">register user</a>."
 msgstr ""
-"Organisation créée - veuillez <a href=\"/register\">enregistrer "
-"l'utilisateur</a>"
 
 #: .\core\templates\accounts\acc_active_email.html:112
 msgid ""
 "We are thrilled to have you here! Get ready to dive into your new account."
 msgstr ""
-"Nous sommes ravis de vous avoir ici! Préparez-vous pour se connecter à votre "
-"nouveau compte."
 
 #: .\core\templates\accounts\acc_active_email.html:130
 msgid "Welcome"
-msgstr "Bienvenu"
+msgstr ""
 
 #: .\core\templates\accounts\acc_active_email.html:144
 msgid ""
 "We are excited to have you get started. First, you need to confirm your "
 "account. Just press the button below"
 msgstr ""
-"Nous sommes ravis que vous commenciez. Tout d'abord, vous devez confirmer "
-"votre compte. Appuyez simplement sur le bouton ci-dessous"
 
 #: .\core\templates\accounts\acc_active_email.html:168
 msgid "Confirm Account"
-msgstr "Confirmer votre Compte"
+msgstr ""
 
 #: .\core\templates\accounts\acc_active_email.html:181
 #: .\core\templates\accounts\password_reset_email.html:184
-msgid "If that does not work, copy and paste the following link in your browser:"
-msgstr "Si cela ne fonctionne pas, copiez et collez le lien suivant dans votre navigateur:"
+msgid ""
+"If that does not work, copy and paste the following link in your browser:"
+msgstr ""
 
 #: .\core\templates\accounts\acc_active_email.html:198
 #: .\core\templates\accounts\password_reset_email.html:203
@@ -358,40 +337,38 @@ msgid ""
 "If you have any questions, just reply to this email we are always happy to "
 "help out."
 msgstr ""
-"Si vous avez des questions, répondez simplement à cet e-mail. Nous serons "
-"toujours ravis de aider"
 
 #: .\core\templates\accounts\acc_active_email.html:204
 msgid "Cheers"
-msgstr "À votre santé"
+msgstr ""
 
 #: .\core\templates\accounts\acc_active_email.html:204
 msgid "Technoserve Team"
-msgstr "Equipe de Technoserve"
+msgstr ""
 
 #: .\core\templates\accounts\acc_active_email.html:216
 #: .\core\templates\accounts\password_reset_email.html:222
 msgid "Need more help?"
-msgstr "Besoin d'aide?"
+msgstr ""
 
 #: .\core\templates\accounts\acc_active_email.html:218
 #: .\core\templates\accounts\password_reset_email.html:224
 msgid "We are here to help you out"
-msgstr "Nous sommes là pour vous aider"
+msgstr ""
 
 #: .\core\templates\accounts\acc_active_email.html:231
 msgid "If these emails get annoying, please feel free to "
-msgstr "Si ces e-mails vous dérangent, n'hésitez pas à"
+msgstr ""
 
 #: .\core\templates\accounts\acc_active_email.html:232
 #: .\core\templates\accounts\password_reset_email.html:240
 msgid "unsubscribe"
-msgstr "se désabonner"
+msgstr ""
 
 #: .\core\templates\accounts\full_login.html:21
 #: .\core\templates\accounts\register.html:20
 msgid "Sign Up"
-msgstr "S'inscrire"
+msgstr ""
 
 #: .\core\templates\accounts\full_login.html:30
 #: .\core\templates\accounts\login.html:29
@@ -400,25 +377,25 @@ msgstr "S'inscrire"
 #: .\core\templates\accounts\register_org.html:30
 #: .\core\templates\accounts\register_role.html:30
 msgid "Add your credentials"
-msgstr "Ajoutez vos identifiants"
+msgstr ""
 
 #: .\core\templates\accounts\full_login.html:77
 msgid "Gender:"
-msgstr "Genre:"
+msgstr ""
 
 #: .\core\templates\accounts\full_login.html:90
 msgid "Date of Birth:"
-msgstr "Date de naissance:"
+msgstr ""
 
 #: .\core\templates\accounts\full_login.html:123
 #: .\core\templates\accounts\register.html:96
 msgid "Organization Name:"
-msgstr "Nom de l'organisation:"
+msgstr ""
 
 #: .\core\templates\accounts\full_login.html:136
 #: .\core\templates\accounts\register.html:109
 msgid "Role:"
-msgstr "Rôle:"
+msgstr ""
 
 #: .\core\templates\accounts\full_login.html:198
 #: .\core\templates\accounts\register.html:141
@@ -426,13 +403,13 @@ msgstr "Rôle:"
 #: .\core\templates\accounts\register_role.html:69
 #: .\core\templates\register.html:66
 msgid "Privacy Policy"
-msgstr "Politique de Confidentialité"
+msgstr ""
 
 #: .\core\templates\accounts\full_login.html:204
 #: .\core\templates\accounts\register.html:147
 #: .\core\templates\register.html:72
 msgid "Create account"
-msgstr "Créer un compte"
+msgstr ""
 
 #: .\core\templates\accounts\full_login.html:219
 #: .\core\templates\accounts\register.html:162
@@ -442,7 +419,7 @@ msgstr "Créer un compte"
 #: .\core\templates\includes\navigation-fullscreen.html:29
 #: .\core\templates\includes\sidenav.html:57 .\core\templates\page-403.html:24
 msgid "Login"
-msgstr "Connexion"
+msgstr ""
 
 #: .\core\templates\accounts\full_login.html:222
 #: .\core\templates\accounts\login.html:77
@@ -455,23 +432,23 @@ msgstr "Connexion"
 #: .\core\templates\email_confirm_invalid.html:34
 #: .\core\templates\email_confirmed.html:33 .\core\templates\login.html:68
 msgid "Contact Us"
-msgstr "Contactez-nous"
+msgstr ""
 
 #: .\core\templates\accounts\login.html:19
 msgid "Sign In"
-msgstr "S'inscrire"
+msgstr ""
 
 #: .\core\templates\accounts\login.html:60 .\core\templates\login.html:54
 msgid "Remember me"
-msgstr "Rappel moi"
+msgstr ""
 
 #: .\core\templates\accounts\login.html:64 .\core\templates\login.html:58
 msgid "Sign in"
-msgstr "S'inscrire"
+msgstr ""
 
 #: .\core\templates\accounts\login.html:67
 msgid "Forgot password"
-msgstr "Mot de passe oublié"
+msgstr ""
 
 #: .\core\templates\accounts\login.html:74
 #: .\core\templates\accounts\new_password.html:70
@@ -479,43 +456,43 @@ msgstr "Mot de passe oublié"
 #: .\core\templates\includes\langnav.html:19
 #: .\core\templates\includes\navigation-fullscreen.html:34
 msgid "Register"
-msgstr "S'inscrire"
+msgstr ""
 
 #: .\core\templates\accounts\new_password.html:19
 #: .\core\templates\accounts\password_reset_form.html:18
 msgid "Forgot Password"
-msgstr "Mot de passe oublié"
+msgstr ""
 
 #: .\core\templates\accounts\new_password.html:26
 #: .\core\templates\email_confirmed.html:23
 msgid "login"
-msgstr "Connexion"
+msgstr ""
 
 #: .\core\templates\accounts\new_password.html:26
 msgid "your account."
-msgstr "Votre Compte"
+msgstr ""
 
 #: .\core\templates\accounts\new_password.html:30
 msgid "Add and confirm your new password"
-msgstr "Ajoutez et confirmez votre nouveau mot de passe"
+msgstr ""
 
 #: .\core\templates\accounts\new_password.html:62
 msgid "Save"
-msgstr "Enregistrer"
+msgstr ""
 
 #: .\core\templates\accounts\password_change_failed.html:20
 msgid "Ooops password change link is invalid!"
-msgstr "Ooops le lien de changement de mot de passe n'est pas valide !"
+msgstr ""
 
 #: .\core\templates\accounts\password_change_failed.html:24
 #: .\core\templates\email_confirm_invalid.html:24
 msgid "Please reach out to us through this"
-msgstr "Merci de nous contacter par ce biais"
+msgstr ""
 
 #: .\core\templates\accounts\password_change_failed.html:24
 #: .\core\templates\email_confirm_invalid.html:24
 msgid "link"
-msgstr "Lien"
+msgstr ""
 
 #: .\core\templates\accounts\password_change_failed.html:31
 #: .\core\templates\email_confirm_invalid.html:31
@@ -523,68 +500,71 @@ msgstr "Lien"
 #: .\core\templates\page-404.html:24 .\core\templates\page-404.html:31
 #: .\core\templates\page-500.html:24 .\core\templates\page-500.html:31
 msgid "Home"
-msgstr "Accueil"
+msgstr ""
+
+#: .\core\templates\accounts\password_reset_email.html:112
+msgid ""
+"We're thrilled to have you here! Get ready to dive into your new account."
+msgstr ""
 
 #: .\core\templates\accounts\password_reset_email.html:145
 msgid "To initiate the password reset process for your"
-msgstr "Pour lancer le processus de réinitialisation du mot de passe de votre"
+msgstr ""
 
 #: .\core\templates\accounts\password_reset_email.html:145
 msgid "Satellite Data Visualisation Dashboard account, click the link below."
 msgstr ""
-"Compte de tableau de bord de visualisation de données satellitaires, cliquez "
-"sur le lien ci-dessous."
 
 #: .\core\templates\accounts\password_reset_email.html:170
 msgid "Confirm Password Reset"
-msgstr "Confirmer la réinitialisation du mot de passe"
+msgstr ""
 
 #: .\core\templates\accounts\password_reset_email.html:210
 msgid "Regards,"
-msgstr "Salutations"
+msgstr ""
 
 #: .\core\templates\accounts\password_reset_email.html:210
 msgid "Caju-Lab Support Team."
-msgstr "Équipe de soutien de Caju-Lab."
+msgstr ""
 
 #: .\core\templates\accounts\password_reset_email.html:238
 msgid "If these emails get annoying, please feel free to"
-msgstr "Si ces e-mails vous dérangent, n'hésitez pas à"
+msgstr ""
 
 #: .\core\templates\accounts\password_reset_form.html:52
 msgid "Change Password"
-msgstr "Changer le mot de passe"
+msgstr ""
 
 #: .\core\templates\accounts\register.html:141
 #: .\core\templates\accounts\register_org.html:126
 #: .\core\templates\accounts\register_role.html:69
 #: .\core\templates\register.html:66
 msgid "I agree with the"
-msgstr "je suis d'accord avec le"
+msgstr ""
 
 #: .\core\templates\accounts\register_org.html:21
 msgid "Register Organization"
-msgstr "Inscrire l'Organisation"
+msgstr ""
 
 #: .\core\templates\accounts\register_org.html:132
 msgid "Create Organization"
-msgstr "Créer une organisation"
+msgstr ""
 
 #: .\core\templates\accounts\register_role.html:21
 msgid "Register Role"
-msgstr "Inscrire le Rôle"
+msgstr ""
 
 #: .\core\templates\accounts\register_role.html:75
 msgid "Create Role"
-msgstr "Créer un Rôle"
+msgstr ""
 
 #: .\core\templates\accounts\role_options.html:2
 msgid "Not Listed"
-msgstr "Non Listé"
+msgstr ""
 
 #: .\core\templates\companies.html:14
 msgid "Tables"
-msgstr "Tableaux"
+msgstr ""
 
 #: .\core\templates\companies.html:39
 msgid "Organizations"
@@ -592,33 +572,33 @@ msgstr ""
 
 #: .\core\templates\companies.html:46
 msgid "Organization Name"
-msgstr "Nom de l'Organisation"
+msgstr ""
 
 #: .\core\templates\companies.html:47
 msgid "Description"
-msgstr "Description"
+msgstr ""
 
 #: .\core\templates\companies.html:48 .\core\templates\companies.html:171
 msgid "Phone Number"
-msgstr "Numéro de téléphone"
+msgstr ""
 
 #: .\core\templates\companies.html:49
 msgid "Email"
-msgstr "Email"
+msgstr ""
 
 #: .\core\templates\companies.html:50 .\core\templates\companies.html:176
 msgid "Website"
-msgstr "Site Internet"
+msgstr ""
 
 #: .\core\templates\companies.html:51 .\core\templates\profile.html:135
 msgid "Address"
-msgstr "Adresse"
+msgstr ""
 
 #: .\core\templates\companies.html:106 .\core\templates\companies.html:222
 #: .\core\templates\nurseries.html:152 .\core\templates\plantations.html:162
 #: .\core\templates\shipment.html:126 .\core\templates\yield.html:156
 msgid "Previous"
-msgstr "Précédent"
+msgstr ""
 
 #: .\core\templates\companies.html:117 .\core\templates\companies.html:233
 #: .\core\templates\nurseries.html:188 .\core\templates\nurseries.html:196
@@ -626,151 +606,151 @@ msgstr "Précédent"
 #: .\core\templates\shipment.html:162 .\core\templates\shipment.html:170
 #: .\core\templates\yield.html:192 .\core\templates\yield.html:200
 msgid "Next"
-msgstr "Suivant"
+msgstr ""
 
 #: .\core\templates\companies.html:160
 msgid "Plantation"
-msgstr "Plantation"
+msgstr ""
 
 #: .\core\templates\companies.html:167 .\core\templates\plantations.html:48
 #: .\core\templates\shipment.html:50 .\core\templates\yield.html:59
 msgid "Plantation Name"
-msgstr "Nom de la Plantation"
+msgstr ""
 
 #: .\core\templates\companies.html:168 .\core\templates\plantations.html:49
 msgid "Plantation Code"
-msgstr "Code la Plantation"
+msgstr ""
 
 #: .\core\templates\companies.html:169
 msgid "Plantation Age"
-msgstr "Âge de la Plantation"
+msgstr ""
 
 #: .\core\templates\companies.html:170
 msgid "Owner Name"
-msgstr "Nom du propriétaire"
+msgstr ""
 
 #: .\core\templates\companies.html:172
 msgid "Plantation Address"
-msgstr "Adresse de la Plantation"
+msgstr ""
 
 #: .\core\templates\companies.html:173
 msgid "Owner Address"
-msgstr "Adresse du Propriétaire"
+msgstr ""
 
 #: .\core\templates\companies.html:174 .\core\templates\plantations.html:53
 msgid "Total Trees"
-msgstr "Nombre total d'arbres"
+msgstr ""
 
 #: .\core\templates\companies.html:175 .\core\templates\nurseries.html:58
 msgid "Partner"
-msgstr "Partenaire"
+msgstr ""
 
 #: .\core\templates\email_confirm_invalid.html:20
 msgid " Ooops activation link is invalid!"
-msgstr "Ooops le lien d'activation n'est pas valide !"
+msgstr ""
 
 #: .\core\templates\email_confirmed.html:19
 msgid "Thank you for your email confirmation."
-msgstr "Merci pour la confirmation de votre e-mail."
+msgstr ""
 
 #: .\core\templates\email_confirmed.html:23
 msgid "Now you can"
-msgstr "Maintenant vous pouvez"
+msgstr ""
 
 #: .\core\templates\email_confirmed.html:23
 msgid "your account"
-msgstr "Votre Compte"
+msgstr ""
 
 #: .\core\templates\includes\footer.html:9
 msgid "More Dashboards"
-msgstr "Plus de tableaux de bord"
+msgstr ""
 
 #: .\core\templates\includes\footer.html:15
 msgid "Creative-Tim"
-msgstr "Temps de création"
+msgstr ""
 
 #: .\core\templates\includes\footer.html:16
 msgid "AppSeed"
-msgstr "vitesse de l'application"
+msgstr ""
 
 #: .\core\templates\includes\langnav.html:27
 msgid "Language"
-msgstr "Langue"
+msgstr ""
 
 #: .\core\templates\includes\langnav.html:46
 msgid "Like us on Facebook"
-msgstr "Aimez-nous sur facebook"
+msgstr ""
 
 #: .\core\templates\includes\langnav.html:48
 #: .\core\templates\includes\navigation-fullscreen.html:44
 msgid "Facebook"
-msgstr "Facebook"
+msgstr ""
 
 #: .\core\templates\includes\langnav.html:53
 msgid "Follow us on Twitter"
-msgstr "Suivez-nous sur Twitter"
+msgstr ""
 
 #: .\core\templates\includes\langnav.html:55
 #: .\core\templates\includes\navigation-fullscreen.html:51
 msgid "Twitter"
-msgstr "Twitter"
+msgstr ""
 
 #: .\core\templates\includes\langnav.html:60
 msgid "Support Technoserve"
-msgstr "Soutien Technoserve"
+msgstr ""
 
 #: .\core\templates\includes\langnav.html:62
 msgid "Support"
-msgstr "Soutien"
+msgstr ""
 
 #: .\core\templates\includes\langnav.html:69
 msgid "Search"
-msgstr "Chercher"
+msgstr ""
 
 #: .\core\templates\includes\navigation-fullscreen.html:60
 msgid "Caju-Support"
-msgstr "Caju-Soutien"
+msgstr ""
 
 #: .\core\templates\includes\navigation.html:43
 msgid "You have"
-msgstr "Vous avez"
+msgstr ""
 
 #: .\core\templates\includes\navigation.html:43
 msgid "notifications"
-msgstr "notifications"
+msgstr ""
 
 #: .\core\templates\includes\sidenav.html:7
 msgid "Cashew Dashboard"
-msgstr "Tableau de bord de noix de cajou"
+msgstr ""
 
 #: .\core\templates\includes\sidenav.html:38
 msgid "Map"
-msgstr "Carte"
+msgstr ""
 
 #: .\core\templates\includes\sidenav.html:44
 msgid "Profile"
-msgstr "Profil"
+msgstr ""
 
 #: .\core\templates\includes\sidenav.html:70
 msgid "Registration"
-msgstr "Inscription"
+msgstr ""
 
 #: .\core\templates\includes\sidenav.html:80
 msgid "New Member"
-msgstr "Nouveau Membre"
+msgstr ""
 
 #: .\core\templates\includes\sidenav.html:91
 msgid "New Organization"
-msgstr "Nouvelle Organisation"
+msgstr ""
 
 #: .\core\templates\includes\sidenav.html:117
 #: .\core\templates\plantations.html:14
 msgid "Plantations"
-msgstr "Plantations"
+msgstr ""
 
 #: .\core\templates\includes\sidenav.html:124
 msgid "Yield"
-msgstr "Rendement"
+msgstr ""
 
 #: .\core\templates\includes\sidenav.html:131 .\core\templates\shipment.html:16
 #: .\core\templates\shipment.html:43
@@ -780,299 +760,286 @@ msgstr ""
 #: .\core\templates\includes\sidenav.html:138
 #: .\core\templates\nurseries.html:14 .\core\templates\nurseries.html:41
 msgid "Nurseries"
-msgstr "Pépinières"
+msgstr ""
 
 #: .\core\templates\includes\sidenav.html:145
 msgid "Logout"
-msgstr "Se déconnecter"
+msgstr ""
 
 #: .\core\templates\includes\sidenav.html:153
 msgid "Resources"
-msgstr "Ressources"
+msgstr ""
 
 #: .\core\templates\includes\sidenav.html:163
 msgid "About TechnoServe"
-msgstr "À propos de TechnoServe"
+msgstr ""
 
 #: .\core\templates\includes\sidenav.html:172
 msgid "Visit TechnoServe"
-msgstr "Visitez TechnoServe"
+msgstr ""
 
 #: .\core\templates\layouts\base-fullscreen.html:12
 #: .\core\templates\layouts\base.html:12
 msgid "Technoserve"
-msgstr "Technoserve"
+msgstr ""
 
 #: .\core\templates\layouts\base-fullscreen.html:46
 msgid "Cajúlab Presents"
-msgstr "Cajulab présente"
+msgstr ""
 
 #: .\core\templates\login.html:18
 msgid "Sign in with"
-msgstr "Se connecter avec"
+msgstr ""
 
 #: .\core\templates\login.html:22 .\core\templates\register.html:23
 msgid "Github"
-msgstr "Github"
+msgstr ""
 
 #: .\core\templates\login.html:32
 msgid "Or sign in with credentials"
-msgstr "Ou connectez-vous avec vos identifiants"
+msgstr ""
 
 #: .\core\templates\login.html:65
 msgid "Create Account"
-msgstr "Créer un compte"
+msgstr ""
 
 #: .\core\templates\nurseries.html:48
 msgid "Nursery Name"
-msgstr "Nom de la pépinière"
+msgstr ""
 
 #: .\core\templates\nurseries.html:49
 msgid "Owner First Name"
-msgstr "Prénom du propriétaire"
+msgstr ""
 
 #: .\core\templates\nurseries.html:50
 msgid "Owner Last Name"
-msgstr "Nom de famille du propriétaire"
+msgstr ""
 
 #: .\core\templates\nurseries.html:51
 msgid "Nursery Address"
-msgstr "Adresse de la pépinière"
+msgstr ""
 
 #: .\core\templates\nurseries.html:52 .\core\templates\plantations.html:54
 #: .\core\templates\profile.html:149
 msgid "Country"
-msgstr "Pays"
+msgstr ""
 
 #: .\core\templates\nurseries.html:53 .\core\templates\plantations.html:56
 #: .\core\templates\shipment.html:55
 msgid "Commune"
-msgstr "Commune"
+msgstr ""
 
 #: .\core\templates\nurseries.html:54
 msgid "Current Area"
-msgstr "Zone actuelle"
+msgstr ""
 
 #: .\core\templates\nurseries.html:55 .\core\templates\plantations.html:60
 msgid "Latitude"
-msgstr "Latitude"
+msgstr ""
 
 #: .\core\templates\nurseries.html:56 .\core\templates\plantations.html:61
 msgid "Longitude"
-msgstr "Longitude"
+msgstr ""
 
 #: .\core\templates\nurseries.html:57 .\core\templates\plantations.html:62
 msgid "Altitude"
-msgstr "Altitude"
+msgstr ""
 
 #: .\core\templates\page-403.html:20
 msgid "Oups! Error 403"
-msgstr "Oups ! Erreur 403"
+msgstr ""
 
 #: .\core\templates\page-403.html:24
 msgid "Access denied - Please authenticate"
-msgstr "Accès refusé - Veuillez vous authentifier"
+msgstr ""
 
 #: .\core\templates\page-403.html:35 .\core\templates\page-404.html:35
 #: .\core\templates\page-500.html:35
 msgid "Get Support"
-msgstr "Obtenir de l'aide"
+msgstr ""
 
 #: .\core\templates\page-404.html:20
 msgid "Oups! Error 404"
-msgstr "Oups ! Erreur 404"
+msgstr ""
 
 #: .\core\templates\page-404.html:24
 msgid "Page not found"
-msgstr "Page non trouvée"
+msgstr ""
 
 #: .\core\templates\page-500.html:20
 msgid "Oups! Error 500"
-msgstr "Oups ! Erreur 405"
+msgstr ""
 
 #: .\core\templates\page-500.html:24
 msgid "Server error, please contact support"
-msgstr "Erreur de serveur, veuillez demander d'aide"
+msgstr ""
 
 #: .\core\templates\plantations.html:41
 msgid "Plantations Data"
-msgstr "Données sur les plantations"
+msgstr ""
 
 #: .\core\templates\plantations.html:50
 msgid "Owner First name"
-msgstr "Prénom du Propriétaire "
+msgstr ""
 
 #: .\core\templates\plantations.html:51
 msgid "Owner Last name"
-msgstr "Nom du propriétaire"
+msgstr ""
 
 #: .\core\templates\plantations.html:52
 msgid "Gender"
-msgstr "Genre"
+msgstr ""
 
 #: .\core\templates\plantations.html:55 .\core\templates\shipment.html:54
 msgid "Department"
-msgstr "département"
+msgstr ""
 
 #: .\core\templates\plantations.html:57
 msgid "Arrondissement"
-msgstr "Arrondissement"
+msgstr ""
 
 #: .\core\templates\plantations.html:59
 msgid "Area(Ha)"
-msgstr "Superficie (ha)"
+msgstr ""
 
 #: .\core\templates\profile.html:18
 msgid "Hello"
-msgstr "Bonjour"
+msgstr ""
 
 #: .\core\templates\profile.html:20
 msgid ""
 "This is your profile page. You can see the progress you have made with your "
 "work and manage your projects or assigned tasks"
 msgstr ""
-"Ceci est votre page de profil. Vous pouvez voir les progrès que vous avez "
-"réalisés avec votre travail et gérer vos projets ou tâches assignées"
 
 #: .\core\templates\profile.html:21 .\core\templates\profile.html:88
 msgid "Edit profile"
-msgstr "Modifier le profil"
+msgstr ""
 
 #: .\core\templates\profile.html:43
 msgid "Connect"
-msgstr "Connecter"
+msgstr ""
 
 #: .\core\templates\profile.html:44
 msgid "Message"
-msgstr "Message"
+msgstr ""
 
 #: .\core\templates\profile.html:97
 msgid "User information"
-msgstr "Informations de l'utilisateur"
+msgstr ""
 
 #: .\core\templates\profile.html:102
 msgid "Username"
-msgstr "Nom d'utilisateur"
+msgstr ""
 
 #: .\core\templates\profile.html:108
 msgid "Email address"
-msgstr "Adresse e-mail"
+msgstr ""
 
 #: .\core\templates\profile.html:116
 msgid "First name"
-msgstr "Prénom"
+msgstr ""
 
 #: .\core\templates\profile.html:122
-#, fuzzy
-#| msgid "Last Name"
 msgid "Last name"
-msgstr "Nom"
+msgstr ""
 
 #: .\core\templates\profile.html:130
 msgid "Contact information"
-msgstr "Numéro de téléphone"
+msgstr ""
 
 #: .\core\templates\profile.html:143
 msgid "City"
-msgstr "Ville"
+msgstr ""
 
 #: .\core\templates\profile.html:155
 msgid "Organization"
-msgstr "Organization"
+msgstr ""
 
 #: .\core\templates\profile.html:163
 msgid "About me"
-msgstr "À propos de moi"
+msgstr ""
 
 #: .\core\templates\profile.html:166
 msgid "About Me"
-msgstr "À propos de moi"
+msgstr ""
 
 #: .\core\templates\profile.html:167
 msgid "Something about me, does not update for now."
-msgstr "Quelque chose à propos de moi, n'est pas mis à jour pour l'instant."
+msgstr ""
 
 #: .\core\templates\register.html:19
 msgid "Sign up with"
-msgstr "Se connecter avec"
+msgstr ""
 
 #: .\core\templates\register.html:33
 msgid "Or sign up with credentials"
-msgstr "Ou inscrivez-vous avec des identifiants"
+msgstr ""
 
 #: .\core\templates\register.html:60
 msgid "password strength:"
-msgstr "Fiabilité du mot de passe:"
+msgstr ""
 
 #: .\core\templates\register.html:60
 msgid "strong"
-msgstr "Puissant"
+msgstr ""
 
 #: .\core\templates\shipment.html:51
 msgid "Shipment Date"
-msgstr "Date d'expédition"
+msgstr ""
 
 #: .\core\templates\shipment.html:52
 msgid "Port Number"
-msgstr "Numéro de port"
+msgstr ""
 
 #: .\core\templates\shipment.html:53
 msgid "Cashew Quantity"
-msgstr "Quantité de noix de cajou"
+msgstr ""
 
 #: .\core\templates\shipment.html:56
 msgid "Plantation Area"
-msgstr "Zone de plantation"
+msgstr ""
 
 #: .\core\templates\yield.html:14
 msgid "Yields"
-msgstr "Rendements"
+msgstr ""
 
 #: .\core\templates\yield.html:60
 msgid "Product ID"
-msgstr "ID du Produit"
+msgstr ""
 
 #: .\core\templates\yield.html:61
 msgid "Year"
-msgstr "Année"
+msgstr ""
 
 #: .\core\templates\yield.html:62
 msgid "Total Plants"
-msgstr "Nombre Total de Plants"
+msgstr ""
 
 #: .\core\templates\yield.html:63
-#, fuzzy
-#| msgid "Yields"
 msgid "Yields (Kg)"
-msgstr "Rendements"
+msgstr ""
 
 #: .\core\templates\yield.html:64
-#, fuzzy
-#| msgid "Yield/Hectare (kg/ha)"
 msgid "Yields/Ha (Kg)"
-msgstr "Rendement/Hectare (kg/ha)"
+msgstr ""
 
 #: .\core\templates\yield.html:65
-#, fuzzy
-#| msgid "Yield per Tree (kg/tree)"
 msgid "Yields/Tree (Kg)"
-msgstr "Rendement par Arbre (kg/arbre)"
+msgstr ""
 
 #: .\core\templates\yield.html:68
 msgid "Out of Prod. Trees"
-msgstr "Arbres hors prod."
+msgstr ""
 
 #: .\gettingstarted\settings.py:162
 msgid "English"
-msgstr "Anglais"
+msgstr ""
 
 #: .\gettingstarted\settings.py:163
 msgid "French"
-msgstr "français"
+msgstr ""
 
 #: .\gettingstarted\urls.py:13
 msgid "admin/"
-msgstr "admin/"
-
-#~ msgid "TNS Drone Images"
-#~ msgstr "Images de Drones de TNS"
+msgstr ""
