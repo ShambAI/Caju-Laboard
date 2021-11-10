@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-10 18:18+0100\n"
+"POT-Creation-Date: 2021-11-10 21:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -179,7 +179,11 @@ msgstr ""
 msgid "Average Yield per Tree (kg/tree)"
 msgstr ""
 
-#: .\app\benin_plantations.py:49
+#: .\app\benin_plantations.py:47
+msgid "View Drone Image"
+msgstr ""
+
+#: .\app\benin_plantations.py:50
 msgid "Benin Plantations"
 msgstr ""
 
@@ -307,6 +311,7 @@ msgid "Organization created - please <a href=\"/register\">register user</a>."
 msgstr ""
 
 #: .\core\templates\accounts\acc_active_email.html:112
+#: .\core\templates\accounts\password_reset_email.html:112
 msgid ""
 "We are thrilled to have you here! Get ready to dive into your new account."
 msgstr ""
@@ -500,11 +505,6 @@ msgstr ""
 #: .\core\templates\page-404.html:24 .\core\templates\page-404.html:31
 #: .\core\templates\page-500.html:24 .\core\templates\page-500.html:31
 msgid "Home"
-msgstr ""
-
-#: .\core\templates\accounts\password_reset_email.html:112
-msgid ""
-"We're thrilled to have you here! Get ready to dive into your new account."
 msgstr ""
 
 #: .\core\templates\accounts\password_reset_email.html:145

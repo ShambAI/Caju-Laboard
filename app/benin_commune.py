@@ -6,7 +6,7 @@ from django.utils.translation import gettext
 import geojson
 from area import area
 from math import log10, floor
-heroku = True
+heroku = False
 
 
 with open("ben_adm2.json", errors="ignore") as f:

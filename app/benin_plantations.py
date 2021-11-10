@@ -20,7 +20,7 @@ class Benin_plantation_LAYER:
     def __init__(self, benin_plantation_layer, dept_yieldHa):
         self.benin_plantation_layer = benin_plantation_layer
         self.dept_yieldHa = dept_yieldHa
-    def add_benin_plantation(self):
+    def add_benin_plantation(self, path_link):
         
         #Plantation translation variables
         Plantation_Owner = gettext("Plantation Owner")
@@ -44,6 +44,7 @@ class Benin_plantation_LAYER:
         Total_Number_of = gettext("Total Number of Trees")
         Average_Yield_per = gettext("Average Yield per Tree (kg/tree)")
         Source_TNS = gettext("Source: TNS/BeninCaju Yield Surveys 2020")
+        View_Drone_Image = gettext("View Drone Image")
         
         #Adding Benin Plantation to the map
         plantation_cluster = MarkerCluster(name=gettext("Benin Plantations"))
@@ -124,11 +125,19 @@ class Benin_plantation_LAYER:
                 html_a = f'''
                     <html>
                     <head>
+                        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+                        <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon" />
+                        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" />
+                        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+                        <link rel="stylesheet" href="css/mdb.min.css" />
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
                         <style>
                             table {{
                             font-family: arial, sans-serif;
                             border-collapse: collapse;
-                            width: 100%;
+                            width: 99%;
                             }}
 
 
@@ -149,14 +158,15 @@ class Benin_plantation_LAYER:
                             table tr:nth-child(odd) td{{
                             background-color: #e7edf0;
                             }}
-                            </style>
+                        </style>
+                            
                         </head>
                         <body>
                         
 
-                            <h3>{Plantation_Owner}: {nameP}</h3>
-                            <h4>{Plantation_ID}: {code}</h4>
-                            <h4>{Village}: {village}</h4>
+                            <h6>{Plantation_Owner}: {nameP}</h3>
+                            <h6>{Plantation_ID}: {code}</h4>
+                            <h6>{Village}: {village}</h4>
                             <table>
                             <tr>
                                 <th></th>
@@ -196,9 +206,9 @@ class Benin_plantation_LAYER:
                             
                             </table>
                             
-                            <h4>
+                            <h6>
                             {Average_Surface_AreaP}
-                            </h4>
+                            </h6>
                             <table>
                             <tr>
                                 <th></th>
@@ -249,13 +259,28 @@ class Benin_plantation_LAYER:
                             
                             </table>
                             <table>
-                                <td><div style= "text-align: center"><h6>{Source_TNS}</h6></div>
-                            </table> 
+                                <td><div style= "text-align: center">
+                                        <button class="btn btn-outline-light" style="background-color: #004b55;" onclick= "window.open('http://127.0.0.1:8000{path_link}drone/{code}/','_blank')" role="button"
+                                            ><i class="fab fa-accusoft me-2"></i>{View_Drone_Image}</button
+                                        >
+                                        
+                                </div></td>
+                            </table>
+                            <table>
+                                <div style= "text-align: center"><h6>{Source_TNS}</h6></div>
+                            </table>
+                            <script>
+                            window.open(
+                                'http://127.0.0.1:8000{path_link}drone/{code}/',
+                                '_blank'
+                                );
+                            <script>
+                            
                         </body>
                         </html>
                     '''
                     
-                iframe = folium.IFrame(html=html_a, width=370, height=380)
+                iframe = folium.IFrame(html=html_a, width=365, height=380)
 
                 folium.Popup(iframe, max_width=1000).add_to(temp_layer_a)
 
@@ -272,6 +297,4 @@ class Benin_plantation_LAYER:
                 temp_layer_a.add_to(self.benin_plantation_layer)
 
         plantation_cluster.add_to(self.benin_plantation_layer)
-        return self.benin_plantation_layer
-
-        
+        return self.benin_plantation_layer       

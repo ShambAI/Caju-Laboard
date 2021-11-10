@@ -110,7 +110,7 @@ class my_home():
         Benin_commune_layer.add_to(m)
 
         benin_plantation_layer = folium.FeatureGroup(name=gettext('Plantation Locations'), show=True, overlay = True)
-        Benin_plantation_layer = Benin_plantation_LAYER(benin_plantation_layer, dept_yieldHa).add_benin_plantation()
+        Benin_plantation_layer = Benin_plantation_LAYER(benin_plantation_layer, dept_yieldHa).add_benin_plantation(path_link)
         Benin_plantation_layer.add_to(m)
         
 

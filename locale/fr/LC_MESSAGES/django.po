@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-10 18:18+0100\n"
+"POT-Creation-Date: 2021-11-10 21:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -185,7 +185,16 @@ msgstr "Nombre Total d'Arbres"
 msgid "Average Yield per Tree (kg/tree)"
 msgstr "Rendement Moyen par Arbre (kg/arbre)"
 
-#: .\app\benin_plantations.py:49
+#: .\app\benin_plantations.py:47
+msgid "TNS Drone Images"
+msgstr "Images de Drones de TNS"
+
+#: .\app\benin_plantations.py:47
+msgid "View Drone Image"
+msgstr "Voir l'image du drone"
+
+
+#: .\app\benin_plantations.py:50
 msgid "Benin Plantations"
 msgstr "Plantations du Bénin"
 
@@ -325,6 +334,7 @@ msgstr ""
 "l'utilisateur</a>"
 
 #: .\core\templates\accounts\acc_active_email.html:112
+#: .\core\templates\accounts\password_reset_email.html:112
 msgid ""
 "We are thrilled to have you here! Get ready to dive into your new account."
 msgstr ""
@@ -349,8 +359,11 @@ msgstr "Confirmer votre Compte"
 
 #: .\core\templates\accounts\acc_active_email.html:181
 #: .\core\templates\accounts\password_reset_email.html:184
-msgid "If that does not work, copy and paste the following link in your browser:"
-msgstr "Si cela ne fonctionne pas, copiez et collez le lien suivant dans votre navigateur:"
+msgid ""
+"If that does not work, copy and paste the following link in your browser:"
+msgstr ""
+"Si cela ne fonctionne pas, copiez et collez le lien suivant dans votre "
+"navigateur:"
 
 #: .\core\templates\accounts\acc_active_email.html:198
 #: .\core\templates\accounts\password_reset_email.html:203
@@ -1073,6 +1086,3 @@ msgstr "français"
 #: .\gettingstarted\urls.py:13
 msgid "admin/"
 msgstr "admin/"
-
-#~ msgid "TNS Drone Images"
-#~ msgstr "Images de Drones de TNS"
