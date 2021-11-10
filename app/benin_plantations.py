@@ -1,37 +1,14 @@
-from authentication.models import CommuneSatellite
-from authentication.models import DeptSatellite
 from authentication.models import BeninYield
-from django.db.models import Sum, Avg
+from authentication.models import AlteiaData
+from authentication.models import SpecialTuple
 import folium
 from django.utils.translation import gettext
 import geojson
-import numpy as np
 from area import area
 from math import log10, floor
 from folium.plugins import MarkerCluster
 import pandas as pd
 from shapely.geometry import shape
-
-
-ben_yield = pd.read_excel("./new_data/ben_yield.xlsx", engine='openpyxl')
-ben_yield_GEO = pd.read_excel("./new_data/ben_yield_GEO.xlsx", engine='openpyxl')
-alteia_df = pd.read_excel("./new_data/alteia_df.xlsx", engine='openpyxl')
-
-list_global = []
-for item in list(ben_yield_GEO['Code']):
-    if item in list(ben_yield['Code']):
-        list_global.append(item)
-        
-GEO_id_tuple = []
-for unique_id in list_global:
-    GEO_id_tuple.append((list(ben_yield_GEO[ben_yield_GEO['Code']==unique_id]['Local shape ID or coordinates'])[0], unique_id))
-    
-special_id_tuple = []
-special_id = []
-for (id_u, code_u) in GEO_id_tuple:
-    if id_u in list(alteia_df['Code']):
-        special_id_tuple.append((id_u, code_u))
-        special_id.append(id_u)
 
 with open("Data/CajuLab_Plantations.geojson", errors="ignore") as f:
     alteia_json = geojson.load(f)
@@ -83,16 +60,17 @@ class Benin_plantation_LAYER:
         for feature in temp_geojson_a.data['features']:
             # GEOJSON layer consisting of a single feature
             code_sum = feature["properties"]["Plantation code"]
-            if code_sum in special_id:
+            items = len(SpecialTuple.objects.filter(alteia_id=code_sum))
+            if items != 0:
                 counter += 1
-                indx = special_id.index(code_sum)
-                code_2_sum = special_id_tuple[indx][1]
-                grand_pred_surface += sum(round(alteia_df[alteia_df['Code']==code_sum].Cashew_Tree/10000,2))
-                grand_ground_surface += sum(ben_yield[ben_yield['Code']==code_2_sum]['2020 estimated surface (ha)'])
-                grand_total_yield += sum(ben_yield[ben_yield['Code']==code_2_sum]['2020 total yield (kg)'])
+                code_2_sum = SpecialTuple.objects.filter(alteia_id=code_sum)[0].plantation_id
+
+
+                grand_pred_surface += round(AlteiaData.objects.filter(plantation_code=code_sum)[0].cashew_tree_cover/10000,2)
+                grand_ground_surface += BeninYield.objects.filter(plantation_code=code_2_sum)[0].surface_area
+                grand_total_yield += BeninYield.objects.filter(plantation_code=code_2_sum)[0].total_yield_kg
                 grand_plantation_size += area(feature['geometry'])/10000
-                
-                grand_num_tree += sum(ben_yield[ben_yield['Code']==code_2_sum]['Number of trees'])
+                grand_num_tree += BeninYield.objects.filter(plantation_code=code_2_sum)[0].total_number_trees
 
         average_pred_yield_ha = 390
         total_grand_pred_surface = int(round(grand_pred_surface))
@@ -114,27 +92,22 @@ class Benin_plantation_LAYER:
             
             code = feature["properties"]["Plantation code"]
             
-            if code in special_id:
-                
+            items = len(SpecialTuple.objects.filter(alteia_id=code))
+            if items != 0:
                 plantation_size = area(feature['geometry'])/10000
                 plantation_size = round(plantation_size,1)
-                indx = special_id.index(code)
-                code_2 = special_id_tuple[indx][1]
-                
-                
+                code_2 = SpecialTuple.objects.filter(alteia_id=code)[0].plantation_id  
                 temp_layer_a = folium.GeoJson(feature, zoom_on_click = True)
-                department_name = list(ben_yield[ben_yield['Code']==code_2]['Departement'])[0]
-                length2 = len(ben_yield[ben_yield['Code']==code_2]['2020 estimated surface (ha)'])
-                tree_ha_pred_plant = round(sum(round(alteia_df[alteia_df['Code']==code].Cashew_Tree/10000,2)),1)
+                department_name = BeninYield.objects.filter(plantation_code=code_2)[0].department
+                tree_ha_pred_plant = round(round(AlteiaData.objects.filter(plantation_code=code)[0].cashew_tree_cover/10000,2),1)
                 yield_pred_plant = int(tree_ha_pred_plant*self.dept_yieldHa[department_name])
-                surface_areaP =  round(sum(ben_yield[ben_yield['Code']==code_2]['2020 estimated surface (ha)'])/length2,1)
-                total_yieldP =  int(round(sum(ben_yield[ben_yield['Code']==code_2]['2020 total yield (kg)'])/length2))
+                surface_areaP =  round(BeninYield.objects.filter(plantation_code=code_2)[0].surface_area,1)
+                total_yieldP =  int(round(BeninYield.objects.filter(plantation_code=code_2)[0].total_yield_kg))
                 yield_haP =  int(total_yieldP/surface_areaP)
-                num_treeP = int(sum(ben_yield[ben_yield['Code']==code_2]['Number of trees']))
+                num_treeP = int(BeninYield.objects.filter(plantation_code=code_2)[0].total_number_trees)
                 yield_treeP = int(round(total_yieldP/num_treeP))
-                
-                nameP = list(ben_yield[ben_yield['Code']==code_2]['Surname'])[0]+' '+list(ben_yield[ben_yield['Code']==code_2]['Given Name'])[0]
-                village = list(ben_yield[ben_yield['Code']==code_2]['Village'])[0]
+                nameP = BeninYield.objects.filter(plantation_code=code_2)[0].owner_first_name+' '+BeninYield.objects.filter(plantation_code=code_2)[0].owner_last_name
+                village = BeninYield.objects.filter(plantation_code=code_2)[0].village
 
                 try:
                     r_total_yieldP = round(total_yieldP, 1-int(floor(log10(abs(total_yieldP))))) if total_yieldP < 90000 else round(total_yieldP, 2-int(floor(log10(abs(total_yieldP)))))

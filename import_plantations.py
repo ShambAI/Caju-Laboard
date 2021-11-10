@@ -168,8 +168,8 @@ def create_special_id(ben_yield, alteia_df, ben_yield_GEO):
         if id_u in list(alteia_df['Code']):
 
             special_id_data = models.SpecialTuple(
-            special_id_tuple = (id_u, code_u),
-            special_id = id_u,
+            plantation_id = code_u,
+            alteia_id = id_u,
             )
         try:
             special_id_data.save()

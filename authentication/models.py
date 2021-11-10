@@ -402,8 +402,8 @@ class BeninYield(models.Model):
         (INACTIVE, 'Inactive'),
     ]
 
-    plantation_name = models.CharField(max_length=200, unique=True)
-    plantation_code = models.CharField(max_length=200, unique=True)
+    plantation_name = models.CharField(max_length=200)
+    plantation_code = models.CharField(max_length=200)
     department = models.CharField(max_length=200)
     commune = models.CharField(max_length=200)
     arrondissement = models.CharField(max_length=200)
@@ -417,7 +417,7 @@ class BeninYield(models.Model):
     total_yield_per_tree_kg = models.FloatField()
     sex = models.CharField(max_length=200)
     plantation_id = models.ForeignKey(Plantation, on_delete=models.CASCADE, null=True)
-    product_id = models.CharField(unique=True, max_length=60)
+    product_id = models.CharField(max_length=60)
     total_number_trees = models.FloatField()
     total_sick_trees = models.FloatField()
     total_dead_trees = models.FloatField()
@@ -465,9 +465,9 @@ class CommuneSatellite(models.Model):
 
 class SpecialTuple(models.Model):
 
-    special_id_tuple = models.CharField(max_length=200, unique=True)
-    special_id = models.CharField(max_length=200, unique=True)
+    plantation_id = models.CharField(max_length=200, unique=True)
+    alteia_id = models.CharField(max_length=200, unique=True)
     
 
     def __str__(self):
-        return str(self.special_id)
+        return str(self.alteia_id)

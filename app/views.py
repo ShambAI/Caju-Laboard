@@ -24,17 +24,7 @@ service_account = 'cajulab@benin-cajulab-web-application.iam.gserviceaccount.com
 credentials = ee.ServiceAccountCredentials(service_account, 'privatekey.json')
 ee.Initialize(credentials)
 locale.setlocale(locale.LC_ALL, '')  # Use '' for auto, or force e.g. to 'en_US.UTF-8'
-
 alldept = ee.Image('users/ashamba/allDepartments_v0')
-# dtstats_df = pd.read_excel("./new_data/dtstats_df.xlsx", engine='openpyxl')
-# dtstats_df1 = pd.read_excel("./new_data/dtstats_df1.xlsx", engine='openpyxl')
-# alteia_df = pd.read_excel("./new_data/alteia_df.xlsx", engine='openpyxl')
-# ben_yield = pd.read_excel("./new_data/ben_yield.xlsx", engine='openpyxl')
-# ben_nursery = pd.read_excel("./new_data/ben_nursery.xlsx", engine='openpyxl')
-# ben_yield_GEO = pd.read_excel("./new_data/ben_yield_GEO.xlsx", engine='openpyxl')
-# drone_df = pd.read_excel("./plant_drone_data/drone_dataframe_reviewed.xlsx", engine='openpyxl')
-# drone_directory = "./plant_drone_data/Images"
-
 
 class my_home():
     # Define a method for displaying Earth Engine image tiles on a folium map.
