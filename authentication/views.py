@@ -551,7 +551,7 @@ def shipment(request):
     return render(request, 'shipment.html', context)
 
 @login_required(login_url="/login/")
-def drone(request, plant_id):
+def drone(request, plant_id, coordinate_xy):
     basemaps = {
                     'Google Maps': folium.TileLayer(
                         tiles = 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
@@ -586,7 +586,7 @@ def drone(request, plant_id):
 
 
     m = folium.Map(
-        location=[9.45716831, 2.64341728],
+        location=coordinate_xy,
         zoom_start=18,
         prefer_canvas=True,
         tiles = None

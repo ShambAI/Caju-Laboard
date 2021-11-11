@@ -120,7 +120,9 @@ class Benin_plantation_LAYER:
                     r_yield_pred_plant = yield_pred_plant
 
 
-                
+                s = shape(feature["geometry"])
+                centre = s.centroid
+                coordinate_xy = [centre.y, centre.x] 
                     
                 html_a = f'''
                     <html>
@@ -260,7 +262,7 @@ class Benin_plantation_LAYER:
                             </table>
                             <table>
                                 <td><div style= "text-align: center">
-                                        <button class="btn btn-outline-light" style="background-color: #004b55;" onclick= "window.open('http://127.0.0.1:8000{path_link}drone/{code}/','_blank')" role="button"
+                                        <button class="btn btn-outline-light" style="background-color: #004b55;" onclick= "window.open('http://127.0.0.1:8000{path_link}drone/{code}/{coordinate_xy}/','_blank')" role="button"
                                             ><i class="fab fa-accusoft me-2"></i>{View_Drone_Image}</button
                                         >
                                         
@@ -271,7 +273,7 @@ class Benin_plantation_LAYER:
                             </table>
                             <script>
                             window.open(
-                                'http://127.0.0.1:8000{path_link}drone/{code}/',
+                                'http://127.0.0.1:8000{path_link}drone/{code}/{coordinate_xy}/',
                                 '_blank'
                                 );
                             <script>
@@ -286,9 +288,7 @@ class Benin_plantation_LAYER:
 
                 # consolidate individual features back into the main layer
                 
-                s = shape(feature["geometry"])
-                centre = s.centroid
-                folium.Marker(location= [centre.y, centre.x],
+                folium.Marker(location= coordinate_xy,
                             rise_on_hover=True,
                             rise_offset = 250,
                             icon = folium.Icon(color="green", icon="globe"),

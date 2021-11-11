@@ -26,7 +26,7 @@ urlpatterns = [
     path('yield/', views.yields, name='yield'),
     path('nurseries/', views.nurseries, name='nurseries'),
     path('shipment/', views.shipment, name='shipment'),
-    path('drone/<plant_id>/', views.drone, name='drone'),
+    path('drone/<plant_id>/<coordinate_xy>/', views.drone, name='drone'),
     path('forgot_password/', views.forgot_password, name='forgot_password'),
     path('password_reset_confirm/<uidb64>/<token>/', views.password_reset_confirm, name='password_reset_confirm'),
 ]
