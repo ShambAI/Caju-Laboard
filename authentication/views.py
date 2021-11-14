@@ -18,6 +18,7 @@ from django.http import HttpResponse
 from .forms import LoginForm, SignUpForm, FullSignUpForm, RegisterOrganization, RegisterRole
 from . import models
 from . import utils
+import geojson
 
 import datetime
 import logging
@@ -60,13 +61,7 @@ def login_view(request):
                 return redirect("/")
             else:
                 msg = gettext('Invalid credentials')
-                # rem_user = RemUser.objects.filter(user_name=username)
-                # _pass = rem_user.values()[0]['password']
-                # if password == _pass:
-                #     login(request, user)
-                #     return redirect("/")
-                # else:
-                #     msg = 'Invalid credentials'   
+                  
         else:
             msg = str(form.errors) #'Error validating the form'
     else:
@@ -464,7 +459,7 @@ def tables(request):
 @login_required(login_url="/login/")
 def yields(request):
     context = {}
-    yields_list = models.YieldHistory.objects.filter(status = utils.Status.ACTIVE)
+    yields_list = models.BeninYield.objects.filter(status = utils.Status.ACTIVE)
 
     page = request.GET.get('page', 1)
 
@@ -565,10 +560,10 @@ def drone(request, plant_id, coordinate_xy):
                         tiles = 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
                         attr = 'Google',
                         name = gettext('Satellite'),
-                        max_zoom = 18,
+                        max_zoom = 25,
                         overlay = True,
-                        show=False,
-                        control = True
+                        show=True,
+                        control = False
                     ),
                     'Mapbox Satellite': folium.TileLayer(
                         tiles='https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2hha2F6IiwiYSI6ImNrczMzNTl3ejB6eTYydnBlNzR0dHUwcnUifQ.vHqPio3Pe0PehWpIuf5QUg',
@@ -576,14 +571,20 @@ def drone(request, plant_id, coordinate_xy):
                         name = gettext('Satellite View'),
                         max_zoom = 30,
                         overlay = True,
-                        show=False,
+                        show=True,
                         control = True
                     )
                 }
                 # figure = folium.Figure()
 
-    rgb = ee.Image('users/ashamba/RGB_TEST')
+    
+    alldept = ee.Image('users/ashamba/allDepartments_v0')
 
+
+    coordinate_xy = (coordinate_xy).replace('[',"").replace(']',"").replace(' ',"").split(',')
+    coordinate_xy = [float(coordinate_xy[0]), float(coordinate_xy[1])]
+
+    # coordinate_xy = [9.45720800, 2.64348809]
 
     m = folium.Map(
         location=coordinate_xy,
@@ -592,7 +593,18 @@ def drone(request, plant_id, coordinate_xy):
         tiles = None
     )
 
-    m.add_child(basemaps['Mapbox Satellite'])
+    m.add_child(basemaps['Google Satellite'])
+
+    def add_ee_layer_drone(self, ee_image_object, vis_params, name):
+            map_id_dict = ee.Image(ee_image_object).getMapId(vis_params)
+            folium.raster_layers.TileLayer(
+                tiles=map_id_dict['tile_fetcher'].url_format,
+                attr='Map Data &copy; <a href="https://earthengine.google.com/">Google Earth Engine</a>',
+                name=name,
+                overlay=True,
+                show=True,
+                control=True
+            ).add_to(self)
 
     def add_ee_layer(self, ee_image_object, vis_params, name):
             map_id_dict = ee.Image(ee_image_object).getMapId(vis_params)
@@ -601,12 +613,35 @@ def drone(request, plant_id, coordinate_xy):
                 attr='Map Data &copy; <a href="https://earthengine.google.com/">Google Earth Engine</a>',
                 name=name,
                 overlay=True,
+                show=False,
                 control=True
             ).add_to(self)
 
-    folium.Map.add_ee_layer = add_ee_layer
-    m.add_ee_layer(rgb, {}, 'DRONE')
+    folium.Map.add_ee_layer_drone = add_ee_layer_drone
 
+    
+
+    zones = alldept.eq(1)
+    zones = zones.updateMask(zones.neq(0))
+    folium.Map.add_ee_layer = add_ee_layer
+    m.add_ee_layer(zones, {'palette': "red"}, gettext('Satellite Prediction'))
+
+    print(plant_id)
+
+    try:
+        with open(f"./tree_crown_geojson/{plant_id}.geojson") as f:
+            crown_json = geojson.load(f)
+        crown_geojson  = folium.GeoJson(data=crown_json,
+                                        name='Tree Tops',
+                                        show=False,
+                                        zoom_on_click = True)
+        crown_geojson.add_to(m)
+        rgb = ee.Image(f'users/ashamba/{plant_id}')
+        m.add_ee_layer_drone(rgb, {}, 'Drone Image')
+    except:
+        pass
+
+    m.add_child(folium.LayerControl())
     m=m._repr_html_()
     context = {'my_map': m}
     context['segment'] = 'index'

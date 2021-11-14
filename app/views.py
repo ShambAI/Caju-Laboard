@@ -9,10 +9,10 @@ import locale
 from django.utils.translation import gettext
 from django.utils.translation import activate, get_language
 from app.nursery_information import Nursery_LAYER
-from app.benin_republic import Benin_LAYER
-from app.benin_department import Benin_dept_LAYER
-from app.benin_commune import Benin_commune_LAYER
-from app.benin_plantations import Benin_plantation_LAYER
+from app.benin_republic import add_benin_republic
+from app.benin_department import add_benin_department
+from app.benin_commune import add_benin_commune
+from app.benin_plantations import add_benin_plantation
 
 # folium
 from folium import plugins
@@ -46,7 +46,7 @@ class my_home():
                         tiles = 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
                         attr = gettext('Google'),
                         name = 'Maps',
-                        max_zoom =18,
+                        max_zoom =25,
                         overlay = True,
                         control = False
                     ),
@@ -54,7 +54,7 @@ class my_home():
                         tiles = 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',
                         attr = 'Google',
                         name = gettext('Google Satellite'),
-                        max_zoom = 18,
+                        max_zoom = 25,
                         overlay = True,
                         show=False,
                         control = True
@@ -63,7 +63,7 @@ class my_home():
                         tiles='https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoic2hha2F6IiwiYSI6ImNrczMzNTl3ejB6eTYydnBlNzR0dHUwcnUifQ.vHqPio3Pe0PehWpIuf5QUg',
                         attr = 'Mapbox',
                         name = gettext('Mapbox Satellite'),
-                        max_zoom = 18,
+                        max_zoom = 25,
                         overlay = True,
                         show=False,
                         control = True
@@ -106,21 +106,17 @@ class my_home():
 
         No_Boundary_layer = folium.FeatureGroup(name=gettext('No Boundary'), show=False, overlay = False)
         No_Boundary_layer.add_to(m)
-
-        benin_layer = folium.FeatureGroup(name=gettext('Benin Republic'), show=False, overlay = False)
-        Benin_layer = Benin_LAYER(benin_layer).add_benin_republic()
+        
+        Benin_layer = add_benin_republic()
         Benin_layer.add_to(m)
 
-        benin_dept_layer = folium.FeatureGroup(name=gettext('Benin Departments'), show=False, overlay = False)
-        Benin_dept_layer, dept_yieldHa = Benin_dept_LAYER(benin_dept_layer).add_benin_department()
+        Benin_dept_layer, dept_yieldHa = add_benin_department()
         Benin_dept_layer.add_to(m)
 
-        benin_commune_layer = folium.FeatureGroup(name=gettext('Benin Communes'), show=False, overlay = False)
-        Benin_commune_layer = Benin_commune_LAYER(benin_commune_layer).add_benin_commune()
+        Benin_commune_layer = add_benin_commune()
         Benin_commune_layer.add_to(m)
 
-        benin_plantation_layer = folium.FeatureGroup(name=gettext('Plantation Locations'), show=True, overlay = True)
-        Benin_plantation_layer = Benin_plantation_LAYER(benin_plantation_layer, dept_yieldHa).add_benin_plantation(path_link)
+        Benin_plantation_layer = add_benin_plantation(path_link, dept_yieldHa)
         Benin_plantation_layer.add_to(m)
         
 

@@ -349,44 +349,6 @@ class Plantation(models.Model):
     def __str__(self):
         return self.plantation_name
 
-class YieldHistory(models.Model):
-
-    
-    class Status():
-        ACTIVE = 1
-        INACTIVE = 0
-
-
-    ACTIVE = 1
-    INACTIVE = 0
-    Status = [
-        (ACTIVE, 'Active'),
-        (INACTIVE, 'Inactive'),
-    ]
-
-    plantation_id = models.ForeignKey(Plantation, on_delete=models.CASCADE, null=True)
-    product_id = models.CharField(unique=True, max_length=60)
-    year = models.IntegerField()
-    total_plants = models.FloatField()
-    total_yield_kg = models.FloatField()
-    total_yield_per_ha_kg = models.FloatField()
-    total_yield_per_tree_kg = models.FloatField()
-    total_sick_trees = models.FloatField()
-    total_dead_trees = models.FloatField()
-    total_trees_out_of_prod = models.FloatField()
-    status = models.IntegerField(choices=Status, default=ACTIVE,)
-    # season = models.IntegerField()
-    # comment = models.CharField(max_length=300)
-    # created_by = models.BigIntegerField(blank=True, null=True)
-    # created_date = models.DateTimeField(blank=True, null=True)
-    # updated_by = models.BigIntegerField(blank=True, null=True)
-    # updated_date = models.DateTimeField(blank=True, null=True)
-
-    def __str__(self):
-        return str(self.product_id) + str(self.year)
-
-
-
 class BeninYield(models.Model):
 
     
@@ -431,8 +393,7 @@ class BeninYield(models.Model):
 
 
     def __str__(self):
-        return str(self.product_id)
-
+        return str(self.product_id) + str(self.year)
 
 class AlteiaData(models.Model):
 
