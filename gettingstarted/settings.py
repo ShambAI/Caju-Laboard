@@ -166,8 +166,8 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
  
-# prod_db  =  dj_database_url.config(conn_max_age=500)
-# DATABASES['default'].update(prod_db)
+prod_db  =  dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(prod_db)
 
 from django.utils.translation import gettext_lazy as _
 
@@ -188,7 +188,7 @@ CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'Europe/Paris'
+CELERY_TIMEZONE = ''
 
 CELERY_RESULT_BACKEND = 'django-db'
 
