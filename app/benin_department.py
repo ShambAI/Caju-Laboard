@@ -8,7 +8,7 @@ import geojson
 from area import area
 from math import log10, floor
 from celery import shared_task
-heroku = False
+heroku = True
 
 
 with open("ben_adm1.json", errors="ignore") as f:
