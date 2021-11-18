@@ -644,10 +644,7 @@ def drone(request, plant_id, coordinate_xy):
 
     
 
-    zones = alldept.eq(1)
-    zones = zones.updateMask(zones.neq(0))
-    folium.Map.add_ee_layer = add_ee_layer
-    m.add_ee_layer(zones, {'palette': "red"}, gettext('Satellite Prediction'))
+    
 
     # try:
     #     with open(f"./tree_crown_geojson/{plant_id}.geojson") as f:
@@ -672,6 +669,11 @@ def drone(request, plant_id, coordinate_xy):
 
     rgb = ee.Image(f'users/ashamba/RGB_TEST')
     m.add_ee_layer_drone(rgb, {}, 'Drone Image')
+
+    zones = alldept.eq(1)
+    zones = zones.updateMask(zones.neq(0))
+    folium.Map.add_ee_layer = add_ee_layer
+    m.add_ee_layer(zones, {'palette': "red"}, gettext('Satellite Prediction'))
 
     m.add_child(folium.LayerControl())
     m=m._repr_html_()
