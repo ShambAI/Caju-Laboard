@@ -92,15 +92,25 @@ WSGI_APPLICATION = "gettingstarted.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE" : "django.db.backends.postgresql_psycopg2",
-        "NAME": 'remotesensing',
-        "USER": 'postgres',
-        "PASSWORD": 'Technoserve0987',
-        "HOST": 'localhost',
-        "PORT": '5432',
-
+        "ENGINE" : "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "my_db.db")
     }
 }
+
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE" : "django.db.backends.postgresql_psycopg2",
+#         "NAME": 'remotesensing',
+#         "USER": 'postgres',
+#         "PASSWORD": 'Technoserve0987',
+#         "HOST": 'localhost',
+#         "PORT": '5432',
+
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
