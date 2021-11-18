@@ -50,13 +50,13 @@
               <span class="nav-link-text">Tables</span>
             </a>
           </li> -->
-          <li class="nav-item">
-            <!-- <a class="nav-link" href="/login.html"> -->
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="/login.html">
             <a class="nav-link {% if 'login' in segment %} active {% endif %}" href="{% url 'login' %}">
               <i class="ni ni-key-25 text-info"></i>
               <span class="nav-link-text">{% trans "Login" %}</span>
             </a>
-          </li>
+          </li> -->
           <!-- <li class="nav-item">
             <a class="nav-link" href="/register.html">
               <i class="ni ni-circle-08 text-pink"></i>
@@ -140,7 +140,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}">
+            <a class="nav-link" href="{% url 'logout' %}">
               <i class="ni ni-user-run text-red"></i>
               <span class="nav-link-text">{% trans "Logout" %}</span>
             </a>

@@ -5,12 +5,13 @@ Copyright (c) 2021 - Damilola x Technoserve
 
 from django.urls import path
 from . import views
-from .views import login_view, register_user, register_user_full, register_org, register_role, load_roles, profile, tables, activate
+from .views import login_view, register_user, register_user_full, register_org, register_role, load_roles, profile, tables, activate, logout_view
 from django.contrib.auth.views import LogoutView
 from django.conf.urls import url
 
 urlpatterns = [
     path('login/', login_view, name="login"),
+    path('logout/', logout_view, name="logout"),
     path('register/', register_user, name="register"),
     path("logout/", LogoutView.as_view(), name="logout"),
     path("full_register/", register_user_full, name="full_register"),

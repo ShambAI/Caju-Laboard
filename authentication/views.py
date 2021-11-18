@@ -19,6 +19,7 @@ from .forms import LoginForm, SignUpForm, FullSignUpForm, RegisterOrganization, 
 from . import models
 from . import utils
 import geojson
+from django.contrib.auth import logout
 
 import datetime
 import logging
@@ -69,6 +70,28 @@ def login_view(request):
 
     return render(request, "accounts/login.html", {"form": form, "msg" : msg, 'segment': 'login'})
 
+def logout_view(request):
+    logout(request)
+
+    if request.method == "POST":
+        form = LoginForm(data = request.POST or None)
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("/")
+            else:
+                msg = gettext('Invalid credentials')
+                  
+        else:
+            msg = str(form.errors) #'Error validating the form'
+    else:
+        form = LoginForm()
+        msg = ""
+
+    return render(request, "accounts/login.html", {"form": form, "msg" : msg, 'segment': 'login'})
 def forgot_password(request):
 
     msg     = None
@@ -335,7 +358,7 @@ def register_user_full(request):
 
     return render(request, "accounts/full_login.html", {"form": form, "msg" : msg, "success" : success })
 
-# @login_required(login_url="/login/")
+@login_required(login_url="/login/")
 def register_org(request):
 
     msg     = None
@@ -581,10 +604,10 @@ def drone(request, plant_id, coordinate_xy):
     alldept = ee.Image('users/ashamba/allDepartments_v0')
 
 
-    coordinate_xy = (coordinate_xy).replace('[',"").replace(']',"").replace(' ',"").split(',')
-    coordinate_xy = [float(coordinate_xy[0]), float(coordinate_xy[1])]
+    # coordinate_xy = (coordinate_xy).replace('[',"").replace(']',"").replace(' ',"").split(',')
+    # coordinate_xy = [float(coordinate_xy[0]), float(coordinate_xy[1])]
 
-    # coordinate_xy = [9.45720800, 2.64348809]
+    coordinate_xy = [9.45720800, 2.64348809]
 
     m = folium.Map(
         location=coordinate_xy,
@@ -626,20 +649,29 @@ def drone(request, plant_id, coordinate_xy):
     folium.Map.add_ee_layer = add_ee_layer
     m.add_ee_layer(zones, {'palette': "red"}, gettext('Satellite Prediction'))
 
-    print(plant_id)
+    # try:
+    #     with open(f"./tree_crown_geojson/{plant_id}.geojson") as f:
+    #         crown_json = geojson.load(f)
+    #     crown_geojson  = folium.GeoJson(data=crown_json,
+    #                                     name='Tree Tops',
+    #                                     show=False,
+    #                                     zoom_on_click = True)
+    #     crown_geojson.add_to(m)
+    #     rgb = ee.Image(f'users/ashamba/{plant_id}')
+    #     m.add_ee_layer_drone(rgb, {}, 'Drone Image')
+    # except:
+    #     pass
 
-    try:
-        with open(f"./tree_crown_geojson/{plant_id}.geojson") as f:
+    with open(f"Tree Crowns.geojson") as f:
             crown_json = geojson.load(f)
-        crown_geojson  = folium.GeoJson(data=crown_json,
-                                        name='Tree Tops',
-                                        show=False,
-                                        zoom_on_click = True)
-        crown_geojson.add_to(m)
-        rgb = ee.Image(f'users/ashamba/{plant_id}')
-        m.add_ee_layer_drone(rgb, {}, 'Drone Image')
-    except:
-        pass
+    crown_geojson  = folium.GeoJson(data=crown_json,
+                                    name='Tree Tops',
+                                    show=False,
+                                    zoom_on_click = True)
+    crown_geojson.add_to(m)
+
+    rgb = ee.Image(f'users/ashamba/RGB_TEST')
+    m.add_ee_layer_drone(rgb, {}, 'Drone Image')
 
     m.add_child(folium.LayerControl())
     m=m._repr_html_()

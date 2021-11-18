@@ -274,7 +274,7 @@ def add_benin_plantation(self, path_link, dept_yieldHa):
                         </table>
                         <script>
                         window.open(
-                            'http://127.0.0.1:8000{path_link}drone/{code}/{coordinate_xy}/',
+                            'http://127.0.0.1:8000{path_link}/drone/{code}/{coordinate_xy}/',
                             '_blank'
                             );
                         <script>

@@ -11,12 +11,11 @@ from django.utils.translation import gettext_lazy as _
 
 urlpatterns = [
     path(_('admin/'), admin.site.urls),          # Django admin route
-    path("", include("authentication.urls")), # Auth routes - login / register
-    path("", include("app.urls")),
 ]
 
 
 urlpatterns += i18n_patterns (
-    path("", include("app.urls")),
     path("", include("authentication.urls")),
+    path("", include("app.urls")),
+    
 )
