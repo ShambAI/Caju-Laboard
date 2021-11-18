@@ -1,7 +1,7 @@
 {% load i18n %}
 <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main" style="border: 3px solid #00a5a7">
   <div>
-  <a href="{% url 'home' %}">
+  <a href="{% url 'map' %}">
     <img src="https://www.diversityjobs.com/wp-content/uploads/2020/12/technoserve-logo.png" alt="Technoserve-Logo." width="180" height="80">
     <!-- <img src="/static/assets/img/brand/cajulab.png" alt="Technoserve-Logo." width="180" height="100"> -->
     <h3 style="font-family:Lucida Bright;color:#00717f">&nbsp{% trans "Cashew Dashboard" %}</h3>
@@ -33,7 +33,7 @@
             </a>
           </li> -->
           <li class="nav-item">
-            <a class="nav-link {% if 'map' in segment %} active {% endif %}" href="{% url 'home' %}">
+            <a class="nav-link {% if 'map' in segment %} active {% endif %}" href="{% url 'map' %}">
               <i class="ni ni-pin-3 text-primary"></i>
               <span class="nav-link-text">{% trans "Map" %}</span>
             </a>

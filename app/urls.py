@@ -10,7 +10,7 @@ from authentication import views as vw
 urlpatterns = [
 
     # The home page
-    path('', views.index, name='home'),
-    # path('', vw.login_view, name='home'),
+    path('map/', views.index, name='map'),
+    path('', vw.login_view),
     
 ]

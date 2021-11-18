@@ -31,7 +31,7 @@ CORE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "CHANGE_ME!!!! (P.S. the SECRET_KEY environment variable will be used, if set, instead)."
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['https://remsensingapp.herokuapp.com/', '*']
 
@@ -92,8 +92,13 @@ WSGI_APPLICATION = "gettingstarted.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE" : "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, "my_db.db")
+        "ENGINE" : "django.db.backends.postgresql_psycopg2",
+        "NAME": 'remotesensing',
+        "USER": 'postgres',
+        "PASSWORD": 'Technoserve0987',
+        "HOST": 'localhost',
+        "PORT": '5432',
+
     }
 }
 

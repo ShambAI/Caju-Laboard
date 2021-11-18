@@ -263,7 +263,7 @@ def add_benin_plantation(self, path_link, dept_yieldHa):
                         </table>
                         <table>
                             <td><div style= "text-align: center">
-                                    <button class="btn btn-outline-light" style="background-color: #004b55;" onclick= "window.open('http://cajudashboard.herokuapp.com{path_link}drone/{code}/{coordinate_xy}/','_blank')" role="button"
+                                    <button class="btn btn-outline-light" style="background-color: #004b55;" onclick= "window.open('http://127.0.0.1:8000{path_link}drone/{code}/{coordinate_xy}/','_blank')" role="button"
                                         ><i class="fab fa-accusoft me-2"></i>{View_Drone_Image}</button
                                     >
                                     
@@ -274,7 +274,7 @@ def add_benin_plantation(self, path_link, dept_yieldHa):
                         </table>
                         <script>
                         window.open(
-                            'http://cajudashboard.herokuapp.com{path_link}/drone/{code}/{coordinate_xy}/',
+                            'http://127.0.0.1:8000{path_link}/drone/{code}/{coordinate_xy}/',
                             '_blank'
                             );
                         <script>

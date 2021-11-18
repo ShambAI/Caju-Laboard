@@ -50,8 +50,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def login_view(request):
 
     msg = None
+    if request.user.is_authenticated:
+        return redirect("/map/")
 
-    if request.method == "POST":
+    elif request.method == "POST":
         form = LoginForm(data = request.POST or None)
         if form.is_valid():
             username = form.cleaned_data.get("username")
@@ -59,7 +61,7 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("/")
+                return redirect("/map/")
             else:
                 msg = gettext('Invalid credentials')
                   
@@ -72,6 +74,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
+    msg = None
 
     if request.method == "POST":
         form = LoginForm(data = request.POST or None)
@@ -88,10 +91,11 @@ def logout_view(request):
         else:
             msg = str(form.errors) #'Error validating the form'
     else:
+       
         form = LoginForm()
-        msg = ""
 
     return render(request, "accounts/login.html", {"form": form, "msg" : msg, 'segment': 'login'})
+
 def forgot_password(request):
 
     msg     = None
@@ -358,7 +362,7 @@ def register_user_full(request):
 
     return render(request, "accounts/full_login.html", {"form": form, "msg" : msg, "success" : success })
 
-@login_required(login_url="/login/")
+# @login_required(login_url="/login/")
 def register_org(request):
 
     msg     = None
@@ -604,10 +608,10 @@ def drone(request, plant_id, coordinate_xy):
     alldept = ee.Image('users/ashamba/allDepartments_v0')
 
 
-    # coordinate_xy = (coordinate_xy).replace('[',"").replace(']',"").replace(' ',"").split(',')
-    # coordinate_xy = [float(coordinate_xy[0]), float(coordinate_xy[1])]
+    coordinate_xy = (coordinate_xy).replace('[',"").replace(']',"").replace(' ',"").split(',')
+    coordinate_xy = [float(coordinate_xy[0]), float(coordinate_xy[1])]
 
-    coordinate_xy = [9.45720800, 2.64348809]
+    # coordinate_xy = [9.45720800, 2.64348809]
 
     m = folium.Map(
         location=coordinate_xy,
@@ -644,37 +648,25 @@ def drone(request, plant_id, coordinate_xy):
 
     
 
-    
-
-    # try:
-    #     with open(f"./tree_crown_geojson/{plant_id}.geojson") as f:
-    #         crown_json = geojson.load(f)
-    #     crown_geojson  = folium.GeoJson(data=crown_json,
-    #                                     name='Tree Tops',
-    #                                     show=False,
-    #                                     zoom_on_click = True)
-    #     crown_geojson.add_to(m)
-    #     rgb = ee.Image(f'users/ashamba/{plant_id}')
-    #     m.add_ee_layer_drone(rgb, {}, 'Drone Image')
-    # except:
-    #     pass
-
-    with open(f"Tree Crowns.geojson") as f:
-            crown_json = geojson.load(f)
-    crown_geojson  = folium.GeoJson(data=crown_json,
-                                    name='Tree Tops',
-                                    show=False,
-                                    zoom_on_click = True)
-    crown_geojson.add_to(m)
-
-    rgb = ee.Image(f'users/ashamba/RGB_TEST')
-    m.add_ee_layer_drone(rgb, {}, 'Drone Image')
-
     zones = alldept.eq(1)
     zones = zones.updateMask(zones.neq(0))
     folium.Map.add_ee_layer = add_ee_layer
-    m.add_ee_layer(zones, {'palette': "red"}, gettext('Satellite Prediction'))
+    
 
+    try:
+        with open(f"./tree_crown_geojson/{plant_id}.geojson") as f:
+            crown_json = geojson.load(f)
+        crown_geojson  = folium.GeoJson(data=crown_json,
+                                        name='Tree Tops',
+                                        show=False,
+                                        zoom_on_click = True)
+        crown_geojson.add_to(m)
+        rgb = ee.Image(f'users/ashamba/{plant_id}')
+        m.add_ee_layer_drone(rgb, {}, 'Drone Image')
+    except:
+        pass
+
+    m.add_ee_layer(zones, {'palette': "red"}, gettext('Satellite Prediction'))
     m.add_child(folium.LayerControl())
     m=m._repr_html_()
     context = {'my_map': m}

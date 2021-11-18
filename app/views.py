@@ -29,13 +29,13 @@ alldept = ee.Image('users/ashamba/allDepartments_v0')
 class my_home():
     # Define a method for displaying Earth Engine image tiles on a folium map.
 
-    def __init__(self, language):
+    def __init__(self):
 
-        try:
-            activate(language)
-        finally:
-            current_language = get_language()
-            activate(current_language)
+        # try:
+        #     activate(language)
+        # finally:
+        #     current_language = get_language()
+        #     activate(current_language)
 
         self.figure = folium.Figure()
 
@@ -113,8 +113,8 @@ class my_home():
         Benin_dept_layer, dept_yieldHa = add_benin_department()
         Benin_dept_layer.add_to(m)
 
-        # Benin_commune_layer = add_benin_commune()
-        # Benin_commune_layer.add_to(m)
+        Benin_commune_layer = add_benin_commune()
+        Benin_commune_layer.add_to(m)
 
         Benin_plantation_layer = add_benin_plantation(path_link, dept_yieldHa)
         Benin_plantation_layer.add_to(m)
@@ -129,9 +129,9 @@ class my_home():
 
 @login_required(login_url="/login/")
 def index(request):
-    language = request.path_info.replace('/', '')
+    # language = request.path_info.replace('/', '')
     path_link = request.path
-    home_obj = my_home(language)
+    home_obj = my_home()
     context = home_obj.get_context_data(path_link)
     context['segment'] = 'index'
 

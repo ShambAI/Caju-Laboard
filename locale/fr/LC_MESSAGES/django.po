@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-10 23:38+0100\n"
+"POT-Creation-Date: 2021-11-18 16:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,86 +18,90 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: .\app\benin_commune.py:29 .\app\benin_republic.py:28
+#: .\app\benin_commune.py:21
+msgid "Benin Communes"
+msgstr "Communes du Bénin"
+
+#: .\app\benin_commune.py:27 .\app\benin_republic.py:30
 msgid "Departments Cashew Tree Cover Statistics In"
 msgstr "Départements Statistiques de Couverture des Anacardiers en"
 
-#: .\app\benin_commune.py:30 .\app\benin_department.py:35
-#: .\app\benin_republic.py:29
+#: .\app\benin_commune.py:28 .\app\benin_department.py:34
+#: .\app\benin_republic.py:31
 msgid "Active Trees"
 msgstr "Arbres Actifs"
 
-#: .\app\benin_commune.py:31 .\app\benin_department.py:36
-#: .\app\benin_republic.py:30 .\core\templates\yield.html:66
+#: .\app\benin_commune.py:29 .\app\benin_department.py:35
+#: .\app\benin_republic.py:32 .\core\templates\yield.html:66
 msgid "Sick Trees"
 msgstr "Arbres Malades"
 
-#: .\app\benin_commune.py:32 .\app\benin_department.py:37
-#: .\app\benin_republic.py:31 .\core\templates\yield.html:67
+#: .\app\benin_commune.py:30 .\app\benin_department.py:36
+#: .\app\benin_republic.py:33 .\core\templates\yield.html:67
 msgid "Dead Trees"
 msgstr "Arbres Morts"
 
-#: .\app\benin_commune.py:33 .\app\benin_department.py:38
-#: .\app\benin_republic.py:32
+#: .\app\benin_commune.py:31 .\app\benin_department.py:37
+#: .\app\benin_republic.py:34
 msgid "Out of Production Trees"
 msgstr "Arbres Hors Production"
 
-#: .\app\benin_commune.py:34 .\app\benin_department.py:39
-#: .\app\benin_republic.py:33
+#: .\app\benin_commune.py:32 .\app\benin_department.py:38
+#: .\app\benin_republic.py:35
 msgid "Cashew Trees Status in"
 msgstr "Statut des Anacardiers en"
 
-#: .\app\benin_commune.py:35 .\app\benin_department.py:40
-#: .\app\benin_republic.py:34
+#: .\app\benin_commune.py:33 .\app\benin_department.py:39
+#: .\app\benin_republic.py:36
 msgid "is ranked"
 msgstr "est classé"
 
-#: .\app\benin_commune.py:36 .\app\benin_department.py:42
-#: .\app\benin_republic.py:36
+#: .\app\benin_commune.py:34 .\app\benin_department.py:41
+#: .\app\benin_republic.py:38
 msgid "Satellite Est"
 msgstr "Satellite Est"
 
-#: .\app\benin_commune.py:37 .\app\benin_department.py:43
-#: .\app\benin_republic.py:37
+#: .\app\benin_commune.py:35 .\app\benin_department.py:42
+#: .\app\benin_republic.py:39
 msgid "TNS Survey"
 msgstr "Enquête de TNS"
 
-#: .\app\benin_commune.py:40 .\app\benin_department.py:46
-#: .\app\benin_republic.py:40
+#: .\app\benin_commune.py:38 .\app\benin_department.py:45
+#: .\app\benin_republic.py:42
 msgid "Total Cashew Yield (kg)"
 msgstr "Rendement Total de Noix de Cajou (kg)"
 
-#: .\app\benin_commune.py:41 .\app\benin_department.py:47
-#: .\app\benin_republic.py:41
+#: .\app\benin_commune.py:39 .\app\benin_department.py:46
+#: .\app\benin_republic.py:43
 msgid "Total Area (ha)"
 msgstr "Superficie Totale (ha)"
 
-#: .\app\benin_commune.py:42 .\app\benin_department.py:48
-#: .\app\benin_republic.py:42
+#: .\app\benin_commune.py:40 .\app\benin_department.py:47
+#: .\app\benin_republic.py:44
 msgid "Cashew Tree Cover (ha)"
 msgstr "Couverture de l'Anacardier (ha)"
 
-#: .\app\benin_commune.py:43 .\app\benin_department.py:49
-#: .\app\benin_republic.py:43
+#: .\app\benin_commune.py:41 .\app\benin_department.py:48
+#: .\app\benin_republic.py:45
 msgid "Yield/Hectare (kg/ha)"
 msgstr "Rendement/Hectare (kg/ha)"
 
-#: .\app\benin_commune.py:44 .\app\benin_department.py:50
-#: .\app\benin_plantations.py:36 .\app\benin_republic.py:44
+#: .\app\benin_commune.py:42 .\app\benin_department.py:49
+#: .\app\benin_plantations.py:37 .\app\benin_republic.py:46
 msgid "Yield per Tree (kg/tree)"
 msgstr "Rendement par Arbre (kg/arbre)"
 
-#: .\app\benin_commune.py:45 .\app\benin_department.py:51
-#: .\app\benin_plantations.py:35 .\app\benin_republic.py:45
+#: .\app\benin_commune.py:43 .\app\benin_department.py:50
+#: .\app\benin_plantations.py:36 .\app\benin_republic.py:47
 msgid "Number of Trees"
 msgstr " Nombre d'arbres"
 
-#: .\app\benin_commune.py:46 .\app\benin_department.py:52
-#: .\app\benin_plantations.py:46 .\app\benin_republic.py:47
+#: .\app\benin_commune.py:44 .\app\benin_department.py:51
+#: .\app\benin_plantations.py:47 .\app\benin_republic.py:49
 msgid "Source: TNS/BeninCaju Yield Surveys 2020"
 msgstr "Source : Enquêtes de rendement TNS/BéninCaju 2020"
 
-#: .\app\benin_commune.py:47
+#: .\app\benin_commune.py:45
 msgid ""
 "among Benin communes in terms of total cashew yield according to the TNS "
 "Yield Survey"
@@ -105,11 +109,15 @@ msgstr ""
 "parmi les communes béninoises en termes de rendement total de cajou selon "
 "l'enquête de rendement TNS"
 
-#: .\app\benin_department.py:53
+#: .\app\benin_department.py:23
+msgid "Benin Departments"
+msgstr "Départements du Bénin"
+
+#: .\app\benin_department.py:52
 msgid "Predicted Cashew Tree Cover Communes Statistics In"
 msgstr "Couverture prevue de l anacardier statistiques des Communes En"
 
-#: .\app\benin_department.py:54
+#: .\app\benin_department.py:53
 msgid ""
 "among Benin departments in terms of total cashew yield according to the TNS "
 "Yield Survey"
@@ -117,43 +125,47 @@ msgstr ""
 "entre les departements du Benin en termes de rendement total de cajou selon "
 "l'enquete de rendement TNS"
 
-#: .\app\benin_plantations.py:26
+#: .\app\benin_plantations.py:24
+msgid "Plantation Locations"
+msgstr "Emplacements des Plantations"
+
+#: .\app\benin_plantations.py:27
 msgid "Plantation Owner"
 msgstr "Propriétaire de la Plantation"
 
-#: .\app\benin_plantations.py:27
+#: .\app\benin_plantations.py:28
 msgid "Plantation ID"
 msgstr "ID de la Plantation"
 
-#: .\app\benin_plantations.py:28 .\core\templates\plantations.html:58
+#: .\app\benin_plantations.py:29 .\core\templates\plantations.html:58
 msgid "Village"
 msgstr "Village"
 
-#: .\app\benin_plantations.py:29
+#: .\app\benin_plantations.py:30
 msgid "Satellite Estimate"
 msgstr "Estimation Satellite"
 
-#: .\app\benin_plantations.py:30
+#: .\app\benin_plantations.py:31
 msgid "2020 Yield Survey"
 msgstr "Enquête de Rendement 2020"
 
-#: .\app\benin_plantations.py:31
+#: .\app\benin_plantations.py:32
 msgid "Cashew Yield (kg)"
 msgstr "Rendement de Noix de cajou (kg)"
 
-#: .\app\benin_plantations.py:32
+#: .\app\benin_plantations.py:33
 msgid "Plantation Size (ha)"
 msgstr "Surperficie de la Plantation (ha)"
 
-#: .\app\benin_plantations.py:33 .\app\benin_plantations.py:42
+#: .\app\benin_plantations.py:34 .\app\benin_plantations.py:43
 msgid "Cashew Surface Area (ha)"
 msgstr "Superficie du cajou (ha)"
 
-#: .\app\benin_plantations.py:34
+#: .\app\benin_plantations.py:35
 msgid "Yield Per Hectare (kg/ha)"
 msgstr "Rendement par hectare (kg/ha)"
 
-#: .\app\benin_plantations.py:37
+#: .\app\benin_plantations.py:38
 msgid ""
 "Average Surface Area and Cashew Yield Information for Plantations in Benin "
 "Republic"
@@ -161,49 +173,49 @@ msgstr ""
 "Information sur la superficie moyenne et le rendement de noix de cajou des "
 "plantations en République du Bénin"
 
-#: .\app\benin_plantations.py:39
+#: .\app\benin_plantations.py:40
 msgid "Number of Farms"
 msgstr "Nombre de fermes"
 
-#: .\app\benin_plantations.py:40
+#: .\app\benin_plantations.py:41
 msgid "Total Plantation Yield (kg)"
 msgstr "Rendement Total de la Plantation (kg)"
 
-#: .\app\benin_plantations.py:41
+#: .\app\benin_plantations.py:42
 msgid "Total Plantation Area (ha)"
 msgstr "Superficie Totale des Plantations (ha)"
 
-#: .\app\benin_plantations.py:43
+#: .\app\benin_plantations.py:44
 msgid "Average Yield Per Hectare (kg/ha)"
 msgstr "Rendement Moyen Par Hectare (kg/ha)"
 
-#: .\app\benin_plantations.py:44
+#: .\app\benin_plantations.py:45
 msgid "Total Number of Trees"
 msgstr "Nombre Total d'Arbres"
 
-#: .\app\benin_plantations.py:45
+#: .\app\benin_plantations.py:46
 msgid "Average Yield per Tree (kg/tree)"
 msgstr "Rendement Moyen par Arbre (kg/arbre)"
 
-#: .\app\benin_plantations.py:47
+#: .\app\benin_plantations.py:48
 msgid "View Drone Image"
 msgstr "Voir l'image du drone"
 
-#: .\app\benin_plantations.py:50
+#: .\app\benin_plantations.py:51
 msgid "Benin Plantations"
 msgstr "Plantations du Bénin"
 
-#: .\app\benin_republic.py:35
+#: .\app\benin_republic.py:24 .\app\benin_republic.py:65
+msgid "Benin Republic"
+msgstr "République du Bénin"
+
+#: .\app\benin_republic.py:37
 msgid "globally in terms of total cashew yield"
 msgstr "à l'échelle mondiale en termes de rendement total de noix de cajou"
 
-#: .\app\benin_republic.py:46
+#: .\app\benin_republic.py:48
 msgid "9th"
 msgstr "9e"
-
-#: .\app\benin_republic.py:62 .\app\views.py:110
-msgid "Benin Republic"
-msgstr "République du Bénin"
 
 #: .\app\nursery_information.py:10
 msgid "Commune Name"
@@ -221,18 +233,16 @@ msgstr "Superficie de la Pépinière (ha)"
 msgid "Number of Plants"
 msgstr "Nombre de plantes"
 
-#: .\app\views.py:47 .\authentication\views.py:558
+#: .\app\views.py:47 .\authentication\views.py:578
 #: .\core\templates\login.html:26 .\core\templates\register.html:27
 msgid "Google"
 msgstr "Google"
 
 #: .\app\views.py:56
-
 msgid "Google Satellite"
 msgstr "Satellite Google"
 
 #: .\app\views.py:65
-
 msgid "Mapbox Satellite"
 msgstr "Satellite Mapbox"
 
@@ -240,25 +250,13 @@ msgstr "Satellite Mapbox"
 msgid "Nursery Information"
 msgstr "Informations sur la Pépinière"
 
-#: .\app\views.py:105
+#: .\app\views.py:105 .\authentication\views.py:667
 msgid "Satellite Prediction"
 msgstr "Prédiction Satellite"
 
 #: .\app\views.py:107
 msgid "No Boundary"
 msgstr "Pas de Limite"
-
-#: .\app\views.py:114
-msgid "Benin Departments"
-msgstr "Départements du Bénin"
-
-#: .\app\views.py:118
-msgid "Benin Communes"
-msgstr "Communes du Bénin"
-
-#: .\app\views.py:122
-msgid "Plantation Locations"
-msgstr "Emplacements des Plantations"
 
 #: .\authentication\models.py:76 .\authentication\models.py:137
 #: .\authentication\models.py:221 .\authentication\models.py:287
@@ -278,19 +276,19 @@ msgstr "Femelle"
 msgid "Others"
 msgstr "Autres"
 
-#: .\authentication\views.py:62
+#: .\authentication\views.py:64 .\authentication\views.py:87
 #, fuzzy
 #| msgid "Add your credentials"
 msgid "Invalid credentials"
 msgstr "Ajoutez vos identifiants"
 
-#: .\authentication\views.py:90
+#: .\authentication\views.py:110
 #, fuzzy
 #| msgid "Forgot Password"
 msgid "Reset your Password"
 msgstr "Mot de passe oublié"
 
-#: .\authentication\views.py:116
+#: .\authentication\views.py:136
 msgid ""
 "We have emailed you instructions for setting your "
 "password.                         If an account exists with the email you "
@@ -305,42 +303,42 @@ msgstr ""
 "entré correctement l'adresse aveclaquelle vous vous êtes inscrit et vérifiez "
 "votre dossier de courrier indésirable."
 
-#: .\authentication\views.py:123 .\authentication\views.py:159
-#: .\authentication\views.py:234 .\authentication\views.py:337
-#: .\authentication\views.py:371 .\authentication\views.py:416
+#: .\authentication\views.py:143 .\authentication\views.py:179
+#: .\authentication\views.py:254 .\authentication\views.py:357
+#: .\authentication\views.py:391 .\authentication\views.py:436
 msgid "Form is not valid"
 msgstr "Le formulaire n'est pas valide"
 
-#: .\authentication\views.py:155
+#: .\authentication\views.py:175
 msgid "Password change successful. Now you can"
 msgstr "Changement de mot de passe réussi. Maintenant vous pouvez"
 
-#: .\authentication\views.py:204
+#: .\authentication\views.py:224
 msgid "Activate your Cashew Remote Sensing account."
 msgstr "Activez votre compte de télédétection de cajou."
 
-#: .\authentication\views.py:230
+#: .\authentication\views.py:250
 msgid "Please confirm your email address to complete the registration"
 msgstr "Veuillez confirmer votre adresse e-mail pour terminer l'inscription"
 
-#: .\authentication\views.py:334
+#: .\authentication\views.py:354
 msgid "Form is not valid - Passwords do not match"
 msgstr ""
 "Le formulaire n'est pas valide - Les mots de passe ne correspondent pas"
 
-#: .\authentication\views.py:367
+#: .\authentication\views.py:387
 msgid "Organization created - please <a href=\"/register\">register user</a>."
 msgstr ""
 "Organisation créée - veuillez <a href=\"/register\">enregistrer "
 "l'utilisateur</a>"
 
-#: .\authentication\views.py:567
+#: .\authentication\views.py:587
 #, fuzzy
 #| msgid "Satellite Est"
 msgid "Satellite"
 msgstr "Satellite Est"
 
-#: .\authentication\views.py:576
+#: .\authentication\views.py:596
 msgid "Satellite View"
 msgstr "Vue Satellite"
 
@@ -418,7 +416,7 @@ msgid "Sign Up"
 msgstr "S'inscrire"
 
 #: .\core\templates\accounts\full_login.html:30
-#: .\core\templates\accounts\login.html:29
+#: .\core\templates\accounts\login.html:31
 #: .\core\templates\accounts\password_reset_form.html:28
 #: .\core\templates\accounts\register.html:29
 #: .\core\templates\accounts\register_org.html:30
@@ -469,7 +467,7 @@ msgid "Login"
 msgstr "Connexion"
 
 #: .\core\templates\accounts\full_login.html:222
-#: .\core\templates\accounts\login.html:77
+#: .\core\templates\accounts\login.html:79
 #: .\core\templates\accounts\new_password.html:73
 #: .\core\templates\accounts\password_change_failed.html:34
 #: .\core\templates\accounts\password_reset_form.html:63
@@ -481,23 +479,23 @@ msgstr "Connexion"
 msgid "Contact Us"
 msgstr "Contactez-nous"
 
-#: .\core\templates\accounts\login.html:19
+#: .\core\templates\accounts\login.html:21
 msgid "Sign In"
 msgstr "S'inscrire"
 
-#: .\core\templates\accounts\login.html:60 .\core\templates\login.html:54
+#: .\core\templates\accounts\login.html:62 .\core\templates\login.html:54
 msgid "Remember me"
 msgstr "Rappel moi"
 
-#: .\core\templates\accounts\login.html:64 .\core\templates\login.html:58
+#: .\core\templates\accounts\login.html:66 .\core\templates\login.html:58
 msgid "Sign in"
 msgstr "S'inscrire"
 
-#: .\core\templates\accounts\login.html:67
+#: .\core\templates\accounts\login.html:69
 msgid "Forgot password"
 msgstr "Mot de passe oublié"
 
-#: .\core\templates\accounts\login.html:74
+#: .\core\templates\accounts\login.html:76
 #: .\core\templates\accounts\new_password.html:70
 #: .\core\templates\accounts\password_reset_form.html:60
 #: .\core\templates\includes\langnav.html:19
@@ -717,37 +715,45 @@ msgstr "Temps de création"
 msgid "AppSeed"
 msgstr "vitesse de l'application"
 
-#: .\core\templates\includes\langnav.html:27
+#: .\core\templates\includes\langnav.html:24
+msgid "Already signed in?"
+msgstr "Déjà connecté?"
+
+#: .\core\templates\includes\langnav.html:28
+msgid "Launch Map"
+msgstr "Carte de Lancement"
+
+#: .\core\templates\includes\langnav.html:36
 msgid "Language"
 msgstr "Langue"
 
-#: .\core\templates\includes\langnav.html:46
+#: .\core\templates\includes\langnav.html:55
 msgid "Like us on Facebook"
 msgstr "Aimez-nous sur facebook"
 
-#: .\core\templates\includes\langnav.html:48
+#: .\core\templates\includes\langnav.html:57
 #: .\core\templates\includes\navigation-fullscreen.html:44
 msgid "Facebook"
 msgstr "Facebook"
 
-#: .\core\templates\includes\langnav.html:53
+#: .\core\templates\includes\langnav.html:62
 msgid "Follow us on Twitter"
 msgstr "Suivez-nous sur Twitter"
 
-#: .\core\templates\includes\langnav.html:55
+#: .\core\templates\includes\langnav.html:64
 #: .\core\templates\includes\navigation-fullscreen.html:51
 msgid "Twitter"
 msgstr "Twitter"
 
-#: .\core\templates\includes\langnav.html:60
+#: .\core\templates\includes\langnav.html:69
 msgid "Support Technoserve"
 msgstr "Soutien Technoserve"
 
-#: .\core\templates\includes\langnav.html:62
+#: .\core\templates\includes\langnav.html:71
 msgid "Support"
 msgstr "Soutien"
 
-#: .\core\templates\includes\langnav.html:69
+#: .\core\templates\includes\langnav.html:78
 msgid "Search"
 msgstr "Chercher"
 
@@ -1086,11 +1092,11 @@ msgstr "Rendement par Arbre (kg/arbre)"
 msgid "Out of Prod. Trees"
 msgstr "Arbres hors prod."
 
-#: .\gettingstarted\settings.py:162
+#: .\gettingstarted\settings.py:164
 msgid "English"
 msgstr "Anglais"
 
-#: .\gettingstarted\settings.py:163
+#: .\gettingstarted\settings.py:165
 msgid "French"
 msgstr "français"
 

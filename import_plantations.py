@@ -190,7 +190,7 @@ def clean_yield_data():
     # yield_data = yield_data.replace('nan', np.nan).fillna("")
     dict_list = convert_to_dict_list(ben_yield)
     import_dicts_to_database(dict_list)
-    import_dicts_to_yields(dict_list)
+    # import_dicts_to_yields(dict_list)
     import_dicts_to_benyields(dict_list)
     create_special_id(ben_yield, alteia_df, ben_yield_GEO)
 
