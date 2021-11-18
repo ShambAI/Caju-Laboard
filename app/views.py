@@ -113,8 +113,8 @@ class my_home():
         Benin_dept_layer, dept_yieldHa = add_benin_department()
         Benin_dept_layer.add_to(m)
 
-        Benin_commune_layer = add_benin_commune()
-        Benin_commune_layer.add_to(m)
+        # Benin_commune_layer = add_benin_commune()
+        # Benin_commune_layer.add_to(m)
 
         # Benin_plantation_layer = add_benin_plantation(path_link, dept_yieldHa)
         # Benin_plantation_layer.add_to(m)
