@@ -7,9 +7,9 @@ import geojson
 from area import area
 from math import log10, floor
 from celery import shared_task
-heroku = False
+heroku = True
 
-
+# Load the Benin Communes shapefile
 with open("ben_adm2.json", errors="ignore") as f:
     benin_adm2_json = geojson.load(f)
 
@@ -48,6 +48,7 @@ def add_benin_commune(self):
         # GEOJSON layer consisting of a single feature
         name = feature["properties"]["NAME_2"]
 
+        # looping through all communes in Benin Repubic to get the ranking
         z_list = []
         for c in range(len(CommuneSatellite.objects.all())):
             y = CommuneSatellite.objects.all()[c].commune
@@ -58,11 +59,13 @@ def add_benin_commune(self):
         sorted_by_second = sorted(z_list, reverse = True, key=lambda tup: tup[1])
         list2, _ = zip(*sorted_by_second)
 
+        # A small logic to solve the french symbols name error when viewed on local host
         if heroku:
             position2 = list2.index(name) 
         else:
             position2 = 1
-                            
+
+        # formatted rankings in dictionary format                   
         my_dict_communes = {'1': 'highest','2': '2nd','3': '3rd','4': '4th','5': '5th','6': '6th', '7': '7th','8': '8th','9': '9th', '10': '10th',
                 '11': '11th','12': '12th','13': '13th','14': '14th','15': '15th','16': '16th','17': '17th','18': '18th','19': '19th','20': '20th',
                 '21': '21st','22': '22nd','23': '23rd','24': '24th','25': '25th','26': '26th', '27': '27th', '28': '28th', '29': '29th','30': '30th',
@@ -73,6 +76,8 @@ def add_benin_commune(self):
                 '71': '71st','72': '72nd','73': '73rd','74': '74th','75': '75th','76': 'lowest'}
 
         temp_layer2 = folium.GeoJson(feature,  zoom_on_click = True, highlight_function = highlight_function)
+
+        # load statistics from the database and formating them for displaying on popups
 
         tree_ha_pred_comm = CommuneSatellite.objects.filter(commune= name).aggregate(Sum('cashew_tree_cover'))
         try:
@@ -143,6 +148,8 @@ def add_benin_commune(self):
         except:
             active_treesC = 0 
         
+        # formating numbers greater than 90000 to show 91k
+
         try:
             r_region_sizeC = round(region_sizeC, 1-int(floor(log10(abs(region_sizeC))))) if region_sizeC < 90000 else round(region_sizeC, 2-int(floor(log10(abs(region_sizeC)))))
         except:
@@ -185,6 +192,7 @@ def add_benin_commune(self):
 
         
 
+        # html template for the popups
 
         html3 = f'''
                 <html>

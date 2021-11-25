@@ -11,7 +11,7 @@ import pandas as pd
 from shapely.geometry import shape
 from celery import shared_task
 
-
+8# Load the Benin Plantations shapefile
 with open("Data/CajuLab_Plantations.geojson", errors="ignore") as f:
     alteia_json = geojson.load(f)
 
@@ -52,7 +52,8 @@ def add_benin_plantation(self, path_link, dept_yieldHa):
     temp_geojson_a  = folium.GeoJson(data=alteia_json,
         name='Alteia Plantation Data 2',
         highlight_function = highlight_function)
-
+    
+    # Computing the total statistics of all 171 plantations
     grand_pred_surface = 0
     grand_ground_surface = 0
     grand_total_yield = 0
@@ -60,6 +61,7 @@ def add_benin_plantation(self, path_link, dept_yieldHa):
     counter = 0
     grand_num_tree = 0
     for feature in temp_geojson_a.data['features']:
+
         # GEOJSON layer consisting of a single feature
         code_sum = feature["properties"]["Plantation code"]
         items = len(SpecialTuple.objects.filter(alteia_id=code_sum))
@@ -67,12 +69,14 @@ def add_benin_plantation(self, path_link, dept_yieldHa):
             counter += 1
             code_2_sum = SpecialTuple.objects.filter(alteia_id=code_sum)[0].plantation_id
 
-
+            # load statistics from the database and 
             grand_pred_surface += round(AlteiaData.objects.filter(plantation_code=code_sum)[0].cashew_tree_cover/10000,2)
             grand_ground_surface += BeninYield.objects.filter(plantation_code=code_2_sum)[0].surface_area
             grand_total_yield += BeninYield.objects.filter(plantation_code=code_2_sum)[0].total_yield_kg
             grand_plantation_size += area(feature['geometry'])/10000
             grand_num_tree += BeninYield.objects.filter(plantation_code=code_2_sum)[0].total_number_trees
+
+    # formating statistics for displaying on popups
 
     average_pred_yield_ha = 390
     total_grand_pred_surface = int(round(grand_pred_surface))
@@ -84,6 +88,8 @@ def add_benin_plantation(self, path_link, dept_yieldHa):
     total_grand_num_tree = int(round(grand_num_tree))
     total_grand_yield_tree = int(round(total_grand_ground_yield/total_grand_num_tree))
 
+    # formating numbers greater than 90000 to show 91k
+
     r_total_grand_num_tree = round(total_grand_num_tree, 1-int(floor(log10(abs(total_grand_num_tree))))) if total_grand_num_tree < 90000 else round(total_grand_num_tree, 2-int(floor(log10(abs(total_grand_num_tree)))))
     r_total_grand_pred_yield = round(total_grand_pred_yield, 1-int(floor(log10(abs(total_grand_pred_yield))))) if total_grand_pred_yield < 90000 else round(total_grand_pred_yield, 2-int(floor(log10(abs(total_grand_pred_yield)))))
     r_total_grand_ground_yield = round(total_grand_ground_yield, 1-int(floor(log10(abs(total_grand_ground_yield))))) if total_grand_ground_yield < 90000 else round(total_grand_ground_yield, 2-int(floor(log10(abs(total_grand_ground_yield)))))
@@ -91,6 +97,7 @@ def add_benin_plantation(self, path_link, dept_yieldHa):
     
 
     for feature in temp_geojson_a.data['features']:
+        # GEOJSON layer consisting of a single feature
         
         code = feature["properties"]["Plantation code"]
         
@@ -120,11 +127,13 @@ def add_benin_plantation(self, path_link, dept_yieldHa):
             except:
                 r_yield_pred_plant = yield_pred_plant
 
-
+            # Getting the centroid of the plantation shapefile for use by the drone map and placing markers on the plantation midpoint
             s = shape(feature["geometry"])
             centre = s.centroid
             coordinate_xy = [centre.y, centre.x] 
-                
+
+            # html template for the popups
+ 
             html_a = f'''
                 <html>
                 <head>

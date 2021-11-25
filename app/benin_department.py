@@ -8,9 +8,9 @@ import geojson
 from area import area
 from math import log10, floor
 from celery import shared_task
-heroku = False
+heroku = True
 
-
+# Load the Benin Departments shapefile
 with open("ben_adm1.json", errors="ignore") as f:
     benin_adm1_json = geojson.load(f)
 
@@ -29,7 +29,6 @@ def add_benin_department(self):
     dept_yieldHa = {}
 
     #Variables for departmental translation
-    #Variables for translation
 
     Active_Trees = gettext("Active Trees")
     Sick_Trees = gettext("Sick Trees")
@@ -57,6 +56,8 @@ def add_benin_department(self):
         name = feature["properties"]["NAME_1"]
 
         z_list = []
+        # looping through all departments in Benin Repubic to get the ranking
+
         for d in range(len(DeptSatellite.objects.all())):
             y = DeptSatellite.objects.all()[d].department
             x = CommuneSatellite.objects.filter(department=y).aggregate(Sum('cashew_tree_cover'))
@@ -66,6 +67,7 @@ def add_benin_department(self):
         sorted_by_second = sorted(z_list, reverse = True, key=lambda tup: tup[1])
         list1, _ = zip(*sorted_by_second)
 
+        # A small logic to solve the french symbols name error when viewed on local host
         if heroku:
             position = list1.index(name)
         else:
@@ -84,7 +86,9 @@ def add_benin_department(self):
         temp_layer1 = folium.GeoJson(feature, zoom_on_click = True, highlight_function = highlight_function)
 
 
-        # tree_ha_pred_dept = int(round(sum(dtstats_df[dtstats_df['Districts']==name].Cashew_Yield)/10000,2))
+        # load statistics from the database and formating them for displaying on popups. 
+        # The try catch is to avoid error that arise when we round null values
+
         tree_ha_pred_dept = CommuneSatellite.objects.filter(department= name).aggregate(Sum('cashew_tree_cover'))
         try:
             tree_ha_pred_dept = int(round(tree_ha_pred_dept['cashew_tree_cover__sum']/10000,2))
@@ -114,7 +118,7 @@ def add_benin_department(self):
         except:
             yield_haD = 0
 
-        #Used only in case of error in the try and except catch 
+        # Used only in case of error in the try and except catch 
         yield_treeD = BeninYield.objects.filter(department= name).aggregate(Avg('total_yield_per_tree_kg'))
         try:
             yield_treeD = int(round(yield_treeD['total_yield_per_tree_kg__avg'],2))
@@ -174,10 +178,7 @@ def add_benin_department(self):
             r_yield_haD = round(yield_haD, 1-int(floor(log10(abs(yield_haD))))) if yield_haD < 90000 else round(yield_haD, 2-int(floor(log10(abs(yield_haD)))))
         except:
             r_yield_haD = yield_haD
-        # try:
-        #     r_yield_treeD = round(yield_treeD, 1-int(floor(log10(abs(yield_treeD))))) if yield_treeD < 90000 else round(yield_treeD, 2-int(floor(log10(abs(yield_treeD)))))
-        # except:
-        #     r_yield_treeD = yield_treeD
+        
         try:
             r_yield_treeD = round(r_total_yieldD/active_treesD)
         except:
@@ -194,6 +195,7 @@ def add_benin_department(self):
 
         dept_yieldHa[name] = yield_haD
 
+        # html template for the popups
         html3 = f'''
                 <html>
                     <head>
@@ -326,7 +328,7 @@ def add_benin_department(self):
                     </body>
                     </html>
                 '''
-
+        # Popup size and frame declaration
         iframe = folium.IFrame(html=html3, width=450, height=380)
 
         folium.Popup(iframe, max_width=2000).add_to(temp_layer1)

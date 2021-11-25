@@ -14,12 +14,13 @@ from app.benin_department import add_benin_department
 from app.benin_commune import add_benin_commune
 from app.benin_plantations import add_benin_plantation
 
-# folium
+
 from folium import plugins
 import pandas as pd
 from folium.plugins import MarkerCluster
 import ee
 
+#Google service account for the GEE geotiff
 service_account = 'cajulab@benin-cajulab-web-application.iam.gserviceaccount.com'
 credentials = ee.ServiceAccountCredentials(service_account, 'privatekey.json')
 ee.Initialize(credentials)
@@ -27,20 +28,16 @@ locale.setlocale(locale.LC_ALL, '')  # Use '' for auto, or force e.g. to 'en_US.
 alldept = ee.Image('users/ashamba/allDepartments_v0')
 
 class my_home():
-    # Define a method for displaying Earth Engine image tiles on a folium map.
+    
 
     def __init__(self):
-
-        # try:
-        #     activate(language)
-        # finally:
-        #     current_language = get_language()
-        #     activate(current_language)
 
         self.figure = folium.Figure()
 
     def get_context_data(self, path_link, **kwargs):
+
         
+        # Basemap dictionary
         basemaps = {
                     'Google Maps': folium.TileLayer(
                         tiles = 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
@@ -69,7 +66,8 @@ class my_home():
                         control = True
                     )
                 }
-                # figure = folium.Figure()
+        
+        #Initialize map object
 
         m = folium.Map(
             location=[9.0, 2.4],
@@ -83,11 +81,15 @@ class my_home():
         m.add_child(basemaps['Mapbox Satellite'])
 
         plugins.Fullscreen(position='topright', title='Full Screen', title_cancel='Exit Full Screen', force_separate_button=False).add_to(m)
-       
+
+
+
+       #Adding the nursery layer from the class Nursery_LAYER
         marker_cluster = MarkerCluster(name=gettext("Nursery Information"))
         Nursery_layer = Nursery_LAYER(marker_cluster).add_nursery()
         Nursery_layer.add_to(m)
 
+        # Define a method for displaying Earth Engine image tiles on a folium map.
         def add_ee_layer(self, ee_image_object, vis_params, name):
             map_id_dict = ee.Image(ee_image_object).getMapId(vis_params)
             folium.raster_layers.TileLayer(
@@ -104,22 +106,28 @@ class my_home():
         zones = zones.updateMask(zones.neq(0));
         m.add_ee_layer(zones, {'palette': "red"}, gettext('Satellite Prediction'))
 
+
+        # The no boundary layer to remove shapefiles on the Benin region
         No_Boundary_layer = folium.FeatureGroup(name=gettext('No Boundary'), show=False, overlay = False)
         No_Boundary_layer.add_to(m)
         
+        # Adding the shapefiles with popups for the Benin Republic region
         Benin_layer = add_benin_republic()
         Benin_layer.add_to(m)
 
+        # Adding the shapefiles with popups for the Benin departments region
         Benin_dept_layer, dept_yieldHa = add_benin_department()
         Benin_dept_layer.add_to(m)
 
+        # Adding the shapefiles with popups for the Benin commune region
         Benin_commune_layer = add_benin_commune()
         Benin_commune_layer.add_to(m)
 
+        # Adding the shapefiles with popups for the Benin plantations
         Benin_plantation_layer = add_benin_plantation(path_link, dept_yieldHa)
         Benin_plantation_layer.add_to(m)
         
-
+        #adding folium layer control for the previously added shapefiles
         m.add_child(folium.LayerControl())
         m=m._repr_html_()
         context = {'my_map': m}
@@ -129,7 +137,7 @@ class my_home():
 
 @login_required(login_url="/login/")
 def index(request):
-    # language = request.path_info.replace('/', '')
+   
     path_link = request.path
     home_obj = my_home()
     context = home_obj.get_context_data(path_link)

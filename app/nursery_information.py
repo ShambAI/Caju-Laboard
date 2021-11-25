@@ -7,11 +7,13 @@ class Nursery_LAYER:
     def __init__(self, marker_cluster):
         self.marker_cluster = marker_cluster
     def add_nursery(self):
+        # variables for translation
         Commune_Name = gettext('Commune Name')
         Nursery_Owner = gettext("Nursery Owner")
         Nursery_Area = gettext("Nursery Area (ha)")
         Number_of_Plants = gettext("Number of Plants")
 
+        # Loop through every nursery owner and add to the nursery marker popups
         for i in range(len(Nursery.objects.all())):
                     folium.Marker(location= [Nursery.objects.all()[i].latitude, Nursery.objects.all()[i].longitude],
                                 rise_on_hover=True,
